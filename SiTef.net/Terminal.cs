@@ -9,7 +9,7 @@ namespace SiTef.net
 {
     public class Terminal
     {
-        private short tef;
+        private UIntPtr tef;
 
         private short transaction;
 
