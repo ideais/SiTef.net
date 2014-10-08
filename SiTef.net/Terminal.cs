@@ -1,4 +1,5 @@
-﻿using SiTef.net.Type;
+﻿using SiTef.net.Exceptions;
+using SiTef.net.Type;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,8 @@ namespace SiTef.net
         public Terminal(string servidor, string terminal, string empresa)
         {
             tef = SiTef.IniciaTerminal(servidor, terminal, empresa);
+            if (UIntPtr.Zero == tef)
+                throw new TerminalException("unable to initialize terminal");
         }
 
         public void IniciaTransacao()

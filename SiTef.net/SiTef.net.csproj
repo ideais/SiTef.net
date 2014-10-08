@@ -49,7 +49,7 @@
     <Compile Include="Exceptions\TerminalException.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Type\Field.cs" />
-    <Compile Include="SiTefWrapper.cs">
+    <Compile Include="SiTef.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

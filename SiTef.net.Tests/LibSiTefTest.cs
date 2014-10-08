@@ -8,13 +8,19 @@ namespace SiTef.net.Tests
     {
 
         protected static UIntPtr tef;
-
+        
         [ClassInitialize]
         static public void Init(TestContext context)
         {
             tef = SiTef.IniciaTerminal("10.166.58.10", "AA999999", "00000000");
         }
-        
+
+        [TestMethod]
+        public void IniciaTerminalTest()
+        {
+            Assert.IsTrue(UIntPtr.Zero != tef);
+        }
+
         [TestMethod]
         public void IniciaTransacaoTest()
         {
