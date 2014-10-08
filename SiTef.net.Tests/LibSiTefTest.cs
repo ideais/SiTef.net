@@ -12,14 +12,23 @@ namespace SiTef.net.Tests
         [ClassInitialize]
         static public void Init(TestContext context)
         {
-            tef = SiTefWrapper.IniciaTerminal("10.166.58.10", "AA999999", "00000000");
+            tef = SiTef.IniciaTerminal("10.166.58.10", "AA999999", "00000000");
         }
         
         [TestMethod]
         public void IniciaTransacaoTest()
         {
-            Int16 trn = SiTefWrapper.IniciaTransacao(tef);
+            short trn = SiTef.IniciaTransacao(tef);
             Assert.IsTrue(trn >= 0);
+        }
+
+        [TestMethod]
+        public void GravaCampo()
+        {
+            short trn = SiTef.IniciaTransacao(tef);
+            Assert.IsTrue(trn >= 0);
+            short status = SiTef.GravaCampo(tef, 1, "   1");
+            Assert.IsTrue(status >= 0);
         }
     }
 }

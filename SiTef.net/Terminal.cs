@@ -15,12 +15,12 @@ namespace SiTef.net
 
         public Terminal(string servidor, string terminal, string empresa)
         {
-            tef = SiTefWrapper.IniciaTerminal(servidor, terminal, empresa);
+            tef = SiTef.IniciaTerminal(servidor, terminal, empresa);
         }
 
         public void IniciaTransacao()
         {
-            transaction = SiTefWrapper.IniciaTransacao(tef);
+            transaction = SiTef.IniciaTransacao(tef);
             if (transaction < 0)
             {
 
@@ -30,37 +30,37 @@ namespace SiTef.net
         public void GravaCampo(Field campo)
         {
             if (transaction == 0) IniciaTransacao();
-            SiTefWrapper.GravaCampo(tef, campo.Id, campo.Value);
+            SiTef.GravaCampo(tef, campo.Id, campo.Value);
         }
 
         public void Executa(short acao)
         {
-            SiTefWrapper.Executa(tef, acao);
+            SiTef.Executa(tef, acao);
         }
 
         public Field LeCampo(short id)
         {
             StringBuilder valor = new StringBuilder();
-            SiTefWrapper.LeCampo(tef, id, valor);
+            SiTef.LeCampo(tef, id, valor);
             return Field.InstanceOf(id, valor.ToString());
         }
 
         public bool ExistemMaisElementos(short campo)
         {
-            return SiTefWrapper.ExistemMaisElementos(tef, campo) == 1;
+            return SiTef.ExistemMaisElementos(tef, campo) == 1;
         }
 
 
         public string DescricaoErro(short erro)
         {
             StringBuilder descricao = new StringBuilder();
-            SiTefWrapper.DescricaoErro(tef, erro, descricao);
+            SiTef.DescricaoErro(tef, erro, descricao);
             return descricao.ToString();
         }
 
         public void FinalizaTerminal()
         {
-            SiTefWrapper.FinalizaTerminal(tef);
+            SiTef.FinalizaTerminal(tef);
         }
 
     }

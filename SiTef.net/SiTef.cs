@@ -10,7 +10,7 @@ namespace SiTef.net
     /// 
     /// LibSiTef.dll 1.1.83.0
     /// </summary>
-    public class SiTefWrapper
+    public class SiTef
     {
         /// <summary>
         /// Esta função atua como um construtor, e retorna um handle que deverá ser usado nas demais funções.
