@@ -43,9 +43,12 @@
   <ItemGroup>
     <Compile Include="Action\BaseAction.cs" />
     <Compile Include="Action\IAction.cs" />
+    <Compile Include="Action\Model\AbstractActionModel.cs" />
     <Compile Include="Action\Model\IActionModel.cs" />
-    <Compile Include="Action\Model\QueryCardRequest.cs" />
-    <Compile Include="Action\Type.cs" />
+    <Compile Include="Action\Model\SiTefSaleRequest.cs" />
+    <Compile Include="Action\Model\SiTefSaleResponse.cs" />
+    <Compile Include="Action\SiTefSaleAction.cs" />
+    <Compile Include="Action\ActionType.cs" />
     <Compile Include="Exceptions\TerminalException.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Type\Field.cs" />

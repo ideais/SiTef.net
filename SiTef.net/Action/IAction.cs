@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Action
 {
-    interface IAction<M> where M : IActionModel
+    public interface IAction<M,N> where M : IActionModel where N : IActionModel
     {
-        M Execute(M model);
+        N Execute(M model);
     }
 }

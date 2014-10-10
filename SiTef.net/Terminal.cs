@@ -12,7 +12,7 @@ namespace SiTef.net
     {
         private UIntPtr tef;
 
-        private short transaction;
+        private int transaction;
 
         public Terminal(string servidor, string terminal, string empresa)
         {
@@ -25,38 +25,44 @@ namespace SiTef.net
         {
             transaction = SiTef.IniciaTransacao(tef);
             if (transaction < 0)
-            {
-
-            }
+                throw new TerminalException(DescricaoErro(transaction));
         }
 
         public void GravaCampo(Field campo)
         {
             if (transaction == 0) IniciaTransacao();
-            SiTef.GravaCampo(tef, campo.Id, campo.Value);
+
+            int result = SiTef.GravaCampo(tef, campo.Id, campo.Value);
+            if (result < 0)
+                throw new TerminalException(DescricaoErro(result));
+
         }
 
-        public void Executa(short acao)
+        public void Executa(int acao)
         {
-            SiTef.Executa(tef, acao);
+            int result = SiTef.Executa(tef, acao);
+            if (result < 0)
+                throw new TerminalException(DescricaoErro(result));
         }
 
-        public Field LeCampo(short id)
+        public String LeCampo(int id)
         {
             StringBuilder valor = new StringBuilder();
-            SiTef.LeCampo(tef, id, valor);
-            return Field.InstanceOf(id, valor.ToString());
+            int result = SiTef.LeCampo(tef, id, valor);
+            if (result < 0)
+                throw new TerminalException(DescricaoErro(result));
+            return valor.ToString();
         }
 
-        public bool ExistemMaisElementos(short campo)
+        public bool ExistemMaisElementos(int campo)
         {
             return SiTef.ExistemMaisElementos(tef, campo) == 1;
         }
 
 
-        public string DescricaoErro(short erro)
+        public string DescricaoErro(int erro)
         {
-            StringBuilder descricao = new StringBuilder();
+            StringBuilder descricao = new StringBuilder(128);
             SiTef.DescricaoErro(tef, erro, descricao);
             return descricao.ToString();
         }

@@ -24,16 +24,16 @@ namespace SiTef.net.Tests
         [TestMethod]
         public void IniciaTransacaoTest()
         {
-            short trn = SiTef.IniciaTransacao(tef);
+            int trn = SiTef.IniciaTransacao(tef);
             Assert.IsTrue(trn >= 0);
         }
 
         [TestMethod]
         public void GravaCampo()
         {
-            short trn = SiTef.IniciaTransacao(tef);
+            int trn = SiTef.IniciaTransacao(tef);
             Assert.IsTrue(trn >= 0);
-            short status = SiTef.GravaCampo(tef, 1, "   1");
+            int status = SiTef.GravaCampo(tef, 1, "   1");
             Assert.IsTrue(status >= 0);
         }
     }

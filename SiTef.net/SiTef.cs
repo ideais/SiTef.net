@@ -44,7 +44,7 @@ namespace SiTef.net
         ///    >= 0, sucesso < 0 erro.  
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Inicia_Transacao", SetLastError = true, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public unsafe static extern Int16 IniciaTransacao(UIntPtr tef);
+        public unsafe static extern int IniciaTransacao(UIntPtr tef);
 
         /// <summary>
         /// Salva na DLL um campo que será utilizado nas demais funções.
@@ -63,7 +63,7 @@ namespace SiTef.net
         ///     >= 0, se conseguiu gravar o campo. < 0, se não foi possível gravar o campo.
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Grava_Campo", SetLastError = true)]
-        public unsafe static extern Int16 GravaCampo(UIntPtr tef, Int16 campo, string valor);
+        public unsafe static extern int GravaCampo(UIntPtr tef, int campo, string valor);
 
         /// <summary>
         /// Indica se existe algum elemento a ser lido em um dado campo, campo que pode ser simples ou múltiplo.
@@ -81,7 +81,7 @@ namespace SiTef.net
         ///     Retorna 1 no caso de existirem mais elementos a serem lidos do dado campo ou 0 no caso de não existirem.
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Existem_Mais_Elementos", SetLastError = true)]
-        public unsafe static extern Int16 ExistemMaisElementos(UIntPtr tef, Int16 campo);
+        public unsafe static extern int ExistemMaisElementos(UIntPtr tef, int campo);
 
         /// <summary>
         /// Obtém da DLL um campo que foi gerado como resultado de uma transação com o SiTef. O conteúdo de um campo será retornado somente um única vez. 
@@ -101,7 +101,7 @@ namespace SiTef.net
         ///     < 0, se não foi possível obter o campo. 
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Le_Campo", SetLastError = true)]
-        public unsafe static extern Int16 LeCampo(UIntPtr tef, Int16 campo, StringBuilder valor);
+        public unsafe static extern int LeCampo(UIntPtr tef, int campo, StringBuilder valor);
 
         /// <summary>
         /// Executa uma determinada ação na biblioteca, como uma venda ou um cancelamento. 
@@ -117,7 +117,7 @@ namespace SiTef.net
         ///     < 0, falha de comunicação. 
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Executa", SetLastError = true)]
-        public unsafe static extern Int16 Executa(UIntPtr tef, Int16 acao);
+        public unsafe static extern int Executa(UIntPtr tef, int acao);
 
         /// <summary>
         /// Libera todos os recursos utilizados por um terminal. Atua como um destrutor,
@@ -131,7 +131,7 @@ namespace SiTef.net
         ///     < 0, se falha de comunicação. 
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Finaliza_Terminal", SetLastError = true)]
-        public unsafe static extern Int16 FinalizaTerminal(UIntPtr tef);
+        public unsafe static extern int FinalizaTerminal(UIntPtr tef);
 
         /// <summary>
         /// Obtém a descrição de um determinado código de erro retornado por qualquer uma das rotinas descritas anteriormente.
@@ -150,7 +150,7 @@ namespace SiTef.net
         ///     <> 0, se erro.
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Obtem_Descricao_Erro", SetLastError = true)]
-        public unsafe static extern Int16 DescricaoErro(UIntPtr tef, Int16 erro, StringBuilder descricao);
+        public unsafe static extern int DescricaoErro(UIntPtr tef, int erro, StringBuilder descricao);
 
         /// <summary>
         /// Retorna a versão da biblioteca LibSiTef. 
@@ -165,7 +165,7 @@ namespace SiTef.net
         ///     Esta função retorna sempre zero. 
         /// </returns>
         [DllImport("LibSiTef.dll", EntryPoint = "MKT_Obtem_Versao", SetLastError = true)]
-        public unsafe static extern Int16 Versao(StringBuilder saida, Int16 max);
+        public unsafe static extern int Versao(StringBuilder saida, int max);
 
     }
 }

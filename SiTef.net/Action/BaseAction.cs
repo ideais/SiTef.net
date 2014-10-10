@@ -9,12 +9,9 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Action
 {
-    public abstract class BaseAction<M> : IAction<M> where M : IActionModel
+    public abstract class BaseAction<M,N> : IAction<M,N> where M : IActionModel where N : IActionModel
     {
-        private Terminal _terminal;
-
-        private IList<Field> _input;
-        public IList<Field> Fields { set { _input = value; } }
+        protected Terminal _terminal;
 
         private short _action;
 
@@ -24,11 +21,11 @@ namespace SiTef.net.Action
             _terminal = terminal;
         }
 
-        public M Execute(M model)
+        public N Execute(M model)
         {
-            foreach (Field field in _input)
+            foreach (Field field in model.GetFields())
             {
-                _terminal.GravaCampo(field);
+                if(field != null) _terminal.GravaCampo(field);
             }
 
             _terminal.Executa(_action);
@@ -36,6 +33,6 @@ namespace SiTef.net.Action
             return ReadOutput();
         }
 
-        protected abstract M ReadOutput();
+        protected abstract N ReadOutput();
     }
 }

@@ -1,28 +1,29 @@
 ﻿
-namespace SiTef.net.Type
+using System;
+namespace SiTef.net.Action
 {
     /// <summary>
     /// Relação dos códigos de Ações
     /// </summary>
-    public class Type
+    public class ActionType
     {
-        public const short CONSULTA_CARTAO = 1;
-        public const short VENDA_SITEF = 2;
-        public const short CANCELA_SITEF = 3;
-        public const short FINALIZA_TRANSACAO = 4;
-        public const short CONSULTA_PARAMETROS_G1_CB = 5;
-        public const short CONSULTA_CODIGO_BARRAS_CB = 6;
-        public const short CONSULTA_CHEQUE_CB = 7;
-        public const short CONSULTA_PAGAMENTO_CB = 8;
-        public const short PAGAMENTO_CB = 9;
-        public const short CONTINUA_PAGAMENTO_CB = 10;
-        public const short ESTORNO_PAGAMENTO_CB = 11;
-        public const short CONSULTA_PARAMETROS_G3_CB = 12;
-        public const short CONSULTA_DEPOSITO_CB = 13;
-        public const short DEPOSITO_CB = 14;
-        public const short ESTORNO_DEPOSITO_CB = 15;
-        public const short CONSULTA_SALDO_CB = 16;
-        public const short SAQUE_CB = 17;
+        public const int CONSULTA_CARTAO = 1;
+        public const int VENDA_SITEF = 2;
+        public const int CANCELA_SITEF = 3;
+        public const int FINALIZA_TRANSACAO = 4;
+        public const int CONSULTA_PARAMETROS_G1_CB = 5;
+        public const int CONSULTA_CODIGO_BARRAS_CB = 6;
+        public const int CONSULTA_CHEQUE_CB = 7;
+        public const int CONSULTA_PAGAMENTO_CB = 8;
+        public const int PAGAMENTO_CB = 9;
+        public const int CONTINUA_PAGAMENTO_CB = 10;
+        public const int ESTORNO_PAGAMENTO_CB = 11;
+        public const int CONSULTA_PARAMETROS_G3_CB = 12;
+        public const int CONSULTA_DEPOSITO_CB = 13;
+        public const int DEPOSITO_CB = 14;
+        public const int ESTORNO_DEPOSITO_CB = 15;
+        public const int CONSULTA_SALDO_CB = 16;
+        public const int SAQUE_CB = 17;
 
         /*
          * 18 ESTORNO_SAQUE_CB 
@@ -40,9 +41,9 @@ namespace SiTef.net.Type
          * 30 ESTORNO_PAGAMENTO_G4 
          */
 
-        public const short PRE_AUTORIZACAO = 31;
-        public const short ESTORNO_PRE_AUTORIZACAO = 32;
-        public const short CAPTURA_PRE_AUTORIZACAO = 33;
+        public const int PRE_AUTORIZACAO = 31;
+        public const int ESTORNO_PRE_AUTORIZACAO = 32;
+        public const int CAPTURA_PRE_AUTORIZACAO = 33;
 
         /* 34 AJUSTA_VENDA 
          * 35 FECHAMENTO_LOTE 

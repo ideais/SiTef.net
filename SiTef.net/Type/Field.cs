@@ -14,6 +14,12 @@ namespace SiTef.net.Type
             get { return _value; }
         }
 
+        public Field(short id, Terminal terminal)
+        {
+            _value = terminal.LeCampo(id);
+        }
+
+
         protected Field(short id, string value, short length, string pattern)
         {
             if (value == null)
@@ -49,7 +55,8 @@ namespace SiTef.net.Type
     /// </summary>
     public class Rede : Field
     {
-        public Rede(string codigo) : base(1, codigo, 4, @"^\w{4}$") { }
+        public Rede(Terminal terminal) : base(1, terminal) { }
+        public Rede(string codigo) : base(1, codigo, 4, @"^\s*\d*$") { }
 
         public static Rede TECHAN = new Rede("   1");
         public static Rede REDE = new Rede("   5");
@@ -74,7 +81,8 @@ namespace SiTef.net.Type
     /// </summary>
     public class NumeroDeParcelas : Field
     {
-        public NumeroDeParcelas(string parcelas) : base(2, parcelas, 2, @"^\d{2,2}$") { }
+        public NumeroDeParcelas(Terminal terminal) : base(2, terminal) { }
+        public NumeroDeParcelas(string parcelas) : base(2, parcelas, 2, @"^\d*$") { }
     }
 
     /// <summary>
@@ -96,7 +104,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class TipoDeFinanciamento : Field
     {
-        public TipoDeFinanciamento(string tipo) : base(3, tipo, 2, @"^\d{2,2}$") { }
+        public TipoDeFinanciamento(string tipo) : base(3, tipo, 2, @"^\s*\d*$") { }
 
         //TODO: Criar as instancias estaticas aí em cima
     }
