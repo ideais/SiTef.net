@@ -32,6 +32,8 @@ namespace SiTef.net.Tests.Integration
                     new DataDeVencimento("1215")
                 )
             );
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
         }
     }
 }

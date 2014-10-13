@@ -8,14 +8,14 @@ namespace SiTef.net.Type
     public class Field
     {
         protected short _id;
-        public short Id { get { return _id; } }
+        public int Id { get { return _id; } }
         protected string _value;
         public string Value
         {
             get { return _value; }
         }
         
-        public Field(short id, short length, Terminal terminal)
+        public Field(short id, int length, Terminal terminal)
         {
             try
             {

@@ -26,7 +26,7 @@ namespace SiTef.net.Tests.Integration
             SiTefSaleRequest request = new SiTefSaleRequest(
                 new NumeroDeParcelas("1"),
                 new TipoDeFinanciamento("2"),
-                new NumeroDoCartao("4000000000000044"),
+                new NumeroDoCartao("4716615017626757"),
                 new DataDeVencimento("1215"),
                 new CodigoDeSeguranca("123"),
                 new Valor("10000")

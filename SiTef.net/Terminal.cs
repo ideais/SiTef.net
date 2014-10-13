@@ -45,7 +45,7 @@ namespace SiTef.net
                 throw new TerminalException(DescricaoErro(result));
         }
 
-        public String LeCampo(int id, short length)
+        public String LeCampo(int id, int length)
         {
             StringBuilder valor = new StringBuilder(length);
             int result = SiTef.LeCampo(tef, (IntPtr)id, valor);
