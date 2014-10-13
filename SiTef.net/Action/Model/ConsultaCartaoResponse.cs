@@ -6,10 +6,10 @@ using System.Text;
 
 namespace SiTef.net.Action.Model
 {
-    public class QueryCardResponse : AbstractActionModel
+    public class ConsultaCartaoResponse : AbstractActionModel
     {
 
-        public QueryCardResponse(Terminal terminal)
+        public ConsultaCartaoResponse(Terminal terminal)
         {
             _fields = new List<Field>{
                 new Field(1, 99, terminal),

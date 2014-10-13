@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SiTef.net
 {
+    /// <summary>
+    /// Wrapper para operações utilizando a LibSitef
+    /// </summary>
     public class Terminal
     {
         private IntPtr tef;

@@ -3,6 +3,7 @@ lib/*.dll
 obj
 *.suo
 *.user
+*.nupkg
 Log
 packages
 TestResults

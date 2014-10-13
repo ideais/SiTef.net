@@ -11,9 +11,9 @@ namespace SiTef.net.Action.Model
     /// MKT_VENDA_SITEF  
     /// Efetua uma transação de venda crédito.
     /// </summary>
-    public class SiTefSaleRequest : AbstractActionModel
+    public class VendaSiTefRequest : AbstractActionModel
     {
-        public SiTefSaleRequest( 
+        public VendaSiTefRequest( 
             NumeroDeParcelas parcels, 
             TipoDeFinanciamento installment,
             NumeroDoCartao cardNumber,

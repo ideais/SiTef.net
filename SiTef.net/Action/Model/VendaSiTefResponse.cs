@@ -10,9 +10,9 @@ namespace SiTef.net.Action.Model
     /// <summary>
     /// Resposta de uma requisição de Venda à Crédito
     /// </summary>
-    public class SiTefSaleResponse : AbstractActionModel
+    public class VendaSiTefResponse : AbstractActionModel
     {
-        public SiTefSaleResponse(Terminal terminal)
+        public VendaSiTefResponse(Terminal terminal)
         {
             _fields = new List<Field>
             {

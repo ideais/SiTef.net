@@ -281,6 +281,21 @@ namespace SiTef.net.Type
         public Supervisor(string supervisor) : base(151, supervisor, 20, null) { }
     }
 
+    /// <summary>
+    /// Valor da taxa de serviço a ser cobrada na operação de venda (Por exemplo: gorjeta).
+    /// Quando compra IATA o valor indica a taxa de embarque.
+    /// Este valor é opcional
+    /// </summary>
+    public class ValorTaxaDeServico : Field
+    {
+        public static short ID = 187;
+        public static short LENGTH = 9;
+        const string PATTERN = @"^\d*$";
+        public ValorTaxaDeServico(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public ValorTaxaDeServico(float value) : base(ID, (value * 100).ToString(), LENGTH, PATTERN) { }
+        public ValorTaxaDeServico(string value) : base(ID, value, LENGTH, PATTERN) { }
+
+    }
 
     /// <summary>
     /// ‘1’: Transação com Tarja Magnética

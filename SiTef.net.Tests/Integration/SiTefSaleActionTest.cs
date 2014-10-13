@@ -22,8 +22,8 @@ namespace SiTef.net.Tests.Integration
         public void ExecuteSaleActionTest()
         {
             term.IniciaTransacao();
-            SiTefSaleAction action = new SiTefSaleAction(term);
-            SiTefSaleRequest request = new SiTefSaleRequest(
+            VendaSiTefAction action = new VendaSiTefAction(term);
+            VendaSiTefRequest request = new VendaSiTefRequest(
                 new NumeroDeParcelas("1"),
                 new TipoDeFinanciamento("2"),
                 new NumeroDoCartao("4716615017626757"),
@@ -31,7 +31,7 @@ namespace SiTef.net.Tests.Integration
                 new CodigoDeSeguranca("123"),
                 new Valor("10000")
                 );
-            SiTefSaleResponse response = action.Execute(request);
+            VendaSiTefResponse response = action.Execute(request);
 
             foreach (var field in response.GetFields())
                 System.Console.WriteLine(field);

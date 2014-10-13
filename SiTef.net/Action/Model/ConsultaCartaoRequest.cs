@@ -6,10 +6,10 @@ using System.Text;
 
 namespace SiTef.net.Action.Model
 {
-    public class QueryCardRequest: AbstractActionModel
+    public class ConsultaCartaoRequest: AbstractActionModel
     {
 
-        public QueryCardRequest(params Field[] fields) : base( fields ) { }
+        public ConsultaCartaoRequest(params Field[] fields) : base( fields ) { }
 
     }
 }

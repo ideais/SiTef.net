@@ -21,10 +21,10 @@ namespace SiTef.net.Tests.Integration
         public void ExecuteQueryActionTest()
         {
             term.IniciaTransacao();
-            QueryCardAction action = new QueryCardAction(term);
+            ConsultaCartaoAction action = new ConsultaCartaoAction(term);
 
-            QueryCardResponse response = action.Execute(
-                new QueryCardRequest(
+            ConsultaCartaoResponse response = action.Execute(
+                new ConsultaCartaoRequest(
                     //Rede.CIELO,
                     //new DataFiscal("13102014"),
                     //new HoraFiscal("101010"),
