@@ -16,11 +16,14 @@ namespace SiTef.net.Action.Model
         {
             _fields = new List<Field>
             {
-                new Rede(terminal)/*,
-                new CodigoRespostaSiTef(terminal),
+                //1
+                new Rede(terminal),
+                //9
+                new DadosDeConfirmacao(terminal),
+                new CodigoDeRespostaSiTef(terminal),
                 new TextoParaExibicao(terminal),
                 new CodigoRespostaInstituicao(terminal),
-                new Data(terminal),
+                new Data(terminal)/*,
                 new Hora(terminal),
                 new NSUHost(terminal),
                 new CodigoDoEstabelecimento(terminal),
@@ -28,7 +31,7 @@ namespace SiTef.net.Action.Model
                 new NSUSiTef(terminal),
                 new LinhasDeCupon(terminal),
                 new LinhasDeCupomEstabelecimento(terminal),
-                new TextoParaExibicaoVisorCliente(terminal) */
+                new TextoParaExibicaoVisorCliente(terminal)*/
             };
         }
     }

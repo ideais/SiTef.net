@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SiTef.net.Exceptions;
+using System;
 using System.Text.RegularExpressions;
 
 namespace SiTef.net.Type
 {
-    
+
     public class Field
     {
         protected short _id;
@@ -13,10 +14,18 @@ namespace SiTef.net.Type
         {
             get { return _value; }
         }
-
-        public Field(short id, Terminal terminal)
+        
+        public Field(short id, short length, Terminal terminal)
         {
-            _value = terminal.LeCampo(id);
+            try
+            {
+                _value = terminal.LeCampo(id, length);
+            }
+            catch (TerminalException ex)
+            {
+                //TODO LOG
+            }
+
         }
 
 
@@ -47,6 +56,12 @@ namespace SiTef.net.Type
             }
         }
 
+        public override string ToString()
+        {
+            if(_value != null)
+                return _value;
+            return "null";
+        }
     }
 
     /// <summary>
@@ -55,8 +70,9 @@ namespace SiTef.net.Type
     /// </summary>
     public class Rede : Field
     {
-        public Rede(Terminal terminal) : base(1, terminal) { }
-        public Rede(string codigo) : base(1, codigo, 4, @"^\s*\d*$") { }
+        public static short LENGTH = 4;
+        public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
+        public Rede(string codigo) : base(1, codigo, LENGTH, @"^\s*\d*$") { }
 
         public static Rede TECHAN = new Rede("   1");
         public static Rede REDE = new Rede("   5");
@@ -81,8 +97,9 @@ namespace SiTef.net.Type
     /// </summary>
     public class NumeroDeParcelas : Field
     {
-        public NumeroDeParcelas(Terminal terminal) : base(2, terminal) { }
-        public NumeroDeParcelas(string parcelas) : base(2, parcelas, 2, @"^\d*$") { }
+        public static short LENGTH = 2;
+        public NumeroDeParcelas(Terminal terminal) : base(2, LENGTH, terminal) { }
+        public NumeroDeParcelas(string parcelas) : base(2, parcelas, LENGTH, @"^\d*$") { }
     }
 
     /// <summary>
@@ -152,6 +169,65 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Dados que devem ser utilizados para confirmação da transação. 
+    /// </summary>
+    public class DadosDeConfirmacao : Field
+    {
+        public static short ID = 9;
+        public DadosDeConfirmacao(Terminal terminal) : base(ID, 128, terminal) { }
+    }
+
+    /// <summary>
+    /// Resultado da transação, quando ‘000’ indica que a transação foi aprovada ou Nada Consta para Consulta ACSP. 
+    /// </summary>
+    public class CodigoDeRespostaSiTef : Field
+    {
+        public static short ID = 10;
+        public CodigoDeRespostaSiTef(Terminal terminal) : base(ID, 3, terminal) { }
+        public bool Approved()
+        {
+            return "000".Equals(_value);
+        }
+    }
+
+    /// <summary>
+    /// Texto retornado pelo SITEF para exibição no terminal.  
+    /// Este campo será repetido tantas vezes quanto for o número de linhas a serem exibidas
+    /// </summary>
+    public class TextoParaExibicao : Field
+    {
+        public static short ID = 11;
+        public static short LENGTH = 64;
+        public TextoParaExibicao(Terminal terminal)
+            : base(ID, LENGTH, terminal)
+        {
+            while (terminal.ExistemMaisElementos(ID))
+                _value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
+        }
+    }
+
+    /// <summary>
+    /// Código retornado pela Instituição ou pelo SiTef.
+    /// Caso retorne ‘SC’ deve- se solicitar aprovação da transação ao Operador;/Supervisor.  
+    /// Para pagamento de contas: Este campo será repetido tantas vezes quanto for o número de Documentos pagos
+    /// </summary>
+    public class CodigoRespostaInstituicao : Field
+    {
+        public static short ID = 12;
+        public CodigoRespostaInstituicao(Terminal terminal) : base(ID, 12, terminal) { }
+    }
+
+    /// <summary>
+    /// Data da efetivação da transação.  
+    /// Para pagamento de contas: Este campo será repetido tantas vezes quanto for o número de Documentos pagos
+    /// </summary>
+    public class Data : Field
+    {
+        public static short ID = 13;
+        public Data(Terminal terminal) : base(ID, 4, terminal) { }
+    }
+
+    /// <summary>
     /// Data da impressora fiscal (Onde DD=dia, MM=mês e AAAA=ano).
     /// </summary>
     public class DataFiscal : Field
@@ -162,9 +238,9 @@ namespace SiTef.net.Type
 
         public DataFiscal(string data) : base(ID, data, LENGTH, PATTERN) { }
 
-        public DataFiscal(short dia, short mes, short ano) : base(ID, String.Format("{0}{1}{2}",dia,mes,ano), LENGTH, PATTERN) { }
+        public DataFiscal(short dia, short mes, short ano) : base(ID, String.Format("{0}{1}{2}", dia, mes, ano), LENGTH, PATTERN) { }
 
-        public DataFiscal(DateTime data) : base(ID, String.Format("{ddMMyyyy}",data), LENGTH, PATTERN) { }
+        public DataFiscal(DateTime data) : base(ID, String.Format("{ddMMyyyy}", data), LENGTH, PATTERN) { }
     }
 
     /// <summary>
@@ -178,7 +254,7 @@ namespace SiTef.net.Type
 
         public HoraFiscal(string hora) : base(ID, hora, LENGTH, PATTERN) { }
 
-        public HoraFiscal(short horas, short minutos, short segundos) : base(ID, String.Format("{0}{1}{2}",horas,minutos,segundos), LENGTH, PATTERN) { }
+        public HoraFiscal(short horas, short minutos, short segundos) : base(ID, String.Format("{0}{1}{2}", horas, minutos, segundos), LENGTH, PATTERN) { }
     }
 
     /// <summary>
@@ -211,10 +287,10 @@ namespace SiTef.net.Type
     /// ‘2’: Transação Digitada
     /// ‘6’: EGift (Utilizado pela rede Hug nas transações de consulta de saldo, venda e cancelamento de venda com cartões GIFT)
     /// </summary>
-    public class TipoOperacaoDeVenda : Field 
+    public class TipoOperacaoDeVenda : Field
     {
         public static short ID = 379;
-        public TipoOperacaoDeVenda(Terminal terminal) : base(ID, terminal) { }
+        public TipoOperacaoDeVenda(Terminal terminal) : base(ID, 1, terminal) { }
     }
 
     /// <summary>

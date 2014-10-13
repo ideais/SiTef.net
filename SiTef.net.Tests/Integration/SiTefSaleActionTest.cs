@@ -32,6 +32,10 @@ namespace SiTef.net.Tests.Integration
                 new Valor("10000")
                 );
             SiTefSaleResponse response = action.Execute(request);
+
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
+
         }
     }
 }

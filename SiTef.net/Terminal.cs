@@ -30,8 +30,6 @@ namespace SiTef.net
 
         public void GravaCampo(Field campo)
         {
-            if (transaction == 0) IniciaTransacao();
-
             IntPtr id = (IntPtr)campo.Id;
 
             int result = SiTef.GravaCampo(tef,id, campo.Value);
@@ -47,9 +45,9 @@ namespace SiTef.net
                 throw new TerminalException(DescricaoErro(result));
         }
 
-        public String LeCampo(int id)
+        public String LeCampo(int id, short length)
         {
-            StringBuilder valor = new StringBuilder();
+            StringBuilder valor = new StringBuilder(length);
             int result = SiTef.LeCampo(tef, (IntPtr)id, valor);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
