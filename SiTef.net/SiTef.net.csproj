@@ -48,8 +48,8 @@
     <Compile Include="Action\Model\VendaSiTefRequest.cs" />
     <Compile Include="Action\Model\VendaSiTefResponse.cs" />
     <Compile Include="Action\PreAutorizacaoAction.cs" />
-    <Compile Include="Action\Model\PreAuthorizacaoRequest.cs" />
-    <Compile Include="Action\Model\PreAuthorizacaoResponse.cs" />
+    <Compile Include="Action\Model\PreAutorizacaoRequest.cs" />
+    <Compile Include="Action\Model\PreAutorizacaoResponse.cs" />
     <Compile Include="Action\ConsultaCartaoAction.cs" />
     <Compile Include="Action\Model\ConsultaCartaoRequest.cs" />
     <Compile Include="Action\Model\ConsultaCartaoResponse.cs" />
