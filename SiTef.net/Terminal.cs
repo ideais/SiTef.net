@@ -10,14 +10,14 @@ namespace SiTef.net
 {
     public class Terminal
     {
-        private UIntPtr tef;
+        private IntPtr tef;
 
         private int transaction;
 
         public Terminal(string servidor, string terminal, string empresa)
         {
             tef = SiTef.IniciaTerminal(servidor, terminal, empresa);
-            if (UIntPtr.Zero == tef)
+            if (IntPtr.Zero == tef)
                 throw new TerminalException("unable to initialize terminal");
         }
 
@@ -32,7 +32,9 @@ namespace SiTef.net
         {
             if (transaction == 0) IniciaTransacao();
 
-            int result = SiTef.GravaCampo(tef, campo.Id, campo.Value);
+            IntPtr id = (IntPtr)campo.Id;
+
+            int result = SiTef.GravaCampo(tef,id, campo.Value);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
 
@@ -40,7 +42,7 @@ namespace SiTef.net
 
         public void Executa(int acao)
         {
-            int result = SiTef.Executa(tef, acao);
+            int result = SiTef.Executa(tef, (IntPtr)acao);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
         }
@@ -48,7 +50,7 @@ namespace SiTef.net
         public String LeCampo(int id)
         {
             StringBuilder valor = new StringBuilder();
-            int result = SiTef.LeCampo(tef, id, valor);
+            int result = SiTef.LeCampo(tef, (IntPtr)id, valor);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
             return valor.ToString();
@@ -62,8 +64,8 @@ namespace SiTef.net
 
         public string DescricaoErro(int erro)
         {
-            StringBuilder descricao = new StringBuilder(128);
-            SiTef.DescricaoErro(tef, erro, descricao);
+            StringBuilder descricao = new StringBuilder(127);
+            SiTef.DescricaoErro(tef, (IntPtr)erro, descricao);
             return descricao.ToString();
         }
 

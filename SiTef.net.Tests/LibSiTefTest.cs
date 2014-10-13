@@ -7,7 +7,7 @@ namespace SiTef.net.Tests
     public class LibSiTefTest
     {
 
-        protected static UIntPtr tef;
+        protected static IntPtr tef;
         
         [ClassInitialize]
         static public void Init(TestContext context)
@@ -18,7 +18,7 @@ namespace SiTef.net.Tests
         [TestMethod]
         public void IniciaTerminalTest()
         {
-            Assert.IsTrue(UIntPtr.Zero != tef);
+            Assert.IsTrue(IntPtr.Zero != tef);
         }
 
         [TestMethod]
@@ -33,7 +33,7 @@ namespace SiTef.net.Tests
         {
             int trn = SiTef.IniciaTransacao(tef);
             Assert.IsTrue(trn >= 0);
-            int status = SiTef.GravaCampo(tef, 1, "   1");
+            int status = SiTef.GravaCampo(tef, (IntPtr)1, "   1");
             Assert.IsTrue(status >= 0);
         }
     }

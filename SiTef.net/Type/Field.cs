@@ -205,6 +205,18 @@ namespace SiTef.net.Type
         public Supervisor(string supervisor) : base(151, supervisor, 20, null) { }
     }
 
+
+    /// <summary>
+    /// ‘1’: Transação com Tarja Magnética
+    /// ‘2’: Transação Digitada
+    /// ‘6’: EGift (Utilizado pela rede Hug nas transações de consulta de saldo, venda e cancelamento de venda com cartões GIFT)
+    /// </summary>
+    public class TipoOperacaoDeVenda : Field 
+    {
+        public static short ID = 379;
+        public TipoOperacaoDeVenda(Terminal terminal) : base(ID, terminal) { }
+    }
+
     /// <summary>
     /// Indica o tipo de transação que será realizada (Utilizada na Consulta Cartão): 
     /// 1 – Consulta Saldo Cartão Gift 

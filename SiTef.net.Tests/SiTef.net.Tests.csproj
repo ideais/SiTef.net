@@ -52,6 +52,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Integration\QueryCardTest.cs" />
     <Compile Include="Integration\SiTefSaleActionTest.cs" />
     <Compile Include="LibSiTefTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

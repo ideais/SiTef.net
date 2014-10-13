@@ -17,15 +17,16 @@ namespace SiTef.net.Tests.Integration
         {
             term = new Terminal("10.166.58.10", "00000001", "00000000");
         }
+
         [TestMethod]
-        public void ExecuteTest()
+        public void ExecuteSaleActionTest()
         {
             term.IniciaTransacao();
             SiTefSaleAction action = new SiTefSaleAction(term);
             SiTefSaleRequest request = new SiTefSaleRequest(
-                new NumeroDeParcelas("3"),
+                new NumeroDeParcelas("1"),
                 new TipoDeFinanciamento("2"),
-                new NumeroDoCartao("4485366476274643"),
+                new NumeroDoCartao("4000000000000044"),
                 new DataDeVencimento("1215"),
                 new CodigoDeSeguranca("123"),
                 new Valor("10000")

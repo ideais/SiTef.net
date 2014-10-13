@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Action
 {
-    public abstract class BaseAction<M,N> : IAction<M,N> where M : IActionModel where N : IActionModel
+    public abstract class AbstractAction<M,N> : IAction<M,N> where M : IActionModel where N : IActionModel
     {
         protected Terminal _terminal;
 
         private short _action;
 
-        public BaseAction(short action, Terminal terminal)
+        public AbstractAction(short action, Terminal terminal)
         {
             _action = action;
             _terminal = terminal;
