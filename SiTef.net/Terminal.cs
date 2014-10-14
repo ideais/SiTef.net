@@ -22,6 +22,7 @@ namespace SiTef.net
             term = SiTef.IniciaTerminal(servidor, terminal, empresa);
             if (IntPtr.Zero == term)
                 throw new TerminalException("unable to initialize terminal");
+            IniciaTransacao();
         }
         
         public void IniciaTransacao()
