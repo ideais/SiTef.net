@@ -7,7 +7,7 @@ using SiTef.net.Type;
 namespace SiTef.net.Tests.Integration
 {
     [TestClass]
-    public class SiTefSaleActionTest
+    public class VendaSiTefTest
     {
 
         static Terminal term;
@@ -19,7 +19,7 @@ namespace SiTef.net.Tests.Integration
         }
 
         [TestMethod]
-        public void ExecuteSaleActionTest()
+        public void ExecuteVendaSiTefTest()
         {
             term.IniciaTransacao();
             VendaSiTefAction action = new VendaSiTefAction(term);
@@ -35,7 +35,8 @@ namespace SiTef.net.Tests.Integration
 
             foreach (var field in response.GetFields())
                 System.Console.WriteLine(field);
-
+            
+            term.FinalizaTerminal();
         }
     }
 }

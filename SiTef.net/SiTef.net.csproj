@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SiTef.net</RootNamespace>
     <AssemblyName>SiTef.net</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +43,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AbstractAction.cs" />
+    <Compile Include="Action\CapturaAction.cs" />
+    <Compile Include="Action\Model\CapturaRequest.cs" />
+    <Compile Include="Action\Model\CapturaResponse.cs" />
     <Compile Include="Action\IAction.cs" />
     <Compile Include="Action\Model\AbstractActionModel.cs" />
     <Compile Include="Action\Model\IActionModel.cs" />

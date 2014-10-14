@@ -7,8 +7,9 @@ using SiTef.net.Type;
 namespace SiTef.net.Tests.Integration
 {
     [TestClass]
-    public class QueryCardTest
+    public class PreAutorizacaoTest
     {
+
         static Terminal term;
 
         [ClassInitialize]
@@ -18,22 +19,24 @@ namespace SiTef.net.Tests.Integration
         }
 
         [TestMethod]
-        public void ExecuteQueryActionTest()
+        public void ExecutePreAutorizacao()
         {
             term.IniciaTransacao();
-            ConsultaCartaoAction action = new ConsultaCartaoAction(term);
-
-            ConsultaCartaoResponse response = action.Execute(
-                new ConsultaCartaoRequest(
-                    //Rede.CIELO,
-                    //new DataFiscal("13102014"),
-                    //new HoraFiscal("101010"),
-                    new NumeroDoCartao("4000000000000044"),
-                    new DataDeVencimento("1215")
-                )
-            );
+            var action = new PreAutorizacaoAction(term);
+            var response = action.Execute( new PreAutorizacaoRequest( 
+                null,
+                new DataFiscal(new DateTime()),
+                null,
+                new NumeroDoCartao("4929208425739710"),
+                new DataDeVencimento("1215"),
+                new Valor("10000"),
+                null,
+                new CodigoDeSeguranca("123")
+            ));
             foreach (var field in response.GetFields())
                 System.Console.WriteLine(field);
+
+            term.FinalizaTerminal();
         }
     }
 }

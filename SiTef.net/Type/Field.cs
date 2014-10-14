@@ -14,7 +14,7 @@ namespace SiTef.net.Type
         {
             get { return _value; }
         }
-        
+
         public Field(short id, int length, Terminal terminal)
         {
             try
@@ -58,10 +58,36 @@ namespace SiTef.net.Type
 
         public override string ToString()
         {
-            if(_value != null)
+            if (_value != null)
                 return _value;
             return "null";
         }
+    }
+
+    public class DateField : Field
+    {
+
+        protected const string PATTERN = @"^[0-3]\d[0-1]\d\d{4,4}$";
+        protected static short LENGTH = 8;
+        private static string FORMAT = "ddMMyyyy";
+        private short ID;
+        private Terminal terminal;
+
+        public DateField(short id, DateTime data) : base(id, data.ToString(FORMAT), LENGTH, PATTERN) { }
+
+        public DateField(short id, String data) : base(id, data, LENGTH, PATTERN) { }
+
+        public DateField(short id, Terminal terminal) : base(id, LENGTH, terminal) { }
+
+
+        public DateTime? ToDateTime()
+        {
+            if (_value != null)
+                return DateTime.ParseExact(_value, FORMAT, null);
+            return null;
+        }
+
+
     }
 
     /// <summary>
@@ -228,19 +254,103 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Hora da efetivação da transação.
+    /// Para pagamento de contas: 
+    /// Este campo será repetido tantas vezes quanto for o número de Documentos pagos.
+    /// </summary>
+    public class Hora : Field
+    {
+        public static short ID = 14;
+        public static short LENGTH = 6;
+        const string PATTERN = @"^[0-2]\d[0-5]\d[0-5]\d$";
+        public Hora(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public Hora(string hora) : base(ID, hora, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// Número único que identifica a transação, é retornado pela instituição.  
+    /// Para pagamento de contas: Este campo será repetido tantas vezes quanto for o número de Documentos pagos.
+    /// </summary>
+    public class NSUHost : Field
+    {
+        public static short ID = 15;
+        public static short LENGTH = 12;
+        const string PATTERN = @"^\d*$";
+        public NSUHost(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NSUHost(string numero) : base(ID, numero, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// Código do estabelecimento do lojista perante a Instituição
+    /// </summary>
+    public class CodigoDoEstabelecimento : Field
+    {
+        public static short ID = 16;
+        public static short LENGTH = 15;
+        const string PATTERN = @"^\d*$";
+        public CodigoDoEstabelecimento(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public CodigoDoEstabelecimento(string codigo) : base(ID, codigo, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// Número da autorização da transação de compra com cartão de crédito. 
+    /// </summary>
+    public class NumeroAutorizacao : Field
+    {
+        public static short ID = 17;
+        public static short LENGTH = 6;
+        public NumeroAutorizacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NumeroAutorizacao(String numero) : base(ID, numero, LENGTH, null) { }
+    }
+
+    /// <summary>
+    /// Descrição da Instituição que processou a transação
+    /// </summary>
+    public class NomeDaInstituicao : Field
+    {
+        public static short ID = 21;
+        public static short LENGTH = 16;
+        public NomeDaInstituicao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Número seqüencial único gerado pelo SiTef, para identificar uma transação.  
+    /// Para pagamento de contas:
+    /// Este campo será repetido tantas vezes quanto for o número de Documentos pagos. 
+    /// </summary>
+    public class NSUSiTef : Field
+    {
+        public static short ID = 22;
+        public static short LENGTH = 6;
+        const string PATTERN = @"^\d*$";
+        public NSUSiTef(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NSUSiTef(string nsu) : base(ID, nsu, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// Linha que compõe o cupom da transação. Se repete até completar o cupom. 
+    /// </summary>
+    public class LinhasDeCupom : Field
+    {
+        public static short ID = 76;
+        public static short LENGTH = 80;
+        public LinhasDeCupom(Terminal terminal)
+            : base(ID, LENGTH, terminal)
+        {
+            while (terminal.ExistemMaisElementos(ID))
+                _value += String.Format("\n{}", terminal.LeCampo(ID, LENGTH));
+        }
+    }
+
+    /// <summary>
     /// Data da impressora fiscal (Onde DD=dia, MM=mês e AAAA=ano).
     /// </summary>
-    public class DataFiscal : Field
+    public class DataFiscal : DateField
     {
-        const string PATTERN = @"^[0-3]\d[0-1]\d\d{4}$";
         const short ID = 147;
-        const short LENGTH = 8;
-
-        public DataFiscal(string data) : base(ID, data, LENGTH, PATTERN) { }
-
-        public DataFiscal(short dia, short mes, short ano) : base(ID, String.Format("{0}{1}{2}", dia, mes, ano), LENGTH, PATTERN) { }
-
-        public DataFiscal(DateTime data) : base(ID, String.Format("{ddMMyyyy}", data), LENGTH, PATTERN) { }
+        public DataFiscal(string data) : base(ID, data) { }
+        public DataFiscal(DateTime data) : base(ID, data) { }
+        public DataFiscal(Terminal terminal) : base(ID, terminal) { }
     }
 
     /// <summary>
@@ -295,6 +405,30 @@ namespace SiTef.net.Type
         public ValorTaxaDeServico(float value) : base(ID, (value * 100).ToString(), LENGTH, PATTERN) { }
         public ValorTaxaDeServico(string value) : base(ID, value, LENGTH, PATTERN) { }
 
+    }
+
+    /// <summary>
+    /// Data de expiração da pré- autorização, onde DD=Dia, MM=Mês, AAAA=Ano. (Usado pela Redecard) 
+    /// </summary>
+    public class DataExpiracao : DateField
+    {
+        public static short ID = 216;
+
+        public DataExpiracao(Terminal terminal) : base(ID, terminal) { }
+        public DataExpiracao(String data) : base(ID, data) { }
+        public DataExpiracao(DateTime data) : base(ID, data) { }
+    }
+
+    /// <summary>
+    /// Data em que a transação foi efetuada, onde DD=Dia, MM=Mês, AAAA=Ano. 
+    /// </summary>
+    public class DataDaTransacao : DateField
+    {
+        public static short ID = 217;
+
+        public DataDaTransacao(Terminal terminal) : base(ID, terminal) { }
+        public DataDaTransacao(String data) : base(ID, data) { }
+        public DataDaTransacao(DateTime data) : base(ID, data) { }
     }
 
     /// <summary>

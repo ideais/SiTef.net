@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace SiTef.net.Action
 {
     /// <summary>
-    /// Reserves a given value on the Client card, that can be later captured and charged.
+    /// Executa uma transação de pré-autorização.
+    /// Quando reservamos um valor no cartão do cliente, a fim de efetuar a cobrança posteriormente
+    /// numa operação de captura.
     /// </summary>
     public class PreAutorizacaoAction : AbstractAction<Model.PreAutorizacaoRequest, Model.PreAutorizacaoResponse>
     {

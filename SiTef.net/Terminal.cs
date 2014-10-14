@@ -11,22 +11,22 @@ namespace SiTef.net
     /// <summary>
     /// Wrapper para operações utilizando a LibSitef
     /// </summary>
-    public class Terminal
+    public class Terminal : IDisposable
     {
-        private IntPtr tef;
+        private IntPtr term;
 
         private int transaction;
 
         public Terminal(string servidor, string terminal, string empresa)
         {
-            tef = SiTef.IniciaTerminal(servidor, terminal, empresa);
-            if (IntPtr.Zero == tef)
+            term = SiTef.IniciaTerminal(servidor, terminal, empresa);
+            if (IntPtr.Zero == term)
                 throw new TerminalException("unable to initialize terminal");
         }
-
+        
         public void IniciaTransacao()
         {
-            transaction = SiTef.IniciaTransacao(tef);
+            transaction = SiTef.IniciaTransacao(term);
             if (transaction < 0)
                 throw new TerminalException(DescricaoErro(transaction));
         }
@@ -34,8 +34,7 @@ namespace SiTef.net
         public void GravaCampo(Field campo)
         {
             IntPtr id = (IntPtr)campo.Id;
-
-            int result = SiTef.GravaCampo(tef,id, campo.Value);
+            int result = SiTef.GravaCampo(term, id, campo.Value);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
 
@@ -43,7 +42,7 @@ namespace SiTef.net
 
         public void Executa(int acao)
         {
-            int result = SiTef.Executa(tef, (IntPtr)acao);
+            int result = SiTef.Executa(term, (IntPtr)acao);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
         }
@@ -51,7 +50,7 @@ namespace SiTef.net
         public String LeCampo(int id, int length)
         {
             StringBuilder valor = new StringBuilder(length);
-            int result = SiTef.LeCampo(tef, (IntPtr)id, valor);
+            int result = SiTef.LeCampo(term, (IntPtr)id, valor);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
             return valor.ToString();
@@ -59,21 +58,26 @@ namespace SiTef.net
 
         public bool ExistemMaisElementos(int campo)
         {
-            return SiTef.ExistemMaisElementos(tef, campo) == 1;
+            return SiTef.ExistemMaisElementos(term, campo) == 1;
         }
 
 
         public string DescricaoErro(int erro)
         {
             StringBuilder descricao = new StringBuilder(127);
-            SiTef.DescricaoErro(tef, (IntPtr)erro, descricao);
+            SiTef.DescricaoErro(term, (IntPtr)erro, descricao);
             return descricao.ToString();
         }
 
         public void FinalizaTerminal()
         {
-            SiTef.FinalizaTerminal(tef);
+            SiTef.FinalizaTerminal(term);
         }
 
+
+        public void Dispose()
+        {
+            SiTef.FinalizaTerminal(term);
+        }
     }
 }
