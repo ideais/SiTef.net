@@ -391,8 +391,30 @@ namespace SiTef.net.Type
             : base(ID, LENGTH, terminal)
         {
             while (terminal.ExistemMaisElementos(ID))
-                _value += String.Format("\n{}", terminal.LeCampo(ID, LENGTH));
+                _value += String.Format(@"\n{0}", terminal.LeCampo(ID, LENGTH));
         }
+    }
+
+    /// <summary>
+    /// ‘0’: Venda
+    /// ‘1’: Pagamento de contas
+    /// Para estorno de pré-autorização:
+    /// ‘2’: Indica estorno de pré-autorização
+    /// ‘4’: Indica estorno de captura de pré-autorização
+    /// </summary>
+    public class TipoTransacao : NumericField
+    {
+        public static short ID = 83;
+        public static short LENGTH = 1;
+        public TipoTransacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        private TipoTransacao(string tipo) : base(ID, tipo, LENGTH) { }
+
+        public static TipoTransacao VENDA = new TipoTransacao("0");
+        public static TipoTransacao PAGAMENTO_DE_CONTAS = new TipoTransacao("1");
+
+        public static TipoTransacao ESTORNO_PRE_AUTORIZACAO = new TipoTransacao("2");
+        public static TipoTransacao ESTORNO_CAPTURA = new TipoTransacao("4");
+
     }
 
     /// <summary>
@@ -505,17 +527,17 @@ namespace SiTef.net.Type
     /// 6 – Cancelamento Generico Ciagroup Gift 
     /// 7 – Inutilização de Cartão Gift 
     /// </summary>
-    public class TipoDeTransacao : Field
+    public class TipoDeTransacaoConsultaCartao : Field
     {
-        public TipoDeTransacao(string tipo) : base(560, tipo, 4, @"^\s*\d*$") { }
+        public TipoDeTransacaoConsultaCartao(string tipo) : base(560, tipo, 4, @"^\s*\d*$") { }
 
-        public static TipoDeTransacao CONSULTA_SALDO_CARTAO_GIFT = new TipoDeTransacao("   1");
-        public static TipoDeTransacao RECARGA_CARTAO_GIFT = new TipoDeTransacao("   2");
-        public static TipoDeTransacao VENDA_CARTAO_GIFT = new TipoDeTransacao("   3");
-        public static TipoDeTransacao CANCELAMENTO_VENDA_CARTAO_GIFT = new TipoDeTransacao("   4");
-        public static TipoDeTransacao CANCELAMENTO_RECARGA_CARTAO_GIFT = new TipoDeTransacao("   5");
-        public static TipoDeTransacao CANCELAMENTO_GENERICO_CIAGROUP_GIFT = new TipoDeTransacao("   6");
-        public static TipoDeTransacao INUTILIZACAO_CARTAO_GIFT = new TipoDeTransacao("   7");
+        public static TipoDeTransacaoConsultaCartao CONSULTA_SALDO_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("1");
+        public static TipoDeTransacaoConsultaCartao RECARGA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("2");
+        public static TipoDeTransacaoConsultaCartao VENDA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("3");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_VENDA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("4");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_RECARGA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("5");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_GENERICO_CIAGROUP_GIFT = new TipoDeTransacaoConsultaCartao("6");
+        public static TipoDeTransacaoConsultaCartao INUTILIZACAO_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("7");
 
     }
 

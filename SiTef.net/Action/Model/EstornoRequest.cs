@@ -9,7 +9,6 @@ namespace SiTef.net.Action.Model
     public class EstornoRequest : AbstractActionModel
     {
         public EstornoRequest(
-            TipoDeTransacao transacao,
             NumeroDoCartao cartao,
             DataDeVencimento vencimento,
             Valor valor,
@@ -17,7 +16,7 @@ namespace SiTef.net.Action.Model
             NumeroAutorizacao autorizacao,
             NSUHost nsuHost,
             CodigoDeSeguranca codigoSeguranca
-                )
-            : base(transacao, cartao, vencimento, valor, data, autorizacao, nsuHost, codigoSeguranca) { }
+        )
+            : base(TipoTransacao.ESTORNO_PRE_AUTORIZACAO, cartao, vencimento, valor, data, autorizacao, nsuHost, codigoSeguranca) { }
     }
 }

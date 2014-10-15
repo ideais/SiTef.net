@@ -47,7 +47,6 @@ namespace SiTef.net.Tests.Integration
                 var estorno = new EstornoPreAutorizacaoAction(term);
                 var response = estorno.Execute(
                     new EstornoRequest(
-                        TipoDeTransacao.CANCELAMENTO_GENERICO_CIAGROUP_GIFT,
                         cartao,
                         vencimento,
                         valor,
