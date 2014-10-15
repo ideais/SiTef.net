@@ -17,6 +17,7 @@ namespace SiTef.net.Type
 
         public Field(short id, int length, Terminal terminal)
         {
+            _id = id;
             try
             {
                 _value = terminal.LeCampo(id, length);
@@ -59,11 +60,27 @@ namespace SiTef.net.Type
         public override string ToString()
         {
             if (_value != null)
-                return _value;
+                return String.Format("ID({0}) - {1}", _id,  _value);
             return "null";
         }
     }
 
+    /// <summary>
+    /// Implementação base para todos os campos numéricos
+    /// </summary>
+    public class NumericField : Field
+    {
+        protected const string PATTERN = @"^\d*$";
+
+        public NumericField(short id, short length, Terminal terminal) : base(id, length, terminal) { }
+        public NumericField(short id, int value, short length) : base(id, value.ToString(), length, PATTERN) { }
+        public NumericField(short id, string value, short length) : base(id, value, length, PATTERN) { }
+
+    }
+
+    /// <summary>
+    /// Implementação base para todos os campos de data
+    /// </summary>
     public class DateField : Field
     {
 
@@ -86,8 +103,6 @@ namespace SiTef.net.Type
                 return DateTime.ParseExact(_value, FORMAT, null);
             return null;
         }
-
-
     }
 
     /// <summary>
@@ -96,7 +111,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class Rede : Field
     {
-        public static short LENGTH = 4;
+        public static short LENGTH = 3;
         public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(string codigo) : base(1, codigo, LENGTH, @"^\s*\d*$") { }
 
@@ -325,6 +340,44 @@ namespace SiTef.net.Type
         const string PATTERN = @"^\d*$";
         public NSUSiTef(Terminal terminal) : base(ID, LENGTH, terminal) { }
         public NSUSiTef(string nsu) : base(ID, nsu, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// Indica a Bandeira do Cartão.
+    /// </summary>
+    public class BandeiraDoCartao : NumericField
+    {
+        public static short ID = 23;
+        public static short LENGTH = 5;
+        public BandeiraDoCartao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public BandeiraDoCartao(int value) : base(ID, value, LENGTH) { }
+        public BandeiraDoCartao(string value) : base(ID, value, LENGTH) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não deve coletar taxa de serviço
+    /// ‘1’: Coletar taxa de serviço se necessário
+    /// </summary>
+    public class TaxaServico : Field
+    {
+        public static short ID = 27;
+        public static short LENGTH = 1;
+        const string PATTERN = @"^[0-1]$";
+        public TaxaServico(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public TaxaServico(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não deve coletar código de segurança do cartão
+    /// ‘1’: Coletar código de segurança do cartão
+    /// </summary>
+    public class CapturaCodigoSeguranca : Field
+    {
+        public static short ID = 33;
+        public static short LENGTH = 1;
+        const string PATTERN = @"^[0-1]$";
+        public CapturaCodigoSeguranca(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
     }
 
     /// <summary>
