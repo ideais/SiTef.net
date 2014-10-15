@@ -15,7 +15,7 @@ namespace SiTef.net.Tests.Integration
         [ClassInitialize]
         static public void Init(TestContext context)
         {
-            term = new Terminal("10.166.58.10", "00000001", "00000000");
+            term = new Terminal("127.0.0.1", "00000001", "00000000");
         }
 
         [TestMethod]
