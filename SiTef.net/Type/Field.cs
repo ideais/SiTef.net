@@ -100,22 +100,22 @@ namespace SiTef.net.Type
         public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(string codigo) : base(1, codigo, LENGTH, @"^\s*\d*$") { }
 
-        public static Rede TECHAN = new Rede("   1");
-        public static Rede REDE = new Rede("   5");
-        public static Rede AMEX = new Rede("   6");
-        public static Rede DINNERS = new Rede("   5");
-        public static Rede SERASA = new Rede("   9");
-        public static Rede BANRISUL = new Rede("  21");
-        public static Rede EDENRED = new Rede("  41");
-        public static Rede HIPER = new Rede("  51");
-        public static Rede CETELEN = new Rede("  55");
-        public static Rede GWCEL = new Rede(" 106");
-        public static Rede CIELO = new Rede(" 125");
-        public static Rede CSU = new Rede(" 170");
-        public static Rede TSYS = new Rede(" 190");
-        public static Rede HUG = new Rede(" 218");
-        public static Rede CIAGROUP = new Rede(" 234");
-        public static Rede CORRESPONDENTE_BANCARIO_BRADESCO = new Rede(" 805");
+        public static Rede TECHAN = new Rede("1");
+        public static Rede REDE = new Rede("5");
+        public static Rede AMEX = new Rede("6");
+        public static Rede DINNERS = new Rede("5");
+        public static Rede SERASA = new Rede("9");
+        public static Rede BANRISUL = new Rede("21");
+        public static Rede EDENRED = new Rede("41");
+        public static Rede HIPER = new Rede("51");
+        public static Rede CETELEN = new Rede("55");
+        public static Rede GWCEL = new Rede("106");
+        public static Rede CIELO = new Rede("125");
+        public static Rede CSU = new Rede("170");
+        public static Rede TSYS = new Rede("190");
+        public static Rede HUG = new Rede("218");
+        public static Rede CIAGROUP = new Rede("234");
+        public static Rede CORRESPONDENTE_BANCARIO_BRADESCO = new Rede("805");
     }
 
     /// <summary>
