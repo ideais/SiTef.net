@@ -18,7 +18,7 @@ namespace SiTef.net.Action
 
         protected override Model.PreAutorizacaoResponse ReadOutput()
         {
-            throw new NotImplementedException();
+            return new Model.PreAutorizacaoResponse(_terminal);
         }
     }
 }
