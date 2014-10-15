@@ -54,7 +54,8 @@ namespace SiTef.net
             int result = SiTef.LeCampo(term, (IntPtr)id, valor);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
-            return valor.ToString();
+            if (valor.Length < length) length = valor.Length;
+            return valor.ToString().Substring(0,length);
         }
 
         public bool ExistemMaisElementos(int campo)

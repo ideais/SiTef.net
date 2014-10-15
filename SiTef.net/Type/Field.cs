@@ -60,7 +60,7 @@ namespace SiTef.net.Type
         public override string ToString()
         {
             if (_value != null)
-                return String.Format("ID({0}) - {1}", _id,  _value);
+                return String.Format("{2}({0})\n{1}", _id,  _value, this.GetType().Name );
             return "null";
         }
     }
@@ -111,10 +111,10 @@ namespace SiTef.net.Type
     /// </summary>
     public class Rede : Field
     {
-        public static short LENGTH = 3;
+        public static short LENGTH = 4;
         public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(string codigo) : base(1, codigo, LENGTH, @"^\s*\d*$") { }
-
+        
         public static Rede TECHAN = new Rede("1");
         public static Rede REDE = new Rede("5");
         public static Rede AMEX = new Rede("6");
@@ -172,7 +172,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class NumeroDoCartao : Field
     {
-        public NumeroDoCartao(string numero) : base(4, numero, 30, @"^\w{16,30}$") { }
+        public NumeroDoCartao(string numero) : base(4, numero, 30, @"^\d{0,30}$") { }
     }
 
     /// <summary>
@@ -391,7 +391,7 @@ namespace SiTef.net.Type
             : base(ID, LENGTH, terminal)
         {
             while (terminal.ExistemMaisElementos(ID))
-                _value += String.Format(@"\n{0}", terminal.LeCampo(ID, LENGTH));
+                _value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
         }
     }
 

@@ -29,11 +29,12 @@ namespace SiTef.net.Tests.Integration
                     null,
                     new DataFiscal(new DateTime()),
                     null,
-                    new NumeroDoCartao("4929208425739710"),
+                              // MASTER 5486906003474434
+                    new NumeroDoCartao("4485022036287910"),
                     new DataDeVencimento("1215"),
                     new Valor("10000"),
                     null,
-                    new CodigoDeSeguranca("123")
+                    new CodigoDeSeguranca("1234")
                 ));
             }
 
