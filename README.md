@@ -52,6 +52,14 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
+Versão **0.0.0.4**
+
+* Correções nas ações
+ * ConsultaCartao
+ * PreCaptura
+ * Captura
+ * Estorno
+
 Versão **0.0.0.3**
 
 * Terminal implementando IDisposable, para ser finalizado automaticamente
