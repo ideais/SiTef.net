@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Exceptions
 {
-    class TerminalException: Exception
+    public class TerminalException: Exception
     {
         public TerminalException() : base() { }
         public TerminalException(string message) : base(message) { }
