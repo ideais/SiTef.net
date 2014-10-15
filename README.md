@@ -52,6 +52,12 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
+Versão **0.0.0.6**
+
+* Correção - TerminalException estava com a visibilidade errada. 
+
+Versão --0.0.0.5--
+
 Versão **0.0.0.4**
 
 * Correções nas ações
