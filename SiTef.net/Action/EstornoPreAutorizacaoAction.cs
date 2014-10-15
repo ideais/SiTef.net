@@ -16,7 +16,7 @@ namespace SiTef.net.Action
 
         protected override Model.EstornoResponse ReadOutput()
         {
-            throw new NotImplementedException();
+            return new Model.EstornoResponse(_terminal);
         }
     }
 }

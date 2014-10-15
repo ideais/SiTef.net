@@ -27,6 +27,6 @@ namespace SiTef.net.Action.Model
          * RG 161 Opcional 
          */
         public PreAutorizacaoRequest(Rede network, DataFiscal date, HoraFiscal time, NumeroDoCartao cartao, DataDeVencimento expiration, Valor value, ValorTaxaDeServico serviceTax, CodigoDeSeguranca securityCode)
-            : base(network, date, time, expiration, value, serviceTax, securityCode) { }
+            : base(network, date, time, cartao, expiration, value, serviceTax, securityCode) { }
     }
 }

@@ -12,7 +12,7 @@ namespace SiTef.net.Tests
         [ClassInitialize]
         static public void Init(TestContext context)
         {
-            tef = SiTef.IniciaTerminal("10.166.58.10", "AA999999", "00000000");
+            tef = SiTef.IniciaTerminal("127.0.0.1", "AA999999", "00000000");
         }
 
         [TestMethod]

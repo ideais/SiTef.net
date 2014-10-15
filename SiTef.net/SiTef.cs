@@ -29,7 +29,7 @@ namespace SiTef.net
         /// <returns>
         ///     <> 0, ID_TEF, identificador que deve ser utilizado nas demais funções. = 0, falha ao iniciar TEF. 
         /// </returns>
-        [DllImport("LibSiTef.dll", EntryPoint = "MKT_Inicia_Terminal", SetLastError = true, CharSet = CharSet.Ansi)]
+        [DllImport("LibSiTef.dll", EntryPoint = "MKT_Inicia_Terminal", SetLastError = true)]
         public unsafe static extern IntPtr IniciaTerminal(string servidor, string terminal, string empresa);
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SiTef.net
         /// <returns>
         ///    >= 0, sucesso < 0 erro.  
         /// </returns>
-        [DllImport("LibSiTef.dll", EntryPoint = "MKT_Inicia_Transacao", SetLastError = true, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        [DllImport("LibSiTef.dll", EntryPoint = "MKT_Inicia_Transacao", SetLastError = true)]
         public unsafe static extern int IniciaTransacao(IntPtr tef);
 
         /// <summary>

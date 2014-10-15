@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.0.0.3</version>
+    <version>0.0.0.4</version>
     <title>$title$</title>
     <authors>Victor Hogemann</authors>
     <owners>B2W Digital</owners>
@@ -14,9 +14,7 @@
       API for using the SiTef service Library. This is an electronic fund transfer service used in Brazil.
     </description>
     <releaseNotes>
-      * Terminal implementando IDisposable, para ser finalizado automaticamente
-      * TerminalFactory inicializa novos terminais para o uso
-      * Ação de Estorno de Pré-Autorização de Cartão de Crédito
+      Correções nas ações de pré-autorização e captura
     </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
     <tags>sitef commerce payment creditcard</tags>

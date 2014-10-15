@@ -14,7 +14,7 @@ namespace SiTef.net.Tests.Integration
         [ClassInitialize]
         static public void Init(TestContext context)
         {
-            factory = new TerminalFactory("10.166.58.10", "00000000");
+            factory = new TerminalFactory("127.0.0.1", "00000000");
         }
 
         [TestMethod]
@@ -47,7 +47,6 @@ namespace SiTef.net.Tests.Integration
                 var estorno = new EstornoPreAutorizacaoAction(term);
                 var response = estorno.Execute(
                     new EstornoRequest(
-                        TipoDeTransacao.CANCELAMENTO_GENERICO_CIAGROUP_GIFT,
                         cartao,
                         vencimento,
                         valor,

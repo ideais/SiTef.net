@@ -17,6 +17,7 @@ namespace SiTef.net.Type
 
         public Field(short id, int length, Terminal terminal)
         {
+            _id = id;
             try
             {
                 _value = terminal.LeCampo(id, length);
@@ -59,11 +60,27 @@ namespace SiTef.net.Type
         public override string ToString()
         {
             if (_value != null)
-                return _value;
+                return String.Format("ID({0}) - {1}", _id,  _value);
             return "null";
         }
     }
 
+    /// <summary>
+    /// Implementação base para todos os campos numéricos
+    /// </summary>
+    public class NumericField : Field
+    {
+        protected const string PATTERN = @"^\d*$";
+
+        public NumericField(short id, short length, Terminal terminal) : base(id, length, terminal) { }
+        public NumericField(short id, int value, short length) : base(id, value.ToString(), length, PATTERN) { }
+        public NumericField(short id, string value, short length) : base(id, value, length, PATTERN) { }
+
+    }
+
+    /// <summary>
+    /// Implementação base para todos os campos de data
+    /// </summary>
     public class DateField : Field
     {
 
@@ -86,8 +103,6 @@ namespace SiTef.net.Type
                 return DateTime.ParseExact(_value, FORMAT, null);
             return null;
         }
-
-
     }
 
     /// <summary>
@@ -96,7 +111,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class Rede : Field
     {
-        public static short LENGTH = 4;
+        public static short LENGTH = 3;
         public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(string codigo) : base(1, codigo, LENGTH, @"^\s*\d*$") { }
 
@@ -328,6 +343,44 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Indica a Bandeira do Cartão.
+    /// </summary>
+    public class BandeiraDoCartao : NumericField
+    {
+        public static short ID = 23;
+        public static short LENGTH = 5;
+        public BandeiraDoCartao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public BandeiraDoCartao(int value) : base(ID, value, LENGTH) { }
+        public BandeiraDoCartao(string value) : base(ID, value, LENGTH) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não deve coletar taxa de serviço
+    /// ‘1’: Coletar taxa de serviço se necessário
+    /// </summary>
+    public class TaxaServico : Field
+    {
+        public static short ID = 27;
+        public static short LENGTH = 1;
+        const string PATTERN = @"^[0-1]$";
+        public TaxaServico(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public TaxaServico(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não deve coletar código de segurança do cartão
+    /// ‘1’: Coletar código de segurança do cartão
+    /// </summary>
+    public class CapturaCodigoSeguranca : Field
+    {
+        public static short ID = 33;
+        public static short LENGTH = 1;
+        const string PATTERN = @"^[0-1]$";
+        public CapturaCodigoSeguranca(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
     /// Linha que compõe o cupom da transação. Se repete até completar o cupom. 
     /// </summary>
     public class LinhasDeCupom : Field
@@ -338,8 +391,30 @@ namespace SiTef.net.Type
             : base(ID, LENGTH, terminal)
         {
             while (terminal.ExistemMaisElementos(ID))
-                _value += String.Format("\n{}", terminal.LeCampo(ID, LENGTH));
+                _value += String.Format(@"\n{0}", terminal.LeCampo(ID, LENGTH));
         }
+    }
+
+    /// <summary>
+    /// ‘0’: Venda
+    /// ‘1’: Pagamento de contas
+    /// Para estorno de pré-autorização:
+    /// ‘2’: Indica estorno de pré-autorização
+    /// ‘4’: Indica estorno de captura de pré-autorização
+    /// </summary>
+    public class TipoTransacao : NumericField
+    {
+        public static short ID = 83;
+        public static short LENGTH = 1;
+        public TipoTransacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        private TipoTransacao(string tipo) : base(ID, tipo, LENGTH) { }
+
+        public static TipoTransacao VENDA = new TipoTransacao("0");
+        public static TipoTransacao PAGAMENTO_DE_CONTAS = new TipoTransacao("1");
+
+        public static TipoTransacao ESTORNO_PRE_AUTORIZACAO = new TipoTransacao("2");
+        public static TipoTransacao ESTORNO_CAPTURA = new TipoTransacao("4");
+
     }
 
     /// <summary>
@@ -452,17 +527,17 @@ namespace SiTef.net.Type
     /// 6 – Cancelamento Generico Ciagroup Gift 
     /// 7 – Inutilização de Cartão Gift 
     /// </summary>
-    public class TipoDeTransacao : Field
+    public class TipoDeTransacaoConsultaCartao : Field
     {
-        public TipoDeTransacao(string tipo) : base(560, tipo, 4, @"^\s*\d*$") { }
+        public TipoDeTransacaoConsultaCartao(string tipo) : base(560, tipo, 4, @"^\s*\d*$") { }
 
-        public static TipoDeTransacao CONSULTA_SALDO_CARTAO_GIFT = new TipoDeTransacao("   1");
-        public static TipoDeTransacao RECARGA_CARTAO_GIFT = new TipoDeTransacao("   2");
-        public static TipoDeTransacao VENDA_CARTAO_GIFT = new TipoDeTransacao("   3");
-        public static TipoDeTransacao CANCELAMENTO_VENDA_CARTAO_GIFT = new TipoDeTransacao("   4");
-        public static TipoDeTransacao CANCELAMENTO_RECARGA_CARTAO_GIFT = new TipoDeTransacao("   5");
-        public static TipoDeTransacao CANCELAMENTO_GENERICO_CIAGROUP_GIFT = new TipoDeTransacao("   6");
-        public static TipoDeTransacao INUTILIZACAO_CARTAO_GIFT = new TipoDeTransacao("   7");
+        public static TipoDeTransacaoConsultaCartao CONSULTA_SALDO_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("1");
+        public static TipoDeTransacaoConsultaCartao RECARGA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("2");
+        public static TipoDeTransacaoConsultaCartao VENDA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("3");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_VENDA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("4");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_RECARGA_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("5");
+        public static TipoDeTransacaoConsultaCartao CANCELAMENTO_GENERICO_CIAGROUP_GIFT = new TipoDeTransacaoConsultaCartao("6");
+        public static TipoDeTransacaoConsultaCartao INUTILIZACAO_CARTAO_GIFT = new TipoDeTransacaoConsultaCartao("7");
 
     }
 
