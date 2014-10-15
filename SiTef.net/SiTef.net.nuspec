@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.0.0.2</version>
+    <version>0.0.0.3</version>
     <title>$title$</title>
     <authors>Victor Hogemann</authors>
     <owners>B2W Digital</owners>
@@ -10,8 +10,14 @@
     <projectUrl>https://github.com/ideais/SiTef.net</projectUrl>
     <!--iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>$description$</description>
-    <releaseNotes>First release, only basic Sales and Card quering operations.</releaseNotes>
+    <description>
+      API for using the SiTef service Library. This is an electronic fund transfer service used in Brazil.
+    </description>
+    <releaseNotes>
+      * Terminal implementando IDisposable, para ser finalizado automaticamente
+      * TerminalFactory inicializa novos terminais para o uso
+      * Ação de Estorno de Pré-Autorização de Cartão de Crédito
+    </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
     <tags>sitef commerce payment creditcard</tags>
   </metadata>
