@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Integration\CapturaTest.cs" />
     <Compile Include="Integration\ConsultaCartaoTest.cs" />
+    <Compile Include="Integration\EstornoPreAutorizacaoTest.cs" />
     <Compile Include="Integration\PreAutorizacaoTest.cs" />
     <Compile Include="Integration\VendaSiTefTest.cs" />
     <Compile Include="LibSiTefTest.cs" />

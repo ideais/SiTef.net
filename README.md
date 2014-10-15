@@ -3,21 +3,6 @@ SiTef.net
 
 API para acesso as funcionalidades da *LibSiTef*.
 
-Changelog
----------
-
-Versão **0.0.0.2**
-
-* Mudando métodos e classes para o português para diminuir confusão
-* Modeladas ações de:
- * Pré-Autorização
- * Captura
-
-Versão **0.0.0.1**:
-
-* Modelo de Tipos de Entrada/Saída com validação
-* Abstração de Ação, com Requisição e Resposta
-
 ### Configurando a LibSiTef
 
 Você vai precisar da _LibSiTef.dll_ para utilizar o projeto. Ela é fornecida pela [Software Express](http://www.softwareexpress.com.br),
@@ -33,8 +18,63 @@ Em específico estamos usando a _LibSiTef.dll_ de **64 bits**. Para configura-la 
 
 #### Linux / Mono
 
-TODO
+Ajuda é bem vinda à quem estiver disposto a fazer o projeto funcionar no Linux com Mono.
 
 ### Utilizando o SiTef.net
 
-TODO
+Exemplo de operação de consulta às informações do cartão do usuário:
+
+```C#
+
+    using SiTef.net.Action;
+    using SiTef.net.Action.Model;
+    using SiTef.net.Type;
+    
+...
+
+    TerminalFactory factory = new TerminalFactory("127.0.0.1","00000000");
+    using (var term = factory.NewInstance())
+    {
+        ConsultaCartaoAction action = new ConsultaCartaoAction(term);
+
+        ConsultaCartaoResponse response = action.Execute(
+            new ConsultaCartaoRequest(
+                new NumeroDoCartao("4000000000000044"),
+                new DataDeVencimento("1215")
+            )
+        );
+        foreach (var field in response.GetFields())
+            System.Console.WriteLine(field);
+    }
+    
+```
+
+Changelog
+---------
+
+Versão **0.0.0.3**
+
+* Terminal implementando IDisposable, para ser finalizado automaticamente
+* TerminalFactory inicializa novos terminais para o uso
+* Ação de Estorno de Pré-Autorização de Cartão de Crédito
+
+Versão **0.0.0.2**
+
+* Mudando métodos e classes para o português para diminuir confusão
+* Modeladas ações de:
+ * Pré-Autorização
+ * Captura
+
+Versão **0.0.0.1**:
+
+* Modelo de Tipos de Entrada/Saída com validação
+* Abstração de Ação, com Requisição e Resposta
+
+Backlog
+-------
+
+* Testes unitários para cada um dos tipos de campos que extendem Field
+* Agrupar as implementações de Field em tipos básicos, Date, Time, Numeric, etc...
+* Validação nos construtores das Actions
+* Validação da resposta das Actions, criação de uma ActionException para encapsular erros de negócio
+* Modelar o restante das Ações definidas pelo SiTef

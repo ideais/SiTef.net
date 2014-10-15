@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Action
 {
-    public class CapturaAction : AbstractAction<Model.CapturaRequest,Model.CapturaResponse>
+    public class CapturaPreAutorizacaoAction : AbstractAction<Model.CapturaRequest,Model.CapturaResponse>
     {
-        public CapturaAction(Terminal terminal) : base(ActionType.CAPTURA_PRE_AUTORIZACAO, terminal) { }
+        public CapturaPreAutorizacaoAction(Terminal terminal) : base(ActionType.CAPTURA_PRE_AUTORIZACAO, terminal) { }
 
         protected override Model.CapturaResponse ReadOutput()
         {

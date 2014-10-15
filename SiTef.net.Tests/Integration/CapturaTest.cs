@@ -20,10 +20,12 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecutaCapturaTest()
         {
+            PreAutorizacaoResponse autorizacao;
+            
             using (var term = factory.NewInstance())
             {
                 var preautoriza = new PreAutorizacaoAction(term);
-                var autorizacao = preautoriza.Execute(new PreAutorizacaoRequest(
+                autorizacao = preautoriza.Execute(new PreAutorizacaoRequest(
                     null,
                     new DataFiscal(new DateTime()),
                     null,
@@ -33,8 +35,10 @@ namespace SiTef.net.Tests.Integration
                     null,
                     new CodigoDeSeguranca("123")
                 ));
+            }
 
-                var captura = new CapturaAction(term);
+            using(var term = factory.NewInstance()){
+                var captura = new CapturaPreAutorizacaoAction(term);
                 var result = captura.Execute(new CapturaRequest(
                         new NumeroDoCartao("4929208425739710"),
                         new DataDeVencimento("1215"),

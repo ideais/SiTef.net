@@ -45,7 +45,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AbstractAction.cs" />
-    <Compile Include="Action\CapturaAction.cs" />
+    <Compile Include="Action\CapturaPreAutorizacaoAction.cs" />
+    <Compile Include="Action\EstornoPreAutorizacaoAction.cs" />
+    <Compile Include="Action\Model\EstornoRequest.cs" />
+    <Compile Include="Action\Model\EstornoResponse.cs" />
     <Compile Include="Action\Model\CapturaRequest.cs" />
     <Compile Include="Action\Model\CapturaResponse.cs" />
     <Compile Include="Action\IAction.cs" />
