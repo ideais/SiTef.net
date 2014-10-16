@@ -31,7 +31,7 @@ namespace SiTef.net.Tests.Integration
                     null,
                               // MASTER 5486906003474434
                     new NumeroDoCartao("4485022036287910"),
-                    new DataDeVencimento("1215"),
+                    new DataDeVencimento(12,15),
                     new Valor("10000"),
                     null,
                     new CodigoDeSeguranca("1234")
@@ -42,7 +42,7 @@ namespace SiTef.net.Tests.Integration
                 var captura = new CapturaPreAutorizacaoAction(term);
                 var result = captura.Execute(new CapturaRequest(
                         new NumeroDoCartao("4929208425739710"),
-                        new DataDeVencimento("1215"),
+                        new DataDeVencimento(12,15),
                         new Valor("10000"),
                         new DataDaTransacao(new DateTime()),
                         autorizacao.autorizacao,

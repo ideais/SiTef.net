@@ -27,7 +27,7 @@ namespace SiTef.net.Tests.Integration
                 new NumeroDeParcelas(1),
                 new TipoDeFinanciamento(2),
                 new NumeroDoCartao("4716615017626757"),
-                new DataDeVencimento("1215"),
+                new DataDeVencimento(12,15),
                 new CodigoDeSeguranca("123"),
                 new Valor("10000")
                 );

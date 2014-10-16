@@ -18,9 +18,24 @@ namespace SiTef.net.Type
     /// <typeparam name="T"></typeparam>
     public abstract class Field<T> : IField
     {
-
+        public string Label { get; set; }
         public short Id { get; set; }
-        public T Value { get; set; }
+        public string WireValue { get; set; }
+        private T _value;
+        public T Value { get {
+            if (_value != null)
+                return _value;
+
+
+            if (_value == null && WireValue != null)
+                _value = Convert(WireValue);
+            else
+                return default(T);
+
+            return _value;
+        }
+            set { _value = value; }
+        }
         public int Length { get; set; }
 
         /// <summary>
@@ -56,7 +71,7 @@ namespace SiTef.net.Type
             this.Length = length;
             try
             {
-                this.Value = Convert(terminal.LeCampo(id, length));
+                this.WireValue = terminal.LeCampo(id, length);
             }
             catch (TerminalException ex) {
                 //System.Diagnostics.Trace.(ex.Message);
@@ -78,10 +93,52 @@ namespace SiTef.net.Type
         public override string ToString()
         {
             if (Value != null)
-                return String.Format("{2}({0})\n{1}", Id, Value, this.GetType().Name);
+                return String.Format("{2}({0})\n{1}", Id, Value, Label != null ? Label : this.GetType().Name);
             return "null";
         }
 
+    }
+
+    /// <summary>
+    /// Classe base para todos os campos Booleanos
+    /// </summary>
+    public class BooleanField : Field<bool>
+    {
+
+        public string TrueValue { get; set; }
+
+        public string FalseValue { get; set; }
+
+        public BooleanField(short id, bool value, short length, string trueValue, string falseValue) : base(id, value, length)
+        {
+            TrueValue = trueValue;
+            FalseValue = falseValue;
+        }
+
+        public BooleanField(short id, int length, Terminal terminal, string trueValue, string falseValue) : base(id, length, terminal) {
+            TrueValue = trueValue;
+            FalseValue = falseValue;
+        }
+
+        public override bool Convert(string value)
+        {
+            if(value == null)
+                return false;
+            return value.Equals(TrueValue);
+        }
+
+        public override string Format()
+        {
+            return Value ? TrueValue : FalseValue;
+        }
+    }
+    /// <summary>
+    /// Campo booleano implementado como valor de 0 ou 1
+    /// </summary>
+    public class ZeroOrOneField : BooleanField
+    {
+        public ZeroOrOneField(short id, bool value) : base(id, value, 1, "1", "0") { }
+        public ZeroOrOneField(short id, Terminal terminal) : base(id, 1, terminal, "1", "0") { }
     }
 
     /// <summary>
@@ -163,27 +220,52 @@ namespace SiTef.net.Type
     /// <summary>
     /// Implementação base para todos os campos de data
     /// </summary>
-    public class DateField : StringField
+    public class DateField : Field<DateTime?>
     {
+        /// <summary>
+        /// Formato utilizado para fazer parse da Data.
+        /// Ex.: ddMMyyyy
+        /// </summary>
+        public string Pattern { get; set; }
 
-        protected const string PATTERN = @"^[0-3]\d[0-1]\d\d{4,4}$";
-        protected static short LENGTH = 8;
-        private static string FORMAT = "ddMMyyyy";
-        private short ID;
-        private Terminal terminal;
+        public DateField(short id, DateTime? data, int length, string format) : base(id, data, length) {
+            Pattern = format;
+        }
 
-        public DateField(short id, DateTime data) : base(id, data.ToString(FORMAT), LENGTH, PATTERN) { }
+        public DateField(short id, int day, int month, int year, int length, string format) : base (id, new DateTime(year, month, day), length) {
+            Pattern = format;
+        }
 
-        public DateField(short id, String data) : base(id, data, LENGTH, PATTERN) { }
+        public DateField(short id, int length, Terminal terminal) : base(id, length, terminal) { }
 
-        public DateField(short id, Terminal terminal) : base(id, LENGTH, terminal) { }
+        public DateField(short id, Terminal terminal) : this(id, 8, terminal) { }
 
+        public override DateTime? Convert(string value)
+        {
+            try
+            {
+                return DateTime.ParseExact(value, Pattern, null);
+            }
+            catch (FormatException ex)
+            {
+                return null;
+            }
+        }
 
-        public DateTime? ToDateTime()
+        public override string Format()
+        {
+            if( Value != null )
+                return ((DateTime)Value).ToString(Pattern);
+            return null;
+        }
+
+        public override string ToString()
         {
             if (Value != null)
-                return DateTime.ParseExact(Value, FORMAT, null);
-            return null;
+                return base.ToString();
+
+            return String.Format("{1}({0})\nData Inválida, ou Null", Id, Label != null ? Label : this.GetType().Name);
+             
         }
     }
 
@@ -260,9 +342,13 @@ namespace SiTef.net.Type
     /// <summary>
     /// Data de vencimento do cartão MMAA (MM=mês AA=ano) 
     /// </summary>
-    public class DataDeVencimento : StringField
+    public class DataDeVencimento : DateField
     {
-        public DataDeVencimento(string numero) : base(5, numero, 4, @"^[0-1]\d{3}$") { }
+        public static short ID = 5;
+        public static int LENGTH = 4;
+        public static string FORMAT = "MMyy";
+        public DataDeVencimento(DateTime data) : base(ID, data, LENGTH, FORMAT) { }
+        public DataDeVencimento(int mes, int ano) : base(ID, 1, mes, ano, LENGTH, FORMAT) { }
     }
 
     /// <summary>
@@ -439,26 +525,22 @@ namespace SiTef.net.Type
     /// ‘0’: Não deve coletar taxa de serviço
     /// ‘1’: Coletar taxa de serviço se necessário
     /// </summary>
-    public class TaxaServico : StringField
+    public class TaxaServico : ZeroOrOneField
     {
         public static short ID = 27;
-        public static short LENGTH = 1;
-        const string PATTERN = @"^[0-1]$";
-        public TaxaServico(Terminal terminal) : base(ID, LENGTH, terminal) { }
-        public TaxaServico(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
+        public TaxaServico(Terminal terminal) : base(ID, terminal) { }
+        public TaxaServico(bool coletar) : base(ID, coletar) { }
     }
 
     /// <summary>
     /// ‘0’: Não deve coletar código de segurança do cartão
     /// ‘1’: Coletar código de segurança do cartão
     /// </summary>
-    public class CapturaCodigoSeguranca : StringField
+    public class CapturaCodigoSeguranca : ZeroOrOneField
     {
         public static short ID = 33;
-        public static short LENGTH = 1;
-        const string PATTERN = @"^[0-1]$";
-        public CapturaCodigoSeguranca(Terminal terminal) : base(ID, LENGTH, terminal) { }
-        public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar ? "1" : "0", LENGTH, PATTERN) { }
+        public CapturaCodigoSeguranca(Terminal terminal) : base(ID, terminal) { }
+        public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar) { }
     }
 
     /// <summary>
@@ -503,9 +585,10 @@ namespace SiTef.net.Type
     /// </summary>
     public class DataFiscal : DateField
     {
-        const short ID = 147;
-        public DataFiscal(string data) : base(ID, data) { }
-        public DataFiscal(DateTime data) : base(ID, data) { }
+        public const short ID = 147;
+        public const int LENGTH = 8;
+        
+        public DataFiscal(DateTime data) : base(ID,data,8,"ddMMyyy") { }
         public DataFiscal(Terminal terminal) : base(ID, terminal) { }
     }
 
@@ -569,10 +652,10 @@ namespace SiTef.net.Type
     public class DataExpiracao : DateField
     {
         public static short ID = 216;
+        public static int LENGTH = 8;
 
         public DataExpiracao(Terminal terminal) : base(ID, terminal) { }
-        public DataExpiracao(String data) : base(ID, data) { }
-        public DataExpiracao(DateTime data) : base(ID, data) { }
+        public DataExpiracao(DateTime data) : base(ID, data, 8, "ddMMyyyy") { }
     }
 
     /// <summary>
@@ -583,8 +666,7 @@ namespace SiTef.net.Type
         public static short ID = 217;
 
         public DataDaTransacao(Terminal terminal) : base(ID, terminal) { }
-        public DataDaTransacao(String data) : base(ID, data) { }
-        public DataDaTransacao(DateTime data) : base(ID, data) { }
+        public DataDaTransacao(DateTime data) : base(ID, data, 8, "ddMMyyyy") { }
     }
 
     /// <summary>

@@ -23,22 +23,22 @@ namespace SiTef.net.Action.Model
                 new StringField(28, 2, terminal), //No Min Parcela
                 new StringField(29, 2, terminal), //No Max Parcela
                 new StringField(30, 4, terminal), // Percentual Máximo da Taxa de Servico
-                new DateField(31, terminal), // Data Limite Pre Datado
-                new DateField(32, terminal), // Data Limite 1a parcela
+                new DateField(31, terminal){Pattern = "ddMMyyyy", Label = "Data Limite Pre Datado"}, // Data Limite Pre Datado
+                new DateField(32, terminal){Pattern = "ddMMyyyy", Label = "Data Limite 1a parcela"}, // Data Limite 1a parcela
                 new CapturaCodigoSeguranca(terminal),
-                new StringField(34, 1, terminal), // Garantia Pre-Datado
-                new StringField(35, 1, terminal), // Transacao com Chip
-                new StringField(36, 1, terminal), // Venda a Vista
-                new StringField(37, 1, terminal), // Venda Parcelada
-                new StringField(38, 1, terminal), // Venda Parcelada C/ Juros Administradora
-                new StringField(39, 1, terminal), // Venda Pro-Rata a Vista
-                new StringField(40, 1, terminal), // Venda Pro-Rata parcelada
-                new StringField(41, 1, terminal), // Cancelamento (tr.36h/ 37h) e Estorno de Captura de Pré-Autorização (tr. 12h)
-                new StringField(42, 1, terminal), // Pré-autorização
-                new StringField(43, 1, terminal), // Consulta venda Parcelada
-                new StringField(44, 1, terminal), // Cancelamento de Pre-Autorizacao
-                new StringField(45, 1, terminal), // Captura de Pre-Autorizacao
-                new StringField(46, 1, terminal), // Consulta AVS
+                new ZeroOrOneField(34, terminal){Label ="Garantia Pre-Datado"},
+                new ZeroOrOneField(35, terminal), // Transacao com Chip
+                new ZeroOrOneField(36, terminal), // Venda a Vista
+                new ZeroOrOneField(37, terminal), // Venda Parcelada
+                new ZeroOrOneField(38, terminal), // Venda Parcelada C/ Juros Administradora
+                new ZeroOrOneField(39, terminal), // Venda Pro-Rata a Vista
+                new ZeroOrOneField(40, terminal), // Venda Pro-Rata parcelada
+                new ZeroOrOneField(41, terminal), // Cancelamento (tr.36h/ 37h) e Estorno de Captura de Pré-Autorização (tr. 12h)
+                new ZeroOrOneField(42, terminal){Label = "Pré-autorização"}, // Pré-autorização
+                new ZeroOrOneField(43, terminal), // Consulta venda Parcelada
+                new ZeroOrOneField(44, terminal), // Cancelamento de Pre-Autorizacao
+                new ZeroOrOneField(45, terminal), // Captura de Pre-Autorizacao
+                new ZeroOrOneField(46, terminal), // Consulta AVS
                 new StringField(155, 128, terminal), // Opcoes Variaveis com Prefixo
                 /*
                 new Field(163, 99, terminal),
