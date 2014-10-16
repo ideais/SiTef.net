@@ -172,7 +172,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class NumeroDoCartao : Field
     {
-        public NumeroDoCartao(string numero) : base(4, Regex.Replace(numero,"[^0-9]",""), 30, @"^\d{0,30}$") { }
+        public NumeroDoCartao(string numero) : base(4, numero, 30, @"^\d{0,30}$") { }
     }
 
     /// <summary>
