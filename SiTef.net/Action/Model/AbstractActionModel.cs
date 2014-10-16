@@ -11,25 +11,18 @@ namespace SiTef.net.Action.Model
 
         protected AbstractActionModel()
         {
-            _fields = new List<Type.Field>();
+            _fields = new List<Type.IField>();
         }
 
-        protected AbstractActionModel( params Type.Field[] fields ){
-            _fields = new List<Type.Field>(fields);
+        protected AbstractActionModel( params Type.IField[] fields ){
+            _fields = new List<Type.IField>(fields);
         }
         
-        protected IList<Type.Field> _fields;
-        public IList<Type.Field> GetFields()
+        protected IList<Type.IField> _fields;
+        public IList<Type.IField> GetFields()
         {
             return _fields;
         }
-
-
-        public void WriteTo(Terminal terminal)
-        {
-            if (_fields != null)
-                foreach (var field in _fields)
-                    terminal.GravaCampo(field);
-        }
+     
     }
 }

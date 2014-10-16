@@ -38,7 +38,7 @@ namespace SiTef.net.Action.Model
             //* Linhas de cupom 76
             cupom = new LinhasDeCupom(terminal);
 
-            _fields = new List<Field>{
+            _fields = new List<IField>{
                 rede,confirmacao,codigoSitef,data,hora,nsuHost,
                 codigoEstabelecimento, numeroAutorizacao,instituicao,nsuSiTef,cupom
             };

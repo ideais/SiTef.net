@@ -24,8 +24,8 @@ namespace SiTef.net.Tests.Integration
             term.IniciaTransacao();
             VendaSiTefAction action = new VendaSiTefAction(term);
             VendaSiTefRequest request = new VendaSiTefRequest(
-                new NumeroDeParcelas("1"),
-                new TipoDeFinanciamento("2"),
+                new NumeroDeParcelas(1),
+                new TipoDeFinanciamento(2),
                 new NumeroDoCartao("4716615017626757"),
                 new DataDeVencimento("1215"),
                 new CodigoDeSeguranca("123"),

@@ -19,14 +19,7 @@ namespace SiTef.net.Action.Model
         /// <returns>
         ///     A list of Fields defined for the Action
         /// </returns>
-        IList<Field> GetFields();
-
-        /// <summary>
-        /// Write the fields into the SiTef terminal. The terminal must be already initialized, and reset with
-        /// the appropriated MKT_Inicia_Transacao call.
-        /// </summary>
-        /// <param name="terminal">The instance we are writing the fields into</param>
-        void WriteTo(Terminal terminal);
+        IList<IField> GetFields();
 
     }
 }

@@ -11,35 +11,35 @@ namespace SiTef.net.Action.Model
 
         public ConsultaCartaoResponse(Terminal terminal)
         {
-            _fields = new List<Field>{
+            _fields = new List<IField>{
                 new Rede(terminal),
                 new CodigoDeRespostaSiTef(terminal),
                 new TextoParaExibicao(terminal),
                 new BandeiraDoCartao(terminal),
-                new Field(24, 1, terminal), //Valida Embosso
-                new Field(25, 4, terminal), //Codigo Validacao
-                new Field(26, 1, terminal), //Tipo Senha
+                new StringField(24, 1, terminal), //Valida Embosso
+                new StringField(25, 4, terminal), //Codigo Validacao
+                new StringField(26, 1, terminal), //Tipo Senha
                 new TaxaServico(terminal),
-                new Field(28, 2, terminal), //No Min Parcela
-                new Field(29, 2, terminal), //No Max Parcela
-                new Field(30, 4, terminal), // Percentual Máximo da Taxa de Servico
+                new StringField(28, 2, terminal), //No Min Parcela
+                new StringField(29, 2, terminal), //No Max Parcela
+                new StringField(30, 4, terminal), // Percentual Máximo da Taxa de Servico
                 new DateField(31, terminal), // Data Limite Pre Datado
                 new DateField(32, terminal), // Data Limite 1a parcela
                 new CapturaCodigoSeguranca(terminal),
-                new Field(34, 1, terminal), // Garantia Pre-Datado
-                new Field(35, 1, terminal), // Transacao com Chip
-                new Field(36, 1, terminal), // Venda a Vista
-                new Field(37, 1, terminal), // Venda Parcelada
-                new Field(38, 1, terminal), // Venda Parcelada C/ Juros Administradora
-                new Field(39, 1, terminal), // Venda Pro-Rata a Vista
-                new Field(40, 1, terminal), // Venda Pro-Rata parcelada
-                new Field(41, 1, terminal), // Cancelamento (tr.36h/ 37h) e Estorno de Captura de Pré-Autorização (tr. 12h)
-                new Field(42, 1, terminal), // Pré-autorização
-                new Field(43, 1, terminal), // Consulta venda Parcelada
-                new Field(44, 1, terminal), // Cancelamento de Pre-Autorizacao
-                new Field(45, 1, terminal), // Captura de Pre-Autorizacao
-                new Field(46, 1, terminal), // Consulta AVS
-                new Field(155, 128, terminal), // Opcoes Variaveis com Prefixo
+                new StringField(34, 1, terminal), // Garantia Pre-Datado
+                new StringField(35, 1, terminal), // Transacao com Chip
+                new StringField(36, 1, terminal), // Venda a Vista
+                new StringField(37, 1, terminal), // Venda Parcelada
+                new StringField(38, 1, terminal), // Venda Parcelada C/ Juros Administradora
+                new StringField(39, 1, terminal), // Venda Pro-Rata a Vista
+                new StringField(40, 1, terminal), // Venda Pro-Rata parcelada
+                new StringField(41, 1, terminal), // Cancelamento (tr.36h/ 37h) e Estorno de Captura de Pré-Autorização (tr. 12h)
+                new StringField(42, 1, terminal), // Pré-autorização
+                new StringField(43, 1, terminal), // Consulta venda Parcelada
+                new StringField(44, 1, terminal), // Cancelamento de Pre-Autorizacao
+                new StringField(45, 1, terminal), // Captura de Pre-Autorizacao
+                new StringField(46, 1, terminal), // Consulta AVS
+                new StringField(155, 128, terminal), // Opcoes Variaveis com Prefixo
                 /*
                 new Field(163, 99, terminal),
                 new Field(164, 99, terminal),

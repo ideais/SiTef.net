@@ -32,10 +32,9 @@ namespace SiTef.net
                 throw new TerminalException(DescricaoErro(transaction));
         }
 
-        public void GravaCampo(Field campo)
+        public void GravaCampo(IntPtr id, string value)
         {
-            IntPtr id = (IntPtr)campo.Id;
-            int result = SiTef.GravaCampo(term, id, campo.Value);
+            int result = SiTef.GravaCampo(term, id, value);
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
 

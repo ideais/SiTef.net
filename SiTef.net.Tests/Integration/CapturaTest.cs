@@ -48,7 +48,7 @@ namespace SiTef.net.Tests.Integration
                         autorizacao.autorizacao,
                         autorizacao.nsuHost,
                         null,
-                        new TipoDeFinanciamento("1"),
+                        new TipoDeFinanciamento(1),
                         null,
                         new CodigoDeSeguranca("123")
                     ));

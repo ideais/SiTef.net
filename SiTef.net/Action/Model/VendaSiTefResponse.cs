@@ -14,7 +14,7 @@ namespace SiTef.net.Action.Model
     {
         public VendaSiTefResponse(Terminal terminal)
         {
-            _fields = new List<Field>
+            _fields = new List<IField>
             {
                 //1
                 new Rede(terminal),

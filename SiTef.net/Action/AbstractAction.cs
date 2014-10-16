@@ -23,9 +23,12 @@ namespace SiTef.net.Action
 
         public N Execute(M model)
         {
-            foreach (Field field in model.GetFields())
+
+            _terminal.IniciaTransacao();
+
+            foreach (IField field in model.GetFields())
             {
-                if(field != null) _terminal.GravaCampo(field);
+                if (field != null) field.WriteTo(_terminal);
             }
 
             _terminal.Executa(_action);

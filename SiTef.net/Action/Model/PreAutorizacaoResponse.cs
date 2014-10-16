@@ -26,7 +26,7 @@ namespace SiTef.net.Action.Model
             cupom = new LinhasDeCupom(terminal); //Linhas de cupom
             expiracao = new DataExpiracao(terminal); //Data Expiracao REDECARD
             
-            _fields = new List<Field>{
+            _fields = new List<IField>{
                 rede, confirmacao, respostaSiTef, textoExibicao, respostaInstituicao, data, hora,
                 nsuHost, codigoEstabelecimento, autorizacao, nomeInstituicao, nsuSiTef, cupom, expiracao
             };

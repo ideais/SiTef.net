@@ -9,7 +9,7 @@ namespace SiTef.net.Action.Model
     public class ConsultaCartaoRequest: AbstractActionModel
     {
 
-        public ConsultaCartaoRequest(params Field[] fields) : base( fields ) { }
+        public ConsultaCartaoRequest(params StringField[] fields) : base( fields ) { }
 
     }
 }

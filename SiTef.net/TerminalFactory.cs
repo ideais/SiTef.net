@@ -9,8 +9,14 @@ namespace SiTef.net
     public class TerminalFactory
     {
 
+        public int Range { get; set; }
+
+        public int Offset { get; set; }
+
         public TerminalFactory(string Servidor, string Empresa)
         {
+            Range = 1000;
+            Offset = 0;
             this.Servidor = Servidor;
             this.Empresa = Empresa;
         }
