@@ -102,7 +102,7 @@ namespace SiTef.net.Type
     /// <summary>
     /// Classe base para todos os campos Booleanos
     /// </summary>
-    public class BooleanField : Field<bool>
+    public class BooleanField : Field<bool?>
     {
 
         public string TrueValue { get; set; }
@@ -120,16 +120,18 @@ namespace SiTef.net.Type
             FalseValue = falseValue;
         }
 
-        public override bool Convert(string value)
+        public override bool? Convert(string value)
         {
             if(value == null)
-                return false;
+                return null;
             return value.Equals(TrueValue);
         }
 
         public override string Format()
         {
-            return Value ? TrueValue : FalseValue;
+            if (Value == null)
+                return null;
+            return Value == true ? TrueValue : FalseValue;
         }
     }
     /// <summary>
@@ -191,7 +193,7 @@ namespace SiTef.net.Type
     /// <summary>
     /// Implementação base para todos os campos numéricos
     /// </summary>
-    public class NumericField : Field<int>
+    public class NumericField : Field<int?>
     {
 
         /// <summary>
@@ -206,13 +208,17 @@ namespace SiTef.net.Type
         public NumericField(short id, int value, int length) : this(id, value, length, true) { }
         public NumericField(short id, int length, Terminal terminal) : base(id, length, terminal) { } 
 
-        public override int Convert(string value)
+        public override int? Convert(string value)
         {
+            if (value == null)
+                return null;
             return int.Parse(value);
         }
 
         public override string Format()
         {
+            if (Value == null)
+                return null;
             return String.Format("{0}", Value);
         }
     }
