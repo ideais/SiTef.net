@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>$id$</id>
-    <version>0.0.0.7</version>
+    <version>0.0.0.8</version>
     <title>$title$</title>
     <authors>Victor Hogemann</authors>
     <owners>B2W Digital</owners>
@@ -14,7 +14,9 @@
       API for using the SiTef service Library. This is an electronic fund transfer service used in Brazil.
     </description>
     <releaseNotes>
-      Bugfix
+      * Refactoring de Field, agora tipificado com Generics e criação de tipos Base comuns
+      * ActionException lançada quando alguma ação tem falha no seu retorno
+      * Vários outros refactorings e melhorias
     </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
     <tags>sitef commerce payment creditcard</tags>
