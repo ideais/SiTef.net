@@ -1,61 +1,84 @@
-﻿using SiTef.net.Type;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace SiTef.net.Action.Model
 {
-    public class CapturaResponse : AbstractActionModel
+    public class CapturaResponse : AbstractActionModel , IActionResponse
     {
 
         public CapturaResponse(Terminal terminal)
         {
             // Rede 1
-            rede = new Rede(terminal);
+            Rede = new Type.Rede(terminal);
             //* Dados de confirmação 9 
-            confirmacao = new DadosDeConfirmacao(terminal);
+            DadosDeConfirmacao = new Type.DadosDeConfirmacao(terminal);
             //* Código de Resposta do SITEF 10 
-            codigoSitef = new CodigoDeRespostaSiTef(terminal);
+            CodigoDeRespostaSiTef = new Type.CodigoDeRespostaSiTef(terminal);
             //* Texto para exibição 11 
-            textoExibicao = new TextoParaExibicao(terminal);
+            TextoParaExibicao = new Type.TextoParaExibicao(terminal);
             //* Código de resposta HOST 12
-            codigoInstituicao = new CodigoRespostaInstituicao(terminal);
+            CodigoRespostaInstituicao = new Type.CodigoRespostaInstituicao(terminal);
             //* Data 13
-            data = new Data(terminal);
+            Data = new Type.Data(terminal);
             //* Hora 14 
-            hora = new Hora(terminal);
+            Hora = new Type.Hora(terminal);
             //* NSU_Host 15
-            nsuHost = new NSUHost(terminal);
+            NSUHost = new Type.NSUHost(terminal);
             //* Código Estabelecimento 16 
-            codigoEstabelecimento = new CodigoDoEstabelecimento(terminal);
+            CodigoDoEstabelecimento = new Type.CodigoDoEstabelecimento(terminal);
             //* Número Autorização 17 
-            numeroAutorizacao = new NumeroAutorizacao(terminal);
+            NumeroAutorizacao = new Type.NumeroAutorizacao(terminal);
             //* Nome da Instituição 21 
-            instituicao = new NomeDaInstituicao(terminal);
+            NomeDaInstituicao = new Type.NomeDaInstituicao(terminal);
             //* Nsu do SiTef 22
-            nsuSiTef = new NSUSiTef(terminal);
+            NSUSiTef = new Type.NSUSiTef(terminal);
             //* Linhas de cupom 76
-            cupom = new LinhasDeCupom(terminal);
+            LinhasDeCupom = new Type.LinhasDeCupom(terminal);
 
-            _fields = new List<IField>{
-                rede,confirmacao,codigoSitef,data,hora,nsuHost,
-                codigoEstabelecimento, numeroAutorizacao,instituicao,nsuSiTef,cupom
+            _fields = new List<Type.IField>{
+                Rede, DadosDeConfirmacao, CodigoDeRespostaSiTef, TextoParaExibicao, CodigoDeRespostaSiTef,
+                Data, Hora, NSUHost, CodigoDoEstabelecimento, NumeroAutorizacao, NomeDaInstituicao,
+                NSUSiTef, LinhasDeCupom
             };
         }
+        
+        public bool Failure()
+        {
+            return !CodigoDeRespostaSiTef.Approved();
+        }
 
-        public Rede rede { get; set; }
-        public DadosDeConfirmacao confirmacao { get; set; }
-        public TextoParaExibicao textoExibicao { get; set; }
-        public CodigoRespostaInstituicao codigoInstituicao { get; set; }
-        public CodigoDeRespostaSiTef codigoSitef { get; set; }
-        public Data data { get; set; }
-        public Hora hora { get; set; }
-        public NSUHost nsuHost { get; set; }
-        public CodigoDoEstabelecimento codigoEstabelecimento { get; set; }
-        public NumeroAutorizacao numeroAutorizacao { get; set; }
-        public NomeDaInstituicao instituicao { get; set; }
-        public NSUSiTef nsuSiTef { get; set; }
-        public LinhasDeCupom cupom { get; set; }
+        public Type.Rede Rede { get; set; }
+
+        public Type.DadosDeConfirmacao DadosDeConfirmacao { get; set; }
+
+        public Type.CodigoDeRespostaSiTef CodigoDeRespostaSiTef { get; set; }
+
+        public Type.TextoParaExibicao TextoParaExibicao { get; set; }
+
+        public Type.CodigoRespostaInstituicao CodigoRespostaInstituicao { get; set; }
+
+        public Type.Data Data { get; set; }
+
+        public Type.Hora Hora { get; set; }
+
+        public Type.NSUHost NSUHost { get; set; }
+
+        public Type.CodigoDoEstabelecimento CodigoDoEstabelecimento { get; set; }
+
+        public Type.NumeroAutorizacao NumeroAutorizacao { get; set; }
+
+        public Type.NomeDaInstituicao NomeDaInstituicao { get; set; }
+
+        public Type.NSUSiTef NSUSiTef { get; set; }
+
+        public Type.LinhasDeCupom LinhasDeCupom { get; set; }
+
+
+        public string Message()
+        {
+            return TextoParaExibicao.Value;
+        }
     }
 }

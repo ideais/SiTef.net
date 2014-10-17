@@ -5,7 +5,7 @@ using System.Text;
 
 namespace SiTef.net.Action.Model
 {
-    public class ConsultaCartaoResponse : AbstractActionModel
+    public class ConsultaCartaoResponse : AbstractActionModel, IActionResponse
     {
         public ConsultaCartaoResponse(Terminal terminal)
         {
@@ -32,11 +32,11 @@ namespace SiTef.net.Action.Model
             VendaProRataParcelada = new Type.ZeroOrOneField(40, terminal) { Label = "Venda Pro-Rata parcelada" };
             CancelamentoEstornoDeCaptura = new Type.ZeroOrOneField(41, terminal) { Label = "Cancelamento (tr.36h/ 37h) e Estorno de Captura de Pré-Autorização (tr. 12h)" };
             PreAutorizacao = new Type.ZeroOrOneField(42, terminal) { Label = "Pré-autorização" };
-            ConsulaVendaParcelada = new Type.ZeroOrOneField(43, terminal); // Consulta venda Parcelada
-            CancelamentoPreAutorizacao = new Type.ZeroOrOneField(44, terminal); // Cancelamento de Pre-Autorizacao
-            CapturaPreAutorizacao = new Type.ZeroOrOneField(45, terminal); // Captura de Pre-Autorizacao
-            ConsultaAVS = new Type.ZeroOrOneField(46, terminal); // Consulta AVS
-            OpcoesVariaveisComPrefixo = new Type.StringField(155, 128, terminal); // Opcoes Variaveis com Prefixo
+            ConsulaVendaParcelada = new Type.ZeroOrOneField(43, terminal) { Label = "Consulta venda Parcelada" };
+            CancelamentoPreAutorizacao = new Type.ZeroOrOneField(44, terminal) { Label = "Cancelamento de Pre-Autorizacao" };
+            CapturaPreAutorizacao = new Type.ZeroOrOneField(45, terminal) { Label = "Captura de Pre-Autorizacao" };
+            ConsultaAVS = new Type.ZeroOrOneField(46, terminal) { Label = "Consulta AVS" };
+            OpcoesVariaveisComPrefixo = new Type.StringField(155, 128, terminal) { Label = "Opcoes Variaveis com Prefixo" }; 
             /*
             new Field(163, 99, terminal);
             new Field(164, 99, terminal);
@@ -65,7 +65,7 @@ namespace SiTef.net.Action.Model
             new Field(242, 99, terminal);
             new Field(243, 99, terminal);
             new Field(244, 99, terminal);*/
-            NumMaxParcelasLoja = new Type.NumericField(245, 2, terminal); //Numero Maximo de Parcelas Loja
+            NumMaxParcelasLoja = new Type.NumericField(245, 2, terminal) { Label = "Numero Maximo de Parcelas Loja" };
             /*
             new Field(246, 99, terminal);
             new Field(350, 99, terminal);
@@ -148,5 +148,16 @@ namespace SiTef.net.Action.Model
         public Type.StringField OpcoesVariaveisComPrefixo { get; set; }
 
         public Type.NumericField NumMaxParcelasLoja { get; set; }
+
+        public bool Failure()
+        {
+            return !CodigoDeRespostaSitef.Approved();
+        }
+
+
+        public string Message()
+        {
+            return TextoParaExibicao.Value;
+        }
     }
 }

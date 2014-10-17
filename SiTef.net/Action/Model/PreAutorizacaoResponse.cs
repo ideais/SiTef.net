@@ -1,63 +1,73 @@
-﻿using SiTef.net.Type;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace SiTef.net.Action.Model
 {
-    public class PreAutorizacaoResponse : AbstractActionModel
+    public class PreAutorizacaoResponse : AbstractActionModel, IActionResponse
     {
 
         public PreAutorizacaoResponse(Terminal terminal)
         {
-            rede = new Rede(terminal);
-            confirmacao = new DadosDeConfirmacao(terminal);
-            respostaSiTef = new CodigoDeRespostaSiTef(terminal);
-            textoExibicao = new TextoParaExibicao(terminal);
-            respostaInstituicao = new CodigoRespostaInstituicao(terminal);
-            data = new Data(terminal);
-            hora = new Hora(terminal);
-            nsuHost = new NSUHost(terminal);
-            codigoEstabelecimento = new CodigoDoEstabelecimento(terminal);
-            autorizacao = new NumeroAutorizacao(terminal);
-            nomeInstituicao = new NomeDaInstituicao(terminal); //Nome da Institucao
-            nsuSiTef = new NSUSiTef(terminal); //NSU SiTef
-            cupom = new LinhasDeCupom(terminal); //Linhas de cupom
-            expiracao = new DataExpiracao(terminal); //Data Expiracao REDECARD
-            
-            _fields = new List<IField>{
-                rede, confirmacao, respostaSiTef, textoExibicao, respostaInstituicao, data, hora,
-                nsuHost, codigoEstabelecimento, autorizacao, nomeInstituicao, nsuSiTef, cupom, expiracao
+            Rede = new Type.Rede(terminal);
+            DadosDeConfirmacao = new Type.DadosDeConfirmacao(terminal);
+            CodigoDeRespostaSiTef = new Type.CodigoDeRespostaSiTef(terminal);
+            TextoParaExibicao = new Type.TextoParaExibicao(terminal);
+            CodigoRespostaInstituicao = new Type.CodigoRespostaInstituicao(terminal);
+            Data = new Type.Data(terminal);
+            Hora = new Type.Hora(terminal);
+            NsuHost = new Type.NSUHost(terminal);
+            CodigoDoEstabelecimento = new Type.CodigoDoEstabelecimento(terminal);
+            NumeroAutorizacao = new Type.NumeroAutorizacao(terminal);
+            NomeDaInstituicao = new Type.NomeDaInstituicao(terminal); //Nome da Institucao
+            NSUSiTef = new Type.NSUSiTef(terminal); //NSU SiTef
+            LinhasDeCupom = new Type.LinhasDeCupom(terminal); //Linhas de cupom
+            DataExpiracao = new Type.DataExpiracao(terminal); //Data Expiracao REDECARD
+
+            _fields = new List<Type.IField>{
+                Rede, DadosDeConfirmacao, CodigoDeRespostaSiTef, TextoParaExibicao, CodigoRespostaInstituicao, Data, Hora,
+                NsuHost, CodigoDoEstabelecimento, NumeroAutorizacao, NomeDaInstituicao, NSUSiTef, LinhasDeCupom, DataExpiracao
             };
         }
 
-        public Rede rede { get; set; }
+        public Type.Rede Rede { get; set; }
 
-        public DadosDeConfirmacao confirmacao { get; set; }
+        public Type.DadosDeConfirmacao DadosDeConfirmacao { get; set; }
 
-        public CodigoDeRespostaSiTef respostaSiTef { get; set; }
+        public Type.CodigoDeRespostaSiTef CodigoDeRespostaSiTef { get; set; }
 
-        public TextoParaExibicao textoExibicao { get; set; }
+        public Type.TextoParaExibicao TextoParaExibicao { get; set; }
 
-        public CodigoRespostaInstituicao respostaInstituicao { get; set; }
+        public Type.CodigoRespostaInstituicao CodigoRespostaInstituicao { get; set; }
 
-        public Data data { get; set; }
+        public Type.Data Data { get; set; }
 
-        public Hora hora { get; set; }
+        public Type.Hora Hora { get; set; }
 
-        public NSUHost nsuHost { get; set; }
+        public Type.NSUHost NsuHost { get; set; }
 
-        public CodigoDoEstabelecimento codigoEstabelecimento { get; set; }
+        public Type.CodigoDoEstabelecimento CodigoDoEstabelecimento { get; set; }
 
-        public NumeroAutorizacao autorizacao { get; set; }
+        public Type.NumeroAutorizacao NumeroAutorizacao { get; set; }
 
-        public NomeDaInstituicao nomeInstituicao { get; set; }
+        public Type.NomeDaInstituicao NomeDaInstituicao { get; set; }
 
-        public NSUSiTef nsuSiTef { get; set; }
+        public Type.NSUSiTef NSUSiTef { get; set; }
 
-        public LinhasDeCupom cupom { get; set; }
+        public Type.LinhasDeCupom LinhasDeCupom { get; set; }
 
-        public DataExpiracao expiracao { get; set; }
+        public Type.DataExpiracao DataExpiracao { get; set; }
+
+        public bool Failure()
+        {
+            return !CodigoDeRespostaSiTef.Approved();
+        }
+
+
+        public string Message()
+        {
+            return TextoParaExibicao.Value;
+        }
     }
 }

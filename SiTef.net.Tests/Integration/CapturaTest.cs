@@ -36,7 +36,13 @@ namespace SiTef.net.Tests.Integration
                     null,
                     new CodigoDeSeguranca("1234")
                 ));
+
+                Console.WriteLine("-------------------------");
+                foreach (var field in autorizacao.GetFields())
+                    Console.WriteLine(field);
+
             }
+            
 
             using(var term = factory.NewInstance()){
                 var captura = new CapturaPreAutorizacaoAction(term);
@@ -45,14 +51,14 @@ namespace SiTef.net.Tests.Integration
                         new DataDeVencimento(12,15),
                         new Valor("10000"),
                         new DataDaTransacao(new DateTime()),
-                        autorizacao.autorizacao,
-                        autorizacao.nsuHost,
+                        autorizacao.NumeroAutorizacao,
+                        autorizacao.NsuHost,
                         null,
                         new TipoDeFinanciamento(1),
                         null,
                         new CodigoDeSeguranca("123")
                     ));
-
+                Console.WriteLine("-------------------------");
                 foreach (var field in result.GetFields())
                     System.Console.WriteLine(field);
             }

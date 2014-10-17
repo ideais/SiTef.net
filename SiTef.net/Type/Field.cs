@@ -57,7 +57,8 @@ namespace SiTef.net.Type
         /// </summary>
         /// <param name="terminal"></param>
         public void WriteTo(Terminal terminal){
-            terminal.GravaCampo((IntPtr)Id,Format());
+            if( Value != null )
+                terminal.GravaCampo((IntPtr)Id,Format());
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace SiTef.net.Type
                 this.WireValue = terminal.LeCampo(id, length);
             }
             catch (TerminalException ex) {
-                //System.Diagnostics.Trace.(ex.Message);
+                Console.Error.WriteLine(String.Format("{0} {1}", Label != null ? Label : GetType().Name, ex.Message));
             }
         }
 
@@ -92,7 +93,7 @@ namespace SiTef.net.Type
 
         public override string ToString()
         {
-            if (Value != null)
+            if (Value != null )
                 return String.Format("{2}({0})\n{1}", Id, Value, Label != null ? Label : this.GetType().Name);
             return "null";
         }
@@ -170,7 +171,7 @@ namespace SiTef.net.Type
                 throw new ArgumentException(String.Format("{0} exceeds the maximum length: {1}", value.Length, length), "value");
 
             if (pattern != null && !Regex.IsMatch(value, pattern))
-                throw new ArgumentException("format not valid");
+                throw new ArgumentException("format not valid","value");
         
         }
 
@@ -557,6 +558,21 @@ namespace SiTef.net.Type
         public static short ID = 76;
         public static short LENGTH = 80;
         public LinhasDeCupom(Terminal terminal)
+            : base(ID, LENGTH, terminal)
+        {
+            while (terminal.ExistemMaisElementos(ID))
+                Value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
+        }
+    }
+
+    /// <summary>
+    /// Linha que compõe o cupom da transação. Se repete até completar o cupom. 
+    /// </summary>
+    public class LinhasDeCupomEstabelecimento : StringField
+    {
+        public static short ID = 80;
+        public static short LENGTH = 80;
+        public LinhasDeCupomEstabelecimento(Terminal terminal)
             : base(ID, LENGTH, terminal)
         {
             while (terminal.ExistemMaisElementos(ID))

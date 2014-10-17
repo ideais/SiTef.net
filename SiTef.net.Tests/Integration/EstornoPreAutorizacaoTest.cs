@@ -51,8 +51,8 @@ namespace SiTef.net.Tests.Integration
                         vencimento,
                         valor,
                         new DataDaTransacao(DateTime.Now),
-                        autorizacao.autorizacao,
-                        autorizacao.nsuHost,
+                        autorizacao.NumeroAutorizacao,
+                        autorizacao.NsuHost,
                         cvv
                     ));
                 foreach (var field in response.GetFields())

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SiTef.net.Action.Model
 {
-    public abstract class AbstractActionModel : IActionModel
+    public abstract class AbstractActionModel : IActionRequest
     {
 
         protected AbstractActionModel()

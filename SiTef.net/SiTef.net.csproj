@@ -64,6 +64,7 @@
     <Compile Include="Action\Model\ConsultaCartaoResponse.cs" />
     <Compile Include="Action\VendaSiTefAction.cs" />
     <Compile Include="Action\ActionType.cs" />
+    <Compile Include="Exceptions\ActionException.cs" />
     <Compile Include="Exceptions\TerminalException.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="TerminalFactory.cs" />
