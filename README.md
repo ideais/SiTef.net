@@ -52,6 +52,17 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
+Versão **0.0.0.10**
+
+* Campo _Valor_ herda de _NumericField_ agora.
+
+Versão **0.0.0.9**
+
+* Ação de Venda
+* Ação de Finaliza Tranzação
+ * Confirma Venda
+ * Cancela Venda
+
 Versão **0.0.0.8**
 
 * Refactoring de Field, agora tipificado com Generics e criação de tipos Base comuns
