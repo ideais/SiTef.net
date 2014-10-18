@@ -30,7 +30,7 @@ namespace SiTef.net.Tests.Integration
                     null,
                     new NumeroDoCartao("4929208425739710"),
                     new DataDeVencimento(12,15),
-                    new Valor("10000"),
+                    new Valor(100.00),
                     null,
                     new CodigoDeSeguranca("123")
                 ));

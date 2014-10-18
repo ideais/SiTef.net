@@ -22,18 +22,21 @@ namespace SiTef.net.Type
         public short Id { get; set; }
         public string WireValue { get; set; }
         private T _value;
-        public T Value { get {
-            if (_value != null)
+        public T Value
+        {
+            get
+            {
+                if (_value != null)
+                    return _value;
+
+
+                if (_value == null && WireValue != null)
+                    _value = Convert(WireValue);
+                else
+                    return default(T);
+
                 return _value;
-
-
-            if (_value == null && WireValue != null)
-                _value = Convert(WireValue);
-            else
-                return default(T);
-
-            return _value;
-        }
+            }
             set { _value = value; }
         }
         public int Length { get; set; }
@@ -56,9 +59,10 @@ namespace SiTef.net.Type
         /// efetuando as conversões necessárias;
         /// </summary>
         /// <param name="terminal"></param>
-        public void WriteTo(Terminal terminal){
-            if( Value != null )
-                terminal.GravaCampo((IntPtr)Id,Format());
+        public void WriteTo(Terminal terminal)
+        {
+            if (Value != null)
+                terminal.GravaCampo((IntPtr)Id, Format());
         }
 
         /// <summary>
@@ -67,14 +71,16 @@ namespace SiTef.net.Type
         /// <param name="id">ID do Campo</param>
         /// <param name="length">Tamanho do Campo</param>
         /// <param name="terminal">Terminal de onde o campo será lido</param>
-        public Field( short id, int length, Terminal terminal) {
+        public Field(short id, int length, Terminal terminal)
+        {
             this.Id = id;
             this.Length = length;
             try
             {
                 this.WireValue = terminal.LeCampo(id, length);
             }
-            catch (TerminalException ex) {
+            catch (TerminalException ex)
+            {
                 Console.Error.WriteLine(String.Format("{0} {1}", Label != null ? Label : GetType().Name, ex.Message));
             }
         }
@@ -93,7 +99,7 @@ namespace SiTef.net.Type
 
         public override string ToString()
         {
-            if (Value != null )
+            if (Value != null)
                 return String.Format("{2}({0})\n{1}", Id, Value, Label != null ? Label : this.GetType().Name);
             return "null";
         }
@@ -110,20 +116,23 @@ namespace SiTef.net.Type
 
         public string FalseValue { get; set; }
 
-        public BooleanField(short id, bool value, short length, string trueValue, string falseValue) : base(id, value, length)
+        public BooleanField(short id, bool value, short length, string trueValue, string falseValue)
+            : base(id, value, length)
         {
             TrueValue = trueValue;
             FalseValue = falseValue;
         }
 
-        public BooleanField(short id, int length, Terminal terminal, string trueValue, string falseValue) : base(id, length, terminal) {
+        public BooleanField(short id, int length, Terminal terminal, string trueValue, string falseValue)
+            : base(id, length, terminal)
+        {
             TrueValue = trueValue;
             FalseValue = falseValue;
         }
 
         public override bool? Convert(string value)
         {
-            if(value == null)
+            if (value == null)
                 return null;
             return value.Equals(TrueValue);
         }
@@ -159,7 +168,8 @@ namespace SiTef.net.Type
         /// <param name="value">Valor</param>
         /// <param name="length">Tamanho máximo do campo</param>
         /// <param name="pattern">RegExp para validação</param>
-        protected StringField(short id, string value, short length, string pattern) : base( id, value, length ) 
+        protected StringField(short id, string value, short length, string pattern)
+            : base(id, value, length)
         {
             if (value == null)
                 throw new ArgumentNullException();
@@ -171,15 +181,17 @@ namespace SiTef.net.Type
                 throw new ArgumentException(String.Format("{0} exceeds the maximum length: {1}", value.Length, length), "value");
 
             if (pattern != null && !Regex.IsMatch(value, pattern))
-                throw new ArgumentException("format not valid","value");
-        
+                throw new ArgumentException("format not valid", "value");
+
         }
 
         public StringField(short id, string value, int length) : base(id, value, length) { }
 
-        public StringField(short id, int length, Terminal terminal) : base(id, length, terminal) {
+        public StringField(short id, int length, Terminal terminal)
+            : base(id, length, terminal)
+        {
             while (terminal.ExistemMaisElementos(id))
-                Value += String.Format("\n{0}",terminal.LeCampo(id, length));
+                Value += String.Format("\n{0}", terminal.LeCampo(id, length));
         }
 
         public override string Convert(string value)
@@ -206,11 +218,13 @@ namespace SiTef.net.Type
         /// </summary>
         public bool Padding { get; set; }
 
-        public NumericField(short id, int value, int length, bool padding) : base(id, value, length) {
+        public NumericField(short id, int value, int length, bool padding)
+            : base(id, value, length)
+        {
             this.Padding = padding;
         }
         public NumericField(short id, int value, int length) : this(id, value, length, true) { }
-        public NumericField(short id, int length, Terminal terminal) : base(id, length, terminal) { } 
+        public NumericField(short id, int length, Terminal terminal) : base(id, length, terminal) { }
 
         public override int? Convert(string value)
         {
@@ -238,11 +252,15 @@ namespace SiTef.net.Type
         /// </summary>
         public string Pattern { get; set; }
 
-        public DateField(short id, DateTime? data, int length, string format) : base(id, data, length) {
+        public DateField(short id, DateTime? data, int length, string format)
+            : base(id, data, length)
+        {
             Pattern = format;
         }
 
-        public DateField(short id, int day, int month, int year, int length, string format) : base (id, new DateTime(year, month, day), length) {
+        public DateField(short id, int day, int month, int year, int length, string format)
+            : base(id, new DateTime(year, month, day), length)
+        {
             Pattern = format;
         }
 
@@ -264,7 +282,7 @@ namespace SiTef.net.Type
 
         public override string Format()
         {
-            if( Value != null )
+            if (Value != null)
                 return ((DateTime)Value).ToString(Pattern);
             return null;
         }
@@ -275,7 +293,7 @@ namespace SiTef.net.Type
                 return base.ToString();
 
             return String.Format("{1}({0})\nData Inválida, ou Null", Id, Label != null ? Label : this.GetType().Name);
-             
+
         }
     }
 
@@ -288,7 +306,7 @@ namespace SiTef.net.Type
         public static short LENGTH = 4;
         public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(int codigo) : base(1, codigo, LENGTH) { }
-        
+
         public static Rede TECHAN = new Rede(1);
         public static Rede REDE = new Rede(5);
         public static Rede AMEX = new Rede(6);
@@ -374,9 +392,14 @@ namespace SiTef.net.Type
     /// Valor da Compra deve ser enviado com duas casas decimais, porém sem a virgula.
     /// Para pagamento de contas: Este campo será repetido tantas vezes quanto for o número de Documentos pagos
     /// </summary>
-    public class Valor : StringField
+    public class Valor : NumericField
     {
-        public Valor(string quantia) : base(7, quantia, 12, @"^\d*$") { }
+        public static short ID = 7;
+        public static short LENGTH = 12;
+        public Valor(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public Valor(int quantia) : base(ID, quantia * 100, LENGTH) { }
+        public Valor(double quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
+        public Valor(decimal quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
     }
 
     /// <summary>
@@ -555,7 +578,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 76;
         public static short LENGTH = 80;
-        public LinhasDeCupom(Terminal terminal) : base(ID, LENGTH, terminal) {}
+        public LinhasDeCupom(Terminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -612,8 +635,8 @@ namespace SiTef.net.Type
     {
         public const short ID = 147;
         public const int LENGTH = 8;
-        
-        public DataFiscal(DateTime data) : base(ID,data,8,"ddMMyyy") { }
+
+        public DataFiscal(DateTime data) : base(ID, data, 8, "ddMMyyy") { }
         public DataFiscal(Terminal terminal) : base(ID, terminal) { }
     }
 
@@ -628,7 +651,7 @@ namespace SiTef.net.Type
 
         public HoraFiscal(DateTime hora) : base(ID, hora, LENGTH, PATTERN) { }
 
-        public HoraFiscal(short horas, short minutos, short segundos) : this(new DateTime()){ }
+        public HoraFiscal(short horas, short minutos, short segundos) : this(new DateTime()) { }
     }
 
     /// <summary>

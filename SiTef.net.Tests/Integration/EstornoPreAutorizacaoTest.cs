@@ -23,7 +23,7 @@ namespace SiTef.net.Tests.Integration
 
             var cartao = new NumeroDoCartao("4929208425739710");
             var vencimento = new DataDeVencimento(12,15);
-            var valor = new Valor("10000");
+            var valor = new Valor(100.00);
             var cvv = new CodigoDeSeguranca("123");
 
             PreAutorizacaoResponse autorizacao;

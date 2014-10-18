@@ -35,7 +35,7 @@ namespace SiTef.net.Tests.Integration
                     new NumeroDoCartao("4024007122405250"),
                     new DataDeVencimento(12, 15),
                     new CodigoDeSeguranca("123"),
-                    new Valor("10000")
+                    new Valor(100.00)
                     );
                 
                 response = action.Execute(request);
