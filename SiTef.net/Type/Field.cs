@@ -177,7 +177,10 @@ namespace SiTef.net.Type
 
         public StringField(short id, string value, int length) : base(id, value, length) { }
 
-        public StringField(short id, int length, Terminal terminal) : base(id, length, terminal) { }
+        public StringField(short id, int length, Terminal terminal) : base(id, length, terminal) {
+            while (terminal.ExistemMaisElementos(id))
+                Value += String.Format("\n{0}",terminal.LeCampo(id, length));
+        }
 
         public override string Convert(string value)
         {
@@ -414,12 +417,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 11;
         public static short LENGTH = 64;
-        public TextoParaExibicao(Terminal terminal)
-            : base(ID, LENGTH, terminal)
-        {
-            while (terminal.ExistemMaisElementos(ID))
-                Value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
-        }
+        public TextoParaExibicao(Terminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -557,12 +555,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 76;
         public static short LENGTH = 80;
-        public LinhasDeCupom(Terminal terminal)
-            : base(ID, LENGTH, terminal)
-        {
-            while (terminal.ExistemMaisElementos(ID))
-                Value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
-        }
+        public LinhasDeCupom(Terminal terminal) : base(ID, LENGTH, terminal) {}
     }
 
     /// <summary>
@@ -572,12 +565,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 80;
         public static short LENGTH = 80;
-        public LinhasDeCupomEstabelecimento(Terminal terminal)
-            : base(ID, LENGTH, terminal)
-        {
-            while (terminal.ExistemMaisElementos(ID))
-                Value += String.Format("\n{0}", terminal.LeCampo(ID, LENGTH));
-        }
+        public LinhasDeCupomEstabelecimento(Terminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -603,6 +591,21 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// ‘0’ – Confirma a transação
+    /// ‘1’ – Cancela a Transação
+    /// </summary>
+    public class TipoConfirmacao : NumericField
+    {
+        public static short ID = 85;
+        public static short LENGTH = 1;
+        public TipoConfirmacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        private TipoConfirmacao(int tipo) : base(ID, tipo, LENGTH) { }
+
+        public static TipoConfirmacao CONFIRMA = new TipoConfirmacao(0);
+        public static TipoConfirmacao CANCELA = new TipoConfirmacao(1);
+    }
+
+    /// <summary>
     /// Data da impressora fiscal (Onde DD=dia, MM=mês e AAAA=ano).
     /// </summary>
     public class DataFiscal : DateField
@@ -617,15 +620,15 @@ namespace SiTef.net.Type
     /// <summary>
     /// Hora da impressora fiscal (Onde HH=hora, MM=minuto e SS=segundo).
     /// </summary>
-    public class HoraFiscal : StringField
+    public class HoraFiscal : DateField
     {
-        const string PATTERN = @"^[0-2]\d[0-5]\d[0-5]\d$";
+        const string PATTERN = @"HHmmss";
         const short ID = 148;
         const short LENGTH = 6;
 
-        public HoraFiscal(string hora) : base(ID, hora, LENGTH, PATTERN) { }
+        public HoraFiscal(DateTime hora) : base(ID, hora, LENGTH, PATTERN) { }
 
-        public HoraFiscal(short horas, short minutos, short segundos) : base(ID, String.Format("{0}{1}{2}", horas, minutos, segundos), LENGTH, PATTERN) { }
+        public HoraFiscal(short horas, short minutos, short segundos) : this(new DateTime()){ }
     }
 
     /// <summary>
@@ -696,10 +699,51 @@ namespace SiTef.net.Type
     /// ‘2’: Transação Digitada
     /// ‘6’: EGift (Utilizado pela rede Hug nas transações de consulta de saldo, venda e cancelamento de venda com cartões GIFT)
     /// </summary>
-    public class TipoOperacaoDeVenda : StringField
+    public class TipoOperacaoDeVenda : NumericField
     {
         public static short ID = 379;
         public TipoOperacaoDeVenda(Terminal terminal) : base(ID, 1, terminal) { }
+    }
+
+    /// <summary>
+    /// Campo indicativo das formas de pagamento disponíveis (recebimento) ou utilizadas (envio).
+    /// 
+    ///  Transações Gift(Recebido na resposta da transação Recarga)
+    ///  . Será retornado n registros no formato: FF:CC1-CC2...-CCn onde:
+    ///  
+    /// FF – Indica a forma de pgto Permitida.
+    /// CC - indica o ID do dado que o PDV deve enviar ao módulo Sitef na confirmação 
+    /// 
+    /// OBS: Poderá ser retornado registro com apenas o campo FF ou com apenas 1 campo CC:
+    /// Ex: 00
+    /// 02:10
+    /// 
+    /// - Transações Gift(Enviado na confirmação) 
+    /// . A aplicação da Automação Comercial deverá enviar cada forma de pagamento utilizada no seguinte formato:
+    /// 
+    /// FF:Valor:CC:Dado a enviar..CC:Dado a enviar
+    /// 
+    /// Onde:
+    /// FF - Indica a forma de pgto Utilizada.
+    /// 
+    /// Valor – Valor da transação.
+    /// 
+    /// CC - indica o ID do dado que o PDV deve enviar
+    /// 
+    /// Dado a enviar – Dado a ser enviado ao Sitef, conforme o CC.
+    /// 
+    /// Ex: Utilizando forma de pgto ‘00’ e ‘02’ com valor de 5,00:
+    /// 00:500
+    /// 02:500:10:0319190013DQ
+    /// 
+    /// (Consulte documento “Novos serviço e prefixo de Formas de Pagamento.doc”)
+    /// </summary>
+    public class FormasDePagamento : StringField
+    {
+        public static short ID = 545;
+        public static short LENGTH = 200;
+        public FormasDePagamento(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public FormasDePagamento(string formas) : base(ID, formas, LENGTH) { }
     }
 
     /// <summary>

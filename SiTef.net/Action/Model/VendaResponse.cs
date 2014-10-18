@@ -9,11 +9,10 @@ namespace SiTef.net.Action.Model
     /// <summary>
     /// Resposta de uma requisição de Venda à Crédito
     /// </summary>
-    public class VendaSiTefResponse : AbstractActionModel, IActionResponse
+    public class VendaResponse : AbstractActionModel, IActionResponse
     {
-        public VendaSiTefResponse(Terminal terminal)
+        public VendaResponse(Terminal terminal)
         {
-
                 Rede = new Type.Rede(terminal);
                 DadosDeConfirmacao = new Type.DadosDeConfirmacao(terminal);
                 CodigoDeRespostaSiTef = new Type.CodigoDeRespostaSiTef(terminal);
@@ -28,9 +27,12 @@ namespace SiTef.net.Action.Model
                 LinhasDeCupom = new Type.LinhasDeCupom(terminal);
                 LinhasDeCupomEstabelecimento = new Type.LinhasDeCupomEstabelecimento(terminal);
                 TextoExibicaoVisorCliente = new Type.StringField(409, 64, terminal) { Label = "Texto para Exibição no Visor do Cliente" };
+            
             _fields = new List<Type.IField>
             {
-                
+                Rede, DadosDeConfirmacao, CodigoDeRespostaSiTef, TextoParaExibicao, CodigoRespostaInstituicao,
+                Data, Hora, NSUHost, CodigoDoEstabelecimento, NumeroAutorizacao, NSUSiTef, LinhasDeCupom,
+                LinhasDeCupomEstabelecimento, TextoExibicaoVisorCliente
             };
         }
 

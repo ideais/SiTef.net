@@ -34,10 +34,7 @@ namespace SiTef.net.Action
             _terminal.Executa(_action);
             
             N response = ReadOutput();
-
-            if (response.Failure())
-                throw new ActionException(response.Message());
-
+                        
             return response;
         }
 
