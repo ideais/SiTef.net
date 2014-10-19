@@ -416,7 +416,9 @@ namespace SiTef.net.Type
     public class DadosDeConfirmacao : StringField
     {
         public static short ID = 9;
-        public DadosDeConfirmacao(Terminal terminal) : base(ID, 128, terminal) { }
+        public static short LENGTH = 128;
+        public DadosDeConfirmacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public DadosDeConfirmacao(string dados) : base(ID, dados, LENGTH) { } 
     }
 
     /// <summary>
