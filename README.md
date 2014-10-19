@@ -40,7 +40,7 @@ Exemplo de operação de consulta às informações do cartão do usuário:
         ConsultaCartaoResponse response = action.Execute(
             new ConsultaCartaoRequest(
                 new NumeroDoCartao("4000000000000044"),
-                new DataDeVencimento("1215")
+                new DataDeVencimento(12,15)
             )
         );
         foreach (var field in response.GetFields())
@@ -51,6 +51,10 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 
 Changelog
 ---------
+
+Versão **0.0.0.11*
+
+* BugFix - DadosDeConfirmação precisa ter um construtor que receba o valor String. 
 
 Versão **0.0.0.10**
 
