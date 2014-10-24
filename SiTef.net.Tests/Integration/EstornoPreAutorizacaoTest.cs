@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SiTef.net.Type;
 using SiTef.net.Action.Model;
 using SiTef.net.Action;
+using SiTef.net.Pool;
 
 namespace SiTef.net.Tests.Integration
 {

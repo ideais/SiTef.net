@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SiTef.net
+namespace SiTef.net.Pool
 {
     public class TerminalFactory
     {
@@ -43,7 +43,7 @@ namespace SiTef.net
         private int _term = 0;
         private string NextTerm()
         {
-            if (_term++ > 99999999) _term = 1;
+            if (_term++ > ( Offset + Range + _term )) _term = 1;
             return _term.ToString("D8");
         }
     }

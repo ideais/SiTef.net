@@ -69,8 +69,13 @@
     <Compile Include="Action\ActionType.cs" />
     <Compile Include="Exceptions\ActionException.cs" />
     <Compile Include="Exceptions\TerminalException.cs" />
+    <Compile Include="ITerminal.cs" />
+    <Compile Include="Pool\AbstractTerminalPool.cs" />
+    <Compile Include="Pool\ITerminalPool.cs" />
+    <Compile Include="Pool\model\TerminalLease.cs" />
     <Compile Include="Terminal.cs" />
-    <Compile Include="TerminalFactory.cs" />
+    <Compile Include="Pool\ITerminalRepository.cs" />
+    <Compile Include="Pool\TerminalFactory.cs" />
     <Compile Include="Type\Field.cs" />
     <Compile Include="SiTef.cs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

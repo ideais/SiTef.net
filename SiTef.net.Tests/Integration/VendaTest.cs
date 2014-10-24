@@ -4,6 +4,7 @@ using SiTef.net.Action;
 using SiTef.net.Action.Model;
 using SiTef.net.Type;
 using SiTef.net.Exceptions;
+using SiTef.net.Pool;
 
 namespace SiTef.net.Tests.Integration
 {

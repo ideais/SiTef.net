@@ -11,14 +11,19 @@ namespace SiTef.net
     /// <summary>
     /// Wrapper para operações utilizando a LibSitef
     /// </summary>
-    public class Terminal : IDisposable
+    public class Terminal : ITerminal
     {
         private IntPtr term;
 
         private int transaction;
 
+        private List<System.Action<string>> DisposeCallbacks;
+
+        private string _terminal;
+
         public Terminal(string servidor, string terminal, string empresa)
         {
+            _terminal = terminal;
             term = SiTef.IniciaTerminal(servidor, terminal, empresa);
             if (IntPtr.Zero == term)
                 throw new TerminalException("unable to initialize terminal");
@@ -79,6 +84,14 @@ namespace SiTef.net
         public void Dispose()
         {
             SiTef.FinalizaTerminal(term);
+            foreach (var action in DisposeCallbacks)
+                action(_terminal);
+        }
+
+
+        public void AddDisposeCallback(Action<string> callback)
+        {
+            DisposeCallbacks.Add(callback);
         }
     }
 }
