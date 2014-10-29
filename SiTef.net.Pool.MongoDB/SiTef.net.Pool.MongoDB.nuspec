@@ -8,13 +8,13 @@
     <owners>B2W Digital</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
     <projectUrl>https://github.com/ideais/SiTef.net</projectUrl>
-    <!--iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl-->
+    <!-- iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-BugFix - DadosDeConfirmacao precisa de um construtor que receba String
+Primeiro release
     </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
-    <tags>sitef commerce payment creditcard</tags>
+    <tags>sitef mongodb</tags>
   </metadata>
 </package>
