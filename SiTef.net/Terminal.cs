@@ -17,19 +17,25 @@ namespace SiTef.net
 
         private int transaction;
 
-        private List<System.Action<string>> DisposeCallbacks;
+        private List<System.Action<ITerminal>> DisposeCallbacks;
 
         private string _terminal;
+        public string Id { get { return _terminal; } set { _terminal = value; } }
+        public string Empresa { get; set; }
+        public string Servidor { get; set; }
 
         public Terminal(string servidor, string terminal, string empresa)
         {
             _terminal = terminal;
+            Servidor = servidor;
+            Empresa = empresa;
             term = SiTef.IniciaTerminal(servidor, terminal, empresa);
+            DisposeCallbacks = new List<System.Action<ITerminal>>();
             if (IntPtr.Zero == term)
                 throw new TerminalException("unable to initialize terminal");
             IniciaTransacao();
         }
-        
+
         public void IniciaTransacao()
         {
             transaction = SiTef.IniciaTransacao(term);
@@ -59,7 +65,7 @@ namespace SiTef.net
             if (result < 0)
                 throw new TerminalException(DescricaoErro(result));
             if (valor.Length < length) length = valor.Length;
-            return valor.ToString().Substring(0,length);
+            return valor.ToString().Substring(0, length);
         }
 
         public bool ExistemMaisElementos(int campo)
@@ -85,11 +91,11 @@ namespace SiTef.net
         {
             SiTef.FinalizaTerminal(term);
             foreach (var action in DisposeCallbacks)
-                action(_terminal);
+                action(this);
         }
 
 
-        public void AddDisposeCallback(Action<string> callback)
+        public void AddDisposeCallback(Action<ITerminal> callback)
         {
             DisposeCallbacks.Add(callback);
         }

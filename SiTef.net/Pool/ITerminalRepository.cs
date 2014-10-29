@@ -9,7 +9,7 @@ namespace SiTef.net.Pool
 {
     public interface ITerminalRepository
     {
-        List<TerminalLease> Lease(string id, int quantity);
-        void Release(List<TerminalLease> leases);
+        TerminalLease Lease(string id);
+        void Release(string terminal);
     }
 }

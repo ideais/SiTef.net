@@ -17,8 +17,8 @@ namespace SiTef.net.Pool
         /// <summary>
         /// Devolve o terminal ao Pool
         /// </summary>
-        /// <param name="terminal">ID do Terminal a ser devolvido</param>
+        /// <param name="terminal">Terminal a ser devolvido</param>
         /// <returns></returns>
-        void ReleaseTerminal(string terminal);
+        void ReleaseTerminal(ITerminal terminal);
     }
 }

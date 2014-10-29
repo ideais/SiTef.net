@@ -70,7 +70,7 @@
     <Compile Include="Exceptions\ActionException.cs" />
     <Compile Include="Exceptions\TerminalException.cs" />
     <Compile Include="ITerminal.cs" />
-    <Compile Include="Pool\AbstractTerminalPool.cs" />
+    <Compile Include="Pool\TerminalPool.cs" />
     <Compile Include="Pool\ITerminalPool.cs" />
     <Compile Include="Pool\model\TerminalLease.cs" />
     <Compile Include="Terminal.cs" />

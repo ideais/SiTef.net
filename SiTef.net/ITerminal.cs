@@ -23,7 +23,10 @@ namespace SiTef.net
 
         void FinalizaTerminal();
 
-        void AddDisposeCallback(System.Action<string> callback);
+        void AddDisposeCallback(System.Action<ITerminal> callback);
 
+        string Id { get; set; }
+        string Servidor { get; set; }
+        string Empresa { get; set; }
     }
 }
