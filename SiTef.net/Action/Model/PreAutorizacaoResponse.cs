@@ -8,7 +8,7 @@ namespace SiTef.net.Action.Model
     public class PreAutorizacaoResponse : AbstractActionModel, IActionResponse
     {
 
-        public PreAutorizacaoResponse(Terminal terminal)
+        public PreAutorizacaoResponse(ITerminal terminal)
         {
             Rede = new Type.Rede(terminal);
             DadosDeConfirmacao = new Type.DadosDeConfirmacao(terminal);

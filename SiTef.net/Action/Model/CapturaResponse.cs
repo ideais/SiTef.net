@@ -8,7 +8,7 @@ namespace SiTef.net.Action.Model
     public class CapturaResponse : AbstractActionModel , IActionResponse
     {
 
-        public CapturaResponse(Terminal terminal)
+        public CapturaResponse(ITerminal terminal)
         {
             // Rede 1
             Rede = new Type.Rede(terminal);

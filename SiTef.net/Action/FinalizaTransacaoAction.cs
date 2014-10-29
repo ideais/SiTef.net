@@ -11,7 +11,7 @@ namespace SiTef.net.Action
     /// </summary>
     public class FinalizaTransacaoAction : AbstractAction<Model.FinalizaTransacaoRequest, Model.NullResponse>
     {
-        public FinalizaTransacaoAction(Terminal terminal) : base(ActionType.FINALIZA_TRANSACAO, terminal) { }
+        public FinalizaTransacaoAction(ITerminal terminal) : base(ActionType.FINALIZA_TRANSACAO, terminal) { }
 
         protected override Model.NullResponse ReadOutput()
         {

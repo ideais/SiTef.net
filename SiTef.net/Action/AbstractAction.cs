@@ -12,11 +12,11 @@ namespace SiTef.net.Action
 {
     public abstract class AbstractAction<M,N> : IAction<M,N> where M : IActionRequest where N : IActionResponse
     {
-        protected Terminal _terminal;
+        protected ITerminal _terminal;
 
         private short _action;
 
-        public AbstractAction(short action, Terminal terminal)
+        public AbstractAction(short action, ITerminal terminal)
         {
             _action = action;
             _terminal = terminal;

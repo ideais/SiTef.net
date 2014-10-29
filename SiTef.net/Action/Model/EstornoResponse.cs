@@ -8,6 +8,6 @@ namespace SiTef.net.Action.Model
 {
     public class EstornoResponse : CapturaResponse
     {
-        public EstornoResponse(Terminal terminal) : base(terminal) { }
+        public EstornoResponse(ITerminal terminal) : base(terminal) { }
     }
 }

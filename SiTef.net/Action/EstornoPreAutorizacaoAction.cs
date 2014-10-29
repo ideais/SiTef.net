@@ -12,7 +12,7 @@ namespace SiTef.net.Action
     public class EstornoPreAutorizacaoAction : AbstractAction<Model.EstornoRequest, Model.EstornoResponse>
     {
 
-        public EstornoPreAutorizacaoAction(Terminal terminal) : base(ActionType.ESTORNO_PRE_AUTORIZACAO, terminal) { }
+        public EstornoPreAutorizacaoAction(ITerminal terminal) : base(ActionType.ESTORNO_PRE_AUTORIZACAO, terminal) { }
 
         protected override Model.EstornoResponse ReadOutput()
         {

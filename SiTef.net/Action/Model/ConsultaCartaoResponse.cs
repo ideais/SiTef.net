@@ -7,7 +7,7 @@ namespace SiTef.net.Action.Model
 {
     public class ConsultaCartaoResponse : AbstractActionModel, IActionResponse
     {
-        public ConsultaCartaoResponse(Terminal terminal)
+        public ConsultaCartaoResponse(ITerminal terminal)
         {
             Rede = new Type.Rede(terminal);
             CodigoDeRespostaSitef = new Type.CodigoDeRespostaSiTef(terminal);

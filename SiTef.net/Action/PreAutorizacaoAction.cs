@@ -14,7 +14,7 @@ namespace SiTef.net.Action
     public class PreAutorizacaoAction : AbstractAction<Model.PreAutorizacaoRequest, Model.PreAutorizacaoResponse>
     {
 
-        public PreAutorizacaoAction(Terminal terminal) : base(ActionType.PRE_AUTORIZACAO, terminal) { }
+        public PreAutorizacaoAction(ITerminal terminal) : base(ActionType.PRE_AUTORIZACAO, terminal) { }
 
         protected override Model.PreAutorizacaoResponse ReadOutput()
         {

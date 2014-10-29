@@ -7,7 +7,7 @@ namespace SiTef.net.Type
 
     public interface IField
     {
-        void WriteTo(Terminal terminal);
+        void WriteTo(ITerminal terminal);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ namespace SiTef.net.Type
         /// efetuando as conversões necessárias;
         /// </summary>
         /// <param name="terminal"></param>
-        public void WriteTo(Terminal terminal)
+        public void WriteTo(ITerminal terminal)
         {
             if (Value != null)
                 terminal.GravaCampo((IntPtr)Id, Format());
@@ -71,7 +71,7 @@ namespace SiTef.net.Type
         /// <param name="id">ID do Campo</param>
         /// <param name="length">Tamanho do Campo</param>
         /// <param name="terminal">Terminal de onde o campo será lido</param>
-        public Field(short id, int length, Terminal terminal)
+        public Field(short id, int length, ITerminal terminal)
         {
             this.Id = id;
             this.Length = length;
@@ -123,7 +123,7 @@ namespace SiTef.net.Type
             FalseValue = falseValue;
         }
 
-        public BooleanField(short id, int length, Terminal terminal, string trueValue, string falseValue)
+        public BooleanField(short id, int length, ITerminal terminal, string trueValue, string falseValue)
             : base(id, length, terminal)
         {
             TrueValue = trueValue;
@@ -150,7 +150,7 @@ namespace SiTef.net.Type
     public class ZeroOrOneField : BooleanField
     {
         public ZeroOrOneField(short id, bool value) : base(id, value, 1, "1", "0") { }
-        public ZeroOrOneField(short id, Terminal terminal) : base(id, 1, terminal, "1", "0") { }
+        public ZeroOrOneField(short id, ITerminal terminal) : base(id, 1, terminal, "1", "0") { }
     }
 
     /// <summary>
@@ -187,7 +187,7 @@ namespace SiTef.net.Type
 
         public StringField(short id, string value, int length) : base(id, value, length) { }
 
-        public StringField(short id, int length, Terminal terminal)
+        public StringField(short id, int length, ITerminal terminal)
             : base(id, length, terminal)
         {
             while (terminal.ExistemMaisElementos(id))
@@ -224,7 +224,7 @@ namespace SiTef.net.Type
             this.Padding = padding;
         }
         public NumericField(short id, int value, int length) : this(id, value, length, true) { }
-        public NumericField(short id, int length, Terminal terminal) : base(id, length, terminal) { }
+        public NumericField(short id, int length, ITerminal terminal) : base(id, length, terminal) { }
 
         public override int? Convert(string value)
         {
@@ -264,9 +264,9 @@ namespace SiTef.net.Type
             Pattern = format;
         }
 
-        public DateField(short id, int length, Terminal terminal) : base(id, length, terminal) { }
+        public DateField(short id, int length, ITerminal terminal) : base(id, length, terminal) { }
 
-        public DateField(short id, Terminal terminal) : this(id, 8, terminal) { }
+        public DateField(short id, ITerminal terminal) : this(id, 8, terminal) { }
 
         public override DateTime? Convert(string value)
         {
@@ -304,7 +304,7 @@ namespace SiTef.net.Type
     public class Rede : NumericField
     {
         public static short LENGTH = 4;
-        public Rede(Terminal terminal) : base(1, LENGTH, terminal) { }
+        public Rede(ITerminal terminal) : base(1, LENGTH, terminal) { }
         public Rede(int codigo) : base(1, codigo, LENGTH) { }
 
         public static Rede TECHAN = new Rede(1);
@@ -331,7 +331,7 @@ namespace SiTef.net.Type
     public class NumeroDeParcelas : NumericField
     {
         public static short LENGTH = 2;
-        public NumeroDeParcelas(Terminal terminal) : base(2, LENGTH, terminal) { }
+        public NumeroDeParcelas(ITerminal terminal) : base(2, LENGTH, terminal) { }
         public NumeroDeParcelas(int parcelas) : base(2, parcelas, LENGTH, false) { }
     }
 
@@ -396,7 +396,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 7;
         public static short LENGTH = 12;
-        public Valor(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public Valor(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public Valor(int quantia) : base(ID, quantia * 100, LENGTH) { }
         public Valor(double quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
         public Valor(decimal quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
@@ -417,7 +417,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 9;
         public static short LENGTH = 128;
-        public DadosDeConfirmacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public DadosDeConfirmacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public DadosDeConfirmacao(string dados) : base(ID, dados, LENGTH) { } 
     }
 
@@ -427,7 +427,7 @@ namespace SiTef.net.Type
     public class CodigoDeRespostaSiTef : StringField
     {
         public static short ID = 10;
-        public CodigoDeRespostaSiTef(Terminal terminal) : base(ID, 3, terminal) { }
+        public CodigoDeRespostaSiTef(ITerminal terminal) : base(ID, 3, terminal) { }
         public bool Approved()
         {
             return "000".Equals(Value);
@@ -442,7 +442,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 11;
         public static short LENGTH = 64;
-        public TextoParaExibicao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public TextoParaExibicao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -453,7 +453,7 @@ namespace SiTef.net.Type
     public class CodigoRespostaInstituicao : StringField
     {
         public static short ID = 12;
-        public CodigoRespostaInstituicao(Terminal terminal) : base(ID, 12, terminal) { }
+        public CodigoRespostaInstituicao(ITerminal terminal) : base(ID, 12, terminal) { }
     }
 
     /// <summary>
@@ -463,7 +463,7 @@ namespace SiTef.net.Type
     public class Data : StringField
     {
         public static short ID = 13;
-        public Data(Terminal terminal) : base(ID, 4, terminal) { }
+        public Data(ITerminal terminal) : base(ID, 4, terminal) { }
     }
 
     /// <summary>
@@ -476,7 +476,7 @@ namespace SiTef.net.Type
         public static short ID = 14;
         public static short LENGTH = 6;
         const string PATTERN = @"^[0-2]\d[0-5]\d[0-5]\d$";
-        public Hora(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public Hora(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public Hora(string hora) : base(ID, hora, LENGTH, PATTERN) { }
     }
 
@@ -489,7 +489,7 @@ namespace SiTef.net.Type
         public static short ID = 15;
         public static short LENGTH = 12;
         const string PATTERN = @"^\d*$";
-        public NSUHost(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NSUHost(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public NSUHost(string numero) : base(ID, numero, LENGTH, PATTERN) { }
     }
 
@@ -501,7 +501,7 @@ namespace SiTef.net.Type
         public static short ID = 16;
         public static short LENGTH = 15;
         const string PATTERN = @"^\d*$";
-        public CodigoDoEstabelecimento(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public CodigoDoEstabelecimento(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public CodigoDoEstabelecimento(string codigo) : base(ID, codigo, LENGTH, PATTERN) { }
     }
 
@@ -512,7 +512,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 17;
         public static short LENGTH = 6;
-        public NumeroAutorizacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NumeroAutorizacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public NumeroAutorizacao(String numero) : base(ID, numero, LENGTH, null) { }
     }
 
@@ -523,7 +523,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 21;
         public static short LENGTH = 16;
-        public NomeDaInstituicao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NomeDaInstituicao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -536,7 +536,7 @@ namespace SiTef.net.Type
         public static short ID = 22;
         public static short LENGTH = 6;
         const string PATTERN = @"^\d*$";
-        public NSUSiTef(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public NSUSiTef(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public NSUSiTef(string nsu) : base(ID, nsu, LENGTH, PATTERN) { }
     }
 
@@ -547,7 +547,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 23;
         public static short LENGTH = 5;
-        public BandeiraDoCartao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public BandeiraDoCartao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public BandeiraDoCartao(int value) : base(ID, value, LENGTH) { }
     }
 
@@ -558,7 +558,7 @@ namespace SiTef.net.Type
     public class TaxaServico : ZeroOrOneField
     {
         public static short ID = 27;
-        public TaxaServico(Terminal terminal) : base(ID, terminal) { }
+        public TaxaServico(ITerminal terminal) : base(ID, terminal) { }
         public TaxaServico(bool coletar) : base(ID, coletar) { }
     }
 
@@ -569,7 +569,7 @@ namespace SiTef.net.Type
     public class CapturaCodigoSeguranca : ZeroOrOneField
     {
         public static short ID = 33;
-        public CapturaCodigoSeguranca(Terminal terminal) : base(ID, terminal) { }
+        public CapturaCodigoSeguranca(ITerminal terminal) : base(ID, terminal) { }
         public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar) { }
     }
 
@@ -580,7 +580,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 76;
         public static short LENGTH = 80;
-        public LinhasDeCupom(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public LinhasDeCupom(ITerminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -590,7 +590,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 80;
         public static short LENGTH = 80;
-        public LinhasDeCupomEstabelecimento(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public LinhasDeCupomEstabelecimento(ITerminal terminal) : base(ID, LENGTH, terminal) { }
     }
 
     /// <summary>
@@ -604,7 +604,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 83;
         public static short LENGTH = 1;
-        public TipoTransacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public TipoTransacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         private TipoTransacao(int tipo) : base(ID, tipo, LENGTH) { }
 
         public static TipoTransacao VENDA = new TipoTransacao(0);
@@ -623,7 +623,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 85;
         public static short LENGTH = 1;
-        public TipoConfirmacao(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public TipoConfirmacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         private TipoConfirmacao(int tipo) : base(ID, tipo, LENGTH) { }
 
         public static TipoConfirmacao CONFIRMA = new TipoConfirmacao(0);
@@ -639,7 +639,7 @@ namespace SiTef.net.Type
         public const int LENGTH = 8;
 
         public DataFiscal(DateTime data) : base(ID, data, 8, "ddMMyyy") { }
-        public DataFiscal(Terminal terminal) : base(ID, terminal) { }
+        public DataFiscal(ITerminal terminal) : base(ID, terminal) { }
     }
 
     /// <summary>
@@ -690,7 +690,7 @@ namespace SiTef.net.Type
         public static short ID = 187;
         public static short LENGTH = 9;
         const string PATTERN = @"^\d*$";
-        public ValorTaxaDeServico(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public ValorTaxaDeServico(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public ValorTaxaDeServico(float value) : base(ID, (value * 100).ToString(), LENGTH, PATTERN) { }
         public ValorTaxaDeServico(string value) : base(ID, value, LENGTH, PATTERN) { }
 
@@ -704,7 +704,7 @@ namespace SiTef.net.Type
         public static short ID = 216;
         public static int LENGTH = 8;
 
-        public DataExpiracao(Terminal terminal) : base(ID, terminal) { }
+        public DataExpiracao(ITerminal terminal) : base(ID, terminal) { }
         public DataExpiracao(DateTime data) : base(ID, data, 8, "ddMMyyyy") { }
     }
 
@@ -715,7 +715,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 217;
 
-        public DataDaTransacao(Terminal terminal) : base(ID, terminal) { }
+        public DataDaTransacao(ITerminal terminal) : base(ID, terminal) { }
         public DataDaTransacao(DateTime data) : base(ID, data, 8, "ddMMyyyy") { }
     }
 
@@ -727,7 +727,7 @@ namespace SiTef.net.Type
     public class TipoOperacaoDeVenda : NumericField
     {
         public static short ID = 379;
-        public TipoOperacaoDeVenda(Terminal terminal) : base(ID, 1, terminal) { }
+        public TipoOperacaoDeVenda(ITerminal terminal) : base(ID, 1, terminal) { }
     }
 
     /// <summary>
@@ -767,7 +767,7 @@ namespace SiTef.net.Type
     {
         public static short ID = 545;
         public static short LENGTH = 200;
-        public FormasDePagamento(Terminal terminal) : base(ID, LENGTH, terminal) { }
+        public FormasDePagamento(ITerminal terminal) : base(ID, LENGTH, terminal) { }
         public FormasDePagamento(string formas) : base(ID, formas, LENGTH) { }
     }
 

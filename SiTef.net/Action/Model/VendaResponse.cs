@@ -11,7 +11,7 @@ namespace SiTef.net.Action.Model
     /// </summary>
     public class VendaResponse : AbstractActionModel, IActionResponse
     {
-        public VendaResponse(Terminal terminal)
+        public VendaResponse(ITerminal terminal)
         {
                 Rede = new Type.Rede(terminal);
                 DadosDeConfirmacao = new Type.DadosDeConfirmacao(terminal);
