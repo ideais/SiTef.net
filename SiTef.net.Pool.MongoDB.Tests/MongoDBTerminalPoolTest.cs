@@ -16,7 +16,7 @@ namespace SiTef.net.Pool.MongoDB.Tests
 @"
 for( var i = 0; i <= 9; i++ ){
     var n = i + '';
-    var terminal = n.length >= 1 ? n : new Array( 8 - n.length + 1).join('0') + n;
+    var terminal = n.length >= 8 ? n : new Array( 8 - n.length + 1).join('0') + n;
     db.terminais.insert({
         Terminal : terminal,
         Servidor : '127.0.0.1',
@@ -39,6 +39,12 @@ for( var i = 0; i <= 9; i++ ){
         [TestMethod]
         public void TestLease()
         {
+            using (ITerminal term = pool.GetTerminal())
+            {
+                Assert.AreEqual("127.0.0.1", term.Servidor);
+                Assert.AreEqual("00000000", term.Empresa);
+            }
+
             using (ITerminal term = pool.GetTerminal())
             {
                 Assert.AreEqual("127.0.0.1", term.Servidor);

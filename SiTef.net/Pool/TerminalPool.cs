@@ -43,6 +43,8 @@ namespace SiTef.net.Pool
 
             if (Cache.Count == 0)
                 lease = Repository.Lease(Id);
+            else
+                lease = Cache.Pop();
 
             if (lease == null)
                 return null;

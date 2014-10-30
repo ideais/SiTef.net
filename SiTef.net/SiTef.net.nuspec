@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-BugFix - DadosDeConfirmacao precisa de um construtor que receba String
+BugFix - Pool retornando Null
     </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
     <tags>sitef commerce payment creditcard</tags>
