@@ -26,7 +26,6 @@ namespace SiTef.net.Tests.Integration
             VendaResponse response;
             using (var term = factory.NewInstance())
             {
-                term.IniciaTransacao();
                 VendaAction action = new VendaAction(term);
                 VendaRequest request = new VendaRequest(
                     null,//new DataFiscal(DateTime.Now.AddDays(2)),

@@ -62,8 +62,11 @@ namespace SiTef.net.Action
          * 48 CANCELAMENTO_PAGGO 
          * 49 VENDA_WAPPA 
          * 50 CANCELAMENTO_WAPPA 
-         * 51 VENDA_DEBITO (Não disponível)
-         * 52 CANCELAMENTO_DEBITO 
+         */
+
+        public const int VENDA_DEBITO = 51; // (Não disponível)
+
+        /* 52 CANCELAMENTO_DEBITO 
          * 53 FINALIZA_TRN_RETAGUARDA 
          * 54 CONSULTA_CANC_VISA 
          * 55 CANCELAMENTO_VISA_LOG 

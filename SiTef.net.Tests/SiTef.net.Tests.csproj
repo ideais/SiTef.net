@@ -57,9 +57,11 @@
   <ItemGroup>
     <Compile Include="Integration\CapturaTest.cs" />
     <Compile Include="Integration\ConsultaCartaoTest.cs" />
+    <Compile Include="Integration\ConsutaTicketCulturaTest.cs" />
     <Compile Include="Integration\EstornoPreAutorizacaoTest.cs" />
     <Compile Include="Integration\PreAutorizacaoTest.cs" />
     <Compile Include="Integration\VendaTest.cs" />
+    <Compile Include="Integration\VendaTicketCulturaTest.cs" />
     <Compile Include="LibSiTefTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

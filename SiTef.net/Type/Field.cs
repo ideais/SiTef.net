@@ -375,6 +375,7 @@ namespace SiTef.net.Type
         public static short ID = 5;
         public static int LENGTH = 4;
         public static string FORMAT = "MMyy";
+        public DataDeVencimento(ITerminal terminal) : base(ID, terminal) { }
         public DataDeVencimento(DateTime data) : base(ID, data, LENGTH, FORMAT) { }
         public DataDeVencimento(int mes, int ano) : base(ID, 1, mes, ano, LENGTH, FORMAT) { }
     }
@@ -418,7 +419,7 @@ namespace SiTef.net.Type
         public static short ID = 9;
         public static short LENGTH = 128;
         public DadosDeConfirmacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
-        public DadosDeConfirmacao(string dados) : base(ID, dados, LENGTH) { } 
+        public DadosDeConfirmacao(string dados) : base(ID, dados, LENGTH) { }
     }
 
     /// <summary>
@@ -552,6 +553,40 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// ‘0’: Não deve validar
+    /// ‘1’: Devem fazer a validação  solicitando ao operador do PDV a digitação dos últimos 4 dígitos grafados no cartão
+    /// e comparando o resultado com 4 dígitos presentes no próximo campo.
+    /// Caso não coincidam, apresentar a mensagem “Cartão Inválido” e re-iniciar a transação. 
+    /// </summary>
+    public class ValidaEmbosso : ZeroOrOneField
+    {
+        public static short ID = 24;
+        public ValidaEmbosso(ITerminal terminal) : base(ID, terminal) { }
+    }
+
+    /// <summary>
+    /// Código a ser validado quando da obrigatoriedade da consistência do embosso
+    /// </summary>
+    public class CodigoValidacao : NumericField
+    {
+        public static short ID = 25;
+        public static int LENGTH = 4;
+        public CodigoValidacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não deve coletar senha
+    /// ‘1’: Coletar senha obrigatoriamente
+    /// ‘2’: Senha opcional, deve ser coletada se existir pin no PDV. Caso a senha não seja coletada (por ser opcional ou não necessária), o campo correspondente nas mensagens enviadas ao SiTef deve ser passado vazio.
+    /// </summary>
+    public class TipoSenha : NumericField
+    {
+        public static short ID = 26;
+        public static int LENGTH = 1;
+        public TipoSenha(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
     /// ‘0’: Não deve coletar taxa de serviço
     /// ‘1’: Coletar taxa de serviço se necessário
     /// </summary>
@@ -563,6 +598,69 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Indica o número mínimo de parcelas 
+    /// </summary>
+    public class NumMinParcela : NumericField
+    {
+        public static short ID = 28;
+        public static int LENGTH = 2;
+        public NumMinParcela(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Indica o número máximo de parcelas
+    /// </summary>
+    public class NumMaxParcela : NumericField
+    {
+        public static short ID = 29;
+        public static int LENGTH = 2;
+        public NumMaxParcela(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Percentual máximo de taxa de serviço
+    /// </summary>
+    public class PercentualMaxTaxaServico : NumericField
+    {
+        public static short ID = 30;
+        public static int LENGTH = 4;
+        public PercentualMaxTaxaServico(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Data máxima limite da venda pré-datada. 
+    /// </summary>
+    public class DataLimPreDatado : DateField
+    {
+        public static short ID = 31;
+        public static int LENGTH = 8;
+        public static string PATTERN = @"ddMMyyyy";
+        public DataLimPreDatado(ITerminal terminal)
+            : base(ID, LENGTH, terminal)
+        {
+            Pattern = PATTERN;
+        }
+
+    }
+
+    /// <summary>
+    /// Data limite para a primeira parcela para venda a Débito 
+    /// parcelada com juros pela Administradora. (DDMMAAAA)
+    /// </summary>
+    public class DataLimPrimeiraParcela : DateField
+    {
+        public static short ID = 32;
+        public static int LENGTH = 8;
+        public static string PATTERN = @"ddMMyyyy";
+        public DataLimPrimeiraParcela(ITerminal terminal)
+            : base(ID, LENGTH, terminal)
+        {
+            Pattern = PATTERN;
+        }
+
+    }
+
+    /// <summary>
     /// ‘0’: Não deve coletar código de segurança do cartão
     /// ‘1’: Coletar código de segurança do cartão
     /// </summary>
@@ -571,6 +669,26 @@ namespace SiTef.net.Type
         public static short ID = 33;
         public CapturaCodigoSeguranca(ITerminal terminal) : base(ID, terminal) { }
         public CapturaCodigoSeguranca(bool coletar) : base(ID, coletar) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não solicitar tipo de garantia 
+    /// ‘1’: Solicitar tipo de garantia (COM ou SEM garantia
+    /// </summary>
+    public class GarantiaPreDatado : ZeroOrOneField
+    {
+        public static short ID = 34;
+        public GarantiaPreDatado(ITerminal terminal) : base(ID, terminal) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Não utiliza Chip 
+    /// ‘1’: Utiliza Chip
+    /// </summary>
+    public class TransacaoComChip : ZeroOrOneField
+    {
+        public static short ID = 35;
+        public TransacaoComChip(ITerminal terminal) : base(ID, terminal) { }
     }
 
     /// <summary>
@@ -717,6 +835,181 @@ namespace SiTef.net.Type
 
         public DataDaTransacao(ITerminal terminal) : base(ID, terminal) { }
         public DataDaTransacao(DateTime data) : base(ID, data, 8, "ddMMyyyy") { }
+    }
+
+    /// <summary>
+    /// O formato deste campo, quando retornado, é:
+    /// 
+    ///     PERG:<ID>,<Pergunta>,<Regra>,<tamMin>,<tamMax>;    
+    /// 
+    /// Onde:  
+    /// ID - Campo alfanumérico com tamanho máximo de 4 caracteres.
+    ///     Cada mensagem apresentada terá sua identificação, 
+    ///     que deverá ser repassada ao SiTef futuramente. 
+    ///     Esse campo não possui valores repetidos.  
+    /// 
+    /// Pergunta - Campo alfanumérico com a mensagem de coleta que deverá 
+    ///     ser apresentada no display.
+    ///     Tamanho máximo de 40 caracteres, caso o dispositivo seja o PDV, 
+    ///     ou 20 caracteres, caso o dispositivo seja o PINPAD.  
+    /// 
+    /// Regra - Campo numérico com tamanho fixo 1. 
+    ///     Este campo indica de qual dispositivo o PDV deve coletar os dados:  
+    ///     0 – Teclado do operador (PDV).  
+    ///     1 – PINPAD (neste caso o dado retornará criptografado).  
+    ///     2 – Leitora do cartão.  
+    /// 
+    /// tamMin - Campo numérico com tamanho máximo de 2 caracteres. 
+    ///     Indica o tamanho mínimo da resposta.  
+    /// 
+    /// tamMax - Campo numérico com tamanho máximo de 2 caracteres. 
+    ///     Indica o tamanho máximo da resposta.  
+    /// 
+    /// Importante: 
+    /// em um único MKT_Le_Campo (358), poderão vir diversas perguntas concatenadas, ou seja:   
+    ///     
+    ///     PERG1;PERG2;...PERGn;  
+    ///     
+    /// Uma vez coletada a pergunta, a resposta correspondente deve ser enviada
+    /// no mesmo campo 358 da transação propriamente dita, 
+    /// no seguinte formato:   
+    ///     
+    ///     PERG:<ID1>,<Resposta1>,<Regra1>;...PERG:<IDn>,<Respostan>,<Regran>; 
+    ///     
+    /// </summary>
+    public class Perguntas : StringField
+    {
+        public static short ID = 358;
+        public static int LENGTH = 128;
+        public Perguntas(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Código do roteamento
+    /// </summary>
+    public class CodigoDoRoteamento : NumericField
+    {
+        public static short ID = 363;
+        public static int LENGTH = 2;
+        public CodigoDoRoteamento(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Código do produto
+    /// </summary>
+    public class CodigoDoProduto : NumericField
+    {
+        public static short ID = 364;
+        public static int LENGTH = 4;
+        public CodigoDoProduto(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Descrição do produto
+    /// </summary>
+    public class DescricaoDoProduto : StringField
+    {
+        public static short ID = 365;
+        public static int LENGTH = 20;
+        public DescricaoDoProduto(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Nome da empresa
+    /// </summary>
+    public class NomeDaEmpresa : StringField
+    {
+        public static short ID = 366;
+        public static int LENGTH = 24;
+        public NomeDaEmpresa(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Nome do portador do cartão
+    /// </summary>
+    public class NomeDoPortador : StringField
+    {
+        public static short ID = 367;
+        public static int LENGTH = 24;
+        public NomeDoPortador(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+
+    /// <summary>
+    /// Código da linha de crédito 
+    /// </summary>
+    public class CodigoLinhaDeCredito : NumericField
+    {
+        public static short ID = 368;
+        public static int LENGTH = 4;
+        public CodigoLinhaDeCredito(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Descrição da linha de crédito
+    /// </summary>
+    public class DescricaoLinhaDeCredito : StringField
+    {
+        public static short ID = 369;
+        public static int LENGTH = 20;
+        public DescricaoLinhaDeCredito(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+    }
+
+    /// <summary>
+    /// Flags de controle de operação: 
+    ///     0 = Inativo; 
+    ///     1 = Ativo. 
+    /// 
+    /// Formato: 
+    ///     xxxxxxxxxxKLMN 
+    ///     
+    /// K – não utilizado 
+    /// L – habilita verificação dos 4 últimos dígitos do cartão 
+    /// M – não utilizado 
+    /// N – não utilizado 
+    /// x – Reservado para uso futuro
+    /// </summary>
+    public class FlagsDeControleDeOperacao : StringField
+    {
+        public static short ID = 370;
+        public static int LENGTH = 14;
+        public FlagsDeControleDeOperacao(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+
+        /// <summary>
+        ///  /// L – habilita verificação dos 4 últimos dígitos do cartão 
+        /// </summary>
+        /// <returns></returns>
+        public bool VerificaDigitosCartao()
+        {
+            var flag = Value.ToCharArray()[12];
+            return flag == '1';
+        }
+
+    }
+
+    /// <summary>
+    /// ‘0’: Transação não habilitada 
+    /// ‘1’: Transação habilitada
+    /// </summary>
+    public class AutorizaSaldoDisponivel : ZeroOrOneField
+    {
+        public static short ID = 371;
+        public AutorizaSaldoDisponivel(ITerminal terminal) : base(ID, terminal) { }
+    }
+
+    /// <summary>
+    /// ‘0’: Crédito 
+    /// ‘1’: Débito 
+    /// </summary>
+    public class TipoVenda : NumericField
+    {
+        public static short ID = 372;
+        public TipoVenda(ITerminal terminal) : base(ID, 1, terminal) { }
+        private TipoVenda(int tipo) : base(ID, tipo, 1) { }
+
+        public static TipoVenda CREDITO = new TipoVenda(0);
+        public static TipoVenda DEBITO = new TipoVenda(1);
+
     }
 
     /// <summary>

@@ -46,8 +46,11 @@
   <ItemGroup>
     <Compile Include="Action\AbstractAction.cs" />
     <Compile Include="Action\CapturaPreAutorizacaoAction.cs" />
+    <Compile Include="Action\ConsultaTicketCulturaAction.cs" />
+    <Compile Include="Action\Model\ConsultaTicketCulturaResponse.cs" />
     <Compile Include="Action\EstornoPreAutorizacaoAction.cs" />
     <Compile Include="Action\FinalizaTransacaoAction.cs" />
+    <Compile Include="Action\Model\ConsultaTicketCulturaRequest.cs" />
     <Compile Include="Action\Model\FinalizaTransacaoRequest.cs" />
     <Compile Include="Action\Model\EstornoRequest.cs" />
     <Compile Include="Action\Model\EstornoResponse.cs" />
@@ -67,6 +70,9 @@
     <Compile Include="Action\Model\ConsultaCartaoResponse.cs" />
     <Compile Include="Action\VendaAction.cs" />
     <Compile Include="Action\ActionType.cs" />
+    <Compile Include="Action\VendaTicketCulturaAction.cs" />
+    <Compile Include="Action\Model\VendaTicketCulturaRequest.cs" />
+    <Compile Include="Action\Model\VendaTicketCulturaResponse.cs" />
     <Compile Include="Exceptions\ActionException.cs" />
     <Compile Include="Exceptions\TerminalException.cs" />
     <Compile Include="ITerminal.cs" />
@@ -81,6 +87,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Type\LinhaCreditoValeCultura.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="SiTef.net.nuspec">
