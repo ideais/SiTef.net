@@ -398,7 +398,8 @@ namespace SiTef.net.Type
         public static short ID = 7;
         public static short LENGTH = 12;
         public Valor(ITerminal terminal) : base(ID, LENGTH, terminal) { }
-        public Valor(int quantia) : base(ID, quantia * 100, LENGTH) { }
+        public Valor(int quantia) : base(ID, quantia, LENGTH) { }
+
         public Valor(double quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
         public Valor(decimal quantia) : this(System.Convert.ToInt32(quantia * 100)) { }
     }
