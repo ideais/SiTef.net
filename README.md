@@ -52,7 +52,7 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
-Versão **0.0.0.14**
+Versão **0.0.0.15**
 
 * BugFix - Correção no tratamento da conversão do campo _Valor_ para Int
 
