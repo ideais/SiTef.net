@@ -52,7 +52,11 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
-Versão **0.0.0.11*
+Versão **0.0.0.14**
+
+* BugFix - Correção no tratamento da conversão do campo _Valor_ para Int
+
+Versão **0.0.0.11**
 
 * BugFix - DadosDeConfirmação precisa ter um construtor que receba o valor String. 
 
