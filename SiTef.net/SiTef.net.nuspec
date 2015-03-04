@@ -12,7 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-BugFix - Pool retornando Null
+Bug Fix - Release automático dos Leases por Timeout.
     </releaseNotes>
     <copyright>Copyright B2W Digital 2014</copyright>
     <tags>sitef commerce payment creditcard</tags>
