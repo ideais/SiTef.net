@@ -9,11 +9,13 @@ namespace SiTef.net.Pool
 {
     public class TerminalPool : ITerminalPool, IDisposable
     {
-
+        
         public ITerminalRepository Repository { get; set; }
         
         private Stack<TerminalLease> Cache;
         private List<TerminalLease> Leased;
+
+        private int Timeout = 30; // Leases ficam no cache por apenas 30s
 
         /// <summary>
         /// Endereço IP do Servidor SiTef
@@ -33,7 +35,13 @@ namespace SiTef.net.Pool
         {
             Cache = new Stack<TerminalLease>();
             Leased = new List<TerminalLease>();
-            Id = id;            
+            Id = id;
+        }
+
+        public TerminalPool(string id, int timeout)
+            : this(id)
+        {
+            Timeout = timeout;
         }
        
         public ITerminal GetTerminal()
@@ -64,7 +72,10 @@ namespace SiTef.net.Pool
         {
             var lease = Leased.FirstOrDefault<TerminalLease>(x => x.Terminal == terminal.Id);
             Leased.Remove(lease);
-            Cache.Push(lease);
+            if ((DateTime.Now - lease.LeasedAt).TotalSeconds >= Timeout)
+                Repository.Release(lease.Terminal);
+            else
+                Cache.Push(lease);
         }
 
         public void Dispose()
@@ -77,6 +88,11 @@ namespace SiTef.net.Pool
             {
                 Repository.Release(lease.Terminal);
             }
+        }
+
+        ~TerminalPool()
+        {
+            Dispose();
         }
     }
 }
