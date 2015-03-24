@@ -8,7 +8,7 @@ API para acesso as funcionalidades da *LibSiTef*.
 Você vai precisar da _LibSiTef.dll_ para utilizar o projeto. Ela é fornecida pela [Software Express](http://www.softwareexpress.com.br),
 sob licença de uso, entre em contato com eles para obter uma cópia.
 
-Em específico estamos usando a _LibSiTef.dll_ de **64 bits**. Para configura-la no projeto faça o seguinte:
+Em específico estamos usando a _LibSiTef.dll_ de **32 bits**. Para configura-la no projeto faça o seguinte:
 
 #### Windows
 
@@ -51,6 +51,9 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 
 Changelog
 ---------
+Versão **0.0.0.18** - Migrando de x64 para x86 para evitar problemas de compatibilidade
+
+Versão **0.0.0.17**
 
 Versão **0.0.0.16**
 
