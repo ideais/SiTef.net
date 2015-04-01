@@ -8,3 +8,4 @@ Log
 packages
 TestResults
 *.TMP
+.nuget/NuGet.exe
