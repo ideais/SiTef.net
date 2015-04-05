@@ -11,10 +11,8 @@
     <!--iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl-->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>
-Migrating from x64 to x86 target
-    </releaseNotes>
-    <copyright>Copyright B2W Digital 2014</copyright>
+    <releaseNotes>Migrating from x64 to x86 target</releaseNotes>
+    <copyright>Copyright B2W Digital 2015</copyright>
     <tags>sitef commerce payment creditcard</tags>
   </metadata>
 </package>
