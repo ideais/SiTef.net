@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SiTef.net.Action.Model
 {
     /// <summary>
@@ -21,6 +16,6 @@ namespace SiTef.net.Action.Model
             Type.DataDeVencimento DataDeVencimento,
             Type.CodigoDeSeguranca CodigoDeSeguranca,
             Type.Valor Valor)
-                : base(DataFiscal, HoraFiscal, NumeroDeParcelas, TipoDeFinanciamento, NumeroDoCartao, DataDeVencimento, CodigoDeSeguranca, Valor) { }
+            : base(DataFiscal, HoraFiscal, NumeroDeParcelas, TipoDeFinanciamento, NumeroDoCartao, DataDeVencimento, CodigoDeSeguranca, Valor) { }
     }
 }

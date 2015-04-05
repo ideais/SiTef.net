@@ -78,7 +78,7 @@
     <Compile Include="ITerminal.cs" />
     <Compile Include="Pool\TerminalPool.cs" />
     <Compile Include="Pool\ITerminalPool.cs" />
-    <Compile Include="Pool\model\TerminalLease.cs" />
+    <Compile Include="Pool\Model\TerminalLease.cs" />
     <Compile Include="Terminal.cs" />
     <Compile Include="Pool\ITerminalRepository.cs" />
     <Compile Include="Pool\TerminalFactory.cs" />

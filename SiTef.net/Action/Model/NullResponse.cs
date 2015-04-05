@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SiTef.net.Action.Model
 {
@@ -10,8 +7,7 @@ namespace SiTef.net.Action.Model
     /// </summary>
     public class NullResponse : IActionResponse
     {
-
-        static IList<Type.IField> EMPTY = new List<Type.IField>();
+        static readonly IList<Type.IField> Empty = new List<Type.IField>();
 
         public bool Failure()
         {
@@ -25,7 +21,7 @@ namespace SiTef.net.Action.Model
 
         public IList<Type.IField> GetFields()
         {
-            return EMPTY;
+            return Empty;
         }
     }
 }

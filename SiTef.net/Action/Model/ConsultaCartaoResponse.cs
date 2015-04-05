@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SiTef.net.Action.Model
 {
@@ -36,7 +33,7 @@ namespace SiTef.net.Action.Model
             CancelamentoPreAutorizacao = new Type.ZeroOrOneField(44, terminal) { Label = "Cancelamento de Pre-Autorizacao" };
             CapturaPreAutorizacao = new Type.ZeroOrOneField(45, terminal) { Label = "Captura de Pre-Autorizacao" };
             ConsultaAVS = new Type.ZeroOrOneField(46, terminal) { Label = "Consulta AVS" };
-            OpcoesVariaveisComPrefixo = new Type.StringField(155, 128, terminal) { Label = "Opcoes Variaveis com Prefixo" }; 
+            OpcoesVariaveisComPrefixo = new Type.StringField(155, 128, terminal) { Label = "Opcoes Variaveis com Prefixo" };
             /*
             new Field(163, 99, terminal);
             new Field(164, 99, terminal);
@@ -79,7 +76,7 @@ namespace SiTef.net.Action.Model
             new Field(564, 99, terminal);
             new Field(578, 99, terminal);
             new Field(579, 99, terminal);*/
-            _fields = new List<Type.IField>{ 
+            Fields = new List<Type.IField>{ 
                 Rede, CodigoDeRespostaSitef, TextoParaExibicao, BandeiraDoCartao,
                 ValidaEmbosso, CodigoValidacao, TipoSenha, TaxaServico, NumMinParcelas, NumMaxParcelas,
                 PercentualMaxTaxaServico, DataLimitePreDatado, DataLimitePrimeiraParcela, CapturaCodigoSeguranca,

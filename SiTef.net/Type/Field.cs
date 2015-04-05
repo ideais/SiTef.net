@@ -274,7 +274,7 @@ namespace SiTef.net.Type
             {
                 return DateTime.ParseExact(value, Pattern, null);
             }
-            catch (FormatException ex)
+            catch (FormatException)
             {
                 return null;
             }

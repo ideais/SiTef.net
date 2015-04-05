@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SiTef.net.Action
 {
     /// <summary>
@@ -13,7 +8,6 @@ namespace SiTef.net.Action
     /// </summary>
     public class PreAutorizacaoAction : AbstractAction<Model.PreAutorizacaoRequest, Model.PreAutorizacaoResponse>
     {
-
         public PreAutorizacaoAction(ITerminal terminal) : base(ActionType.PRE_AUTORIZACAO, terminal) { }
 
         protected override Model.PreAutorizacaoResponse ReadOutput()

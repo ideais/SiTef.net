@@ -1,21 +1,19 @@
-﻿using SiTef.net.Pool.model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using SiTef.net.Pool.Model;
 using System.Threading.Tasks;
 
 namespace SiTef.net.Pool
 {
     public class TerminalPool : ITerminalPool, IDisposable
     {
-        
         public ITerminalRepository Repository { get; set; }
-        
-        private Stack<TerminalLease> Cache;
-        private List<TerminalLease> Leased;
 
-        private int Timeout = 30; // Leases ficam no cache por apenas 30s
+        private Stack<TerminalLease> _cache;
+        private List<TerminalLease> _leased;
+
+        private int _timeout = 30; // Leases ficam no cache por apenas 30s
 
         /// <summary>
         /// Endereço IP do Servidor SiTef
@@ -30,63 +28,62 @@ namespace SiTef.net.Pool
         /// </summary>
         public string Id { get; set; }
 
-        
+
         public TerminalPool(string id)
         {
-            Cache = new Stack<TerminalLease>();
-            Leased = new List<TerminalLease>();
+            _cache = new Stack<TerminalLease>();
+            _leased = new List<TerminalLease>();
             Id = id;
         }
 
         public TerminalPool(string id, int timeout)
             : this(id)
         {
-            Timeout = timeout;
+            _timeout = timeout;
         }
-       
-        public ITerminal GetTerminal()
+
+        public async Task<ITerminal> GetTerminalAsync()
         {
+            TerminalLease lease;
 
-            TerminalLease lease = null;
-
-            if (Cache.Count == 0)
-                lease = Repository.Lease(Id);
+            if (_cache.Count == 0)
+                lease = await Repository.LeaseAsync(Id);
             else
-                lease = Cache.Pop();
+                lease = _cache.Pop();
 
             if (lease == null)
                 return null;
 
-            Leased.Add(lease);
+            _leased.Add(lease);
 
             // As propriedades do Lease tem prioridade sobre as configuradas no Pool
-            var server = lease.Servidor != null ? lease.Servidor : Server;
-            var empresa = lease.Empresa != null ? lease.Empresa : Server;
+            var server = lease.Servidor ?? Server;
+            var empresa = lease.Empresa ?? Server;
 
             ITerminal term = new Terminal(server, lease.Terminal, empresa);
-            term.AddDisposeCallback(instance => { ReleaseTerminal(instance); });
+            term.AddDisposeCallback(async instance => { await ReleaseTerminalAsync(instance); });
             return term;
         }
 
-        public void ReleaseTerminal(ITerminal terminal)
+        public async Task ReleaseTerminalAsync(ITerminal terminal)
         {
-            var lease = Leased.FirstOrDefault<TerminalLease>(x => x.Terminal == terminal.Id);
-            Leased.Remove(lease);
-            if ((DateTime.Now - lease.LeasedAt).TotalSeconds >= Timeout)
-                Repository.Release(lease.Terminal);
+            var lease = _leased.FirstOrDefault(x => x.Terminal == terminal.Id);
+            _leased.Remove(lease);
+            if ((DateTime.Now - lease.LeasedAt).TotalSeconds >= _timeout)
+                await Repository.ReleaseAsync(lease.Terminal);
             else
-                Cache.Push(lease);
+                _cache.Push(lease);
         }
 
         public void Dispose()
         {
-            foreach (var lease in Cache)
+            foreach (var lease in _cache)
             {
-                Repository.Release(lease.Terminal);
+                Repository.ReleaseAsync(lease.Terminal);
             }
-            foreach (var lease in Leased)
+            foreach (var lease in _leased)
             {
-                Repository.Release(lease.Terminal);
+                Repository.ReleaseAsync(lease.Terminal);
             }
         }
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SiTef.net.Action
 {
     /// <summary>
@@ -12,7 +7,6 @@ namespace SiTef.net.Action
     /// </summary>
     public class ConsultaTicketCulturaAction : AbstractAction<Model.ConsultaTicketCulturaRequest, Model.ConsultaTicketCulturaResponse>
     {
-
         public ConsultaTicketCulturaAction(ITerminal terminal) : base(ActionType.CONSULTA_CARTAO, terminal) { }
 
         protected override Model.ConsultaTicketCulturaResponse ReadOutput()

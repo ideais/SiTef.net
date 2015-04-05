@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 namespace SiTef.net.Action.Model
 {
     /// <summary>
@@ -10,8 +6,8 @@ namespace SiTef.net.Action.Model
     /// </summary>
     public class FinalizaTransacaoRequest : AbstractActionModel
     {
-        public FinalizaTransacaoRequest( Type.TipoTransacao TipoTransacao, Type.DadosDeConfirmacao DadosDeConfirmacao, Type.TipoConfirmacao TipoConfimacao, Type.FormasDePagamento FormasDePagamento ) 
-            : base(TipoTransacao, DadosDeConfirmacao, TipoConfimacao, FormasDePagamento ) { }
+        public FinalizaTransacaoRequest(Type.TipoTransacao tipoTransacao, Type.DadosDeConfirmacao dadosDeConfirmacao, Type.TipoConfirmacao tipoConfimacao, Type.FormasDePagamento formasDePagamento)
+            : base(tipoTransacao, dadosDeConfirmacao, tipoConfimacao, formasDePagamento) { }
     }
 
     /// <summary>
@@ -19,7 +15,7 @@ namespace SiTef.net.Action.Model
     /// </summary>
     public class ConfirmaVenda : FinalizaTransacaoRequest
     {
-        public ConfirmaVenda(Type.DadosDeConfirmacao DadosDeConfirmacao) : base(Type.TipoTransacao.VENDA, DadosDeConfirmacao, Type.TipoConfirmacao.CONFIRMA, null) { }
+        public ConfirmaVenda(Type.DadosDeConfirmacao dadosDeConfirmacao) : base(Type.TipoTransacao.VENDA, dadosDeConfirmacao, Type.TipoConfirmacao.CONFIRMA, null) { }
     }
 
     /// <summary>
@@ -27,6 +23,6 @@ namespace SiTef.net.Action.Model
     /// </summary>
     public class CancelaVenda : FinalizaTransacaoRequest
     {
-        public CancelaVenda(Type.DadosDeConfirmacao DadosDeConfirmacao) : base(Type.TipoTransacao.VENDA, DadosDeConfirmacao, Type.TipoConfirmacao.CANCELA, null) { }
+        public CancelaVenda(Type.DadosDeConfirmacao dadosDeConfirmacao) : base(Type.TipoTransacao.VENDA, dadosDeConfirmacao, Type.TipoConfirmacao.CANCELA, null) { }
     }
 }

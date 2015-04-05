@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SiTef.net.Action.Model
 {
@@ -25,7 +22,7 @@ namespace SiTef.net.Action.Model
             LinhasDeCupom = new Type.LinhasDeCupom(terminal); //Linhas de cupom
             DataExpiracao = new Type.DataExpiracao(terminal); //Data Expiracao REDECARD
 
-            _fields = new List<Type.IField>{
+            Fields = new List<Type.IField>{
                 Rede, DadosDeConfirmacao, CodigoDeRespostaSiTef, TextoParaExibicao, CodigoRespostaInstituicao, Data, Hora,
                 NsuHost, CodigoDoEstabelecimento, NumeroAutorizacao, NomeDaInstituicao, NSUSiTef, LinhasDeCupom, DataExpiracao
             };

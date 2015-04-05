@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace SiTef.net.Action
 {
     /// <summary>
@@ -11,7 +6,6 @@ namespace SiTef.net.Action
     /// </summary>
     public class EstornoPreAutorizacaoAction : AbstractAction<Model.EstornoRequest, Model.EstornoResponse>
     {
-
         public EstornoPreAutorizacaoAction(ITerminal terminal) : base(ActionType.ESTORNO_PRE_AUTORIZACAO, terminal) { }
 
         protected override Model.EstornoResponse ReadOutput()

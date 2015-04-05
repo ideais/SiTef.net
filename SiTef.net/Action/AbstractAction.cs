@@ -1,16 +1,11 @@
-﻿using SiTef.net;
-using SiTef.net.Action.Model;
-using SiTef.net.Exceptions;
+﻿using SiTef.net.Action.Model;
 using SiTef.net.Type;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SiTef.net.Action
 {
-    public abstract class AbstractAction<M,N> : IAction<M,N> where M : IActionRequest where N : IActionResponse
+    public abstract class AbstractAction<M, N> : IAction<M, N>
+        where M : IActionRequest
+        where N : IActionResponse
     {
         protected ITerminal _terminal;
 
@@ -32,9 +27,9 @@ namespace SiTef.net.Action
             }
 
             _terminal.Executa(_action);
-            
+
             N response = ReadOutput();
-                        
+
             return response;
         }
 

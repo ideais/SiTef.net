@@ -1,40 +1,32 @@
 ﻿using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.Builders;
-using SiTef.net.Pool.model;
+using SiTef.net.Pool.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SiTef.net.Pool.MongoDB
 {
     public class MongoDBTerminalRepository : ITerminalRepository
     {
-
-        public MongoDatabase Database { get; set; }
+        public IMongoDatabase Database { get; set; }
 
         public string Collection { get; set; }
 
-        public TerminalLease Lease(string id)
+        public async Task<TerminalLease> LeaseAsync(string id)
         {
-            var collection = Database.GetCollection(Collection);
-            var query = Query.EQ("LeasedTo", BsonNull.Value);
-            var update = Update.Set("LeasedTo", id).
-                    Set("LeasedAt", DateTime.Now);
-            var args = new FindAndModifyArgs { Query = query, Update = update };
-            var result = collection.FindAndModify(args);
-            return result.GetModifiedDocumentAs<MongoTerminalLease>();
+            var collection = Database.GetCollection<MongoTerminalLease>(Collection);
+            var builder = Builders<MongoTerminalLease>.Update;
+            var update = builder.Set(t => t.LeasedTo, id).Set(t => t.LeasedAt, DateTime.Now);
+            var result = await collection.FindOneAndUpdateAsync(t => t.LeasedTo == null, update);
+            return result;
         }
 
-        public void Release(string terminalId)
+        public async Task ReleaseAsync(string terminalId)
         {
-            var collection = Database.GetCollection(Collection);
-            var query = Query.EQ("Id", terminalId);
-            var update = Update.Set("LeasedTo", BsonNull.Value);
-            var args = new FindAndModifyArgs { Query = query, Update = update };
-            collection.FindAndModify(args);
+            var collection = Database.GetCollection<MongoTerminalLease>(Collection);
+            var builder = Builders<MongoTerminalLease>.Update;
+            var update = builder.Set(t => t.LeasedTo, null);
+            await collection.UpdateOneAsync(t => t.Id == ObjectId.Parse(terminalId), update);
         }
     }
 }

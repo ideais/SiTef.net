@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace SiTef.net.Action.Model
 {
     public class ConsultaTicketCulturaResponse : AbstractActionModel, IActionResponse
     {
-
         public ConsultaTicketCulturaResponse(ITerminal terminal)
         {
 
@@ -44,12 +41,12 @@ namespace SiTef.net.Action.Model
                 LinhasCreditoValeCultura.Add(linha);
             }
 
-            _fields = new List<Type.IField> { Rede, Vencimento, CodRespostaSitef, TextoExibicao, BandeiraCartao, ValidaEmbosso, CodigoValidacao, TipoSenha, TaxaServico,
+            Fields = new List<Type.IField> { Rede, Vencimento, CodRespostaSitef, TextoExibicao, BandeiraCartao, ValidaEmbosso, CodigoValidacao, TipoSenha, TaxaServico,
             NumMinParcela, NumMaxParcela, PercentualMaxTaxaServico, DataLimPreDatado, DataLimPrimeiraParcela, CapturaCodigoSeguranca, GarantiaPreDatado, TransacaoComChip,
             CodigoDoRoteamento, CodigoDoProduto, DescricaoDoProduto, NomeDaEmpresa, NomeDoPortador, AutorizaSaldoDisponivel};
 
             foreach (var l in LinhasCreditoValeCultura)
-                _fields.Add(l);
+                Fields.Add(l);
 
         }
 

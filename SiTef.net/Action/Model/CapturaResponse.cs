@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace SiTef.net.Action.Model
 {
@@ -37,7 +34,7 @@ namespace SiTef.net.Action.Model
             //* Linhas de cupom 76
             LinhasDeCupom = new Type.LinhasDeCupom(terminal);
 
-            _fields = new List<Type.IField>{
+            Fields = new List<Type.IField>{
                 Rede, DadosDeConfirmacao, CodigoDeRespostaSiTef, TextoParaExibicao, CodigoDeRespostaSiTef,
                 Data, Hora, NSUHost, CodigoDoEstabelecimento, NumeroAutorizacao, NomeDaInstituicao,
                 NSUSiTef, LinhasDeCupom

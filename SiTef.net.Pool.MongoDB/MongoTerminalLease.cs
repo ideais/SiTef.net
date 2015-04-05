@@ -1,10 +1,5 @@
 ﻿using MongoDB.Bson;
-using SiTef.net.Pool.model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SiTef.net.Pool.Model;
 
 namespace SiTef.net.Pool.MongoDB
 {

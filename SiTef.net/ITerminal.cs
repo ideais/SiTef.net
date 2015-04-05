@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace SiTef.net
 {
     public interface ITerminal : IDisposable
     {
-
         void IniciaTransacao();
 
         void GravaCampo(IntPtr id, string value);
@@ -23,7 +19,7 @@ namespace SiTef.net
 
         void FinalizaTerminal();
 
-        void AddDisposeCallback(System.Action<ITerminal> callback);
+        void AddDisposeCallback(Func<ITerminal, Task> callback);
 
         string Id { get; set; }
         string Servidor { get; set; }

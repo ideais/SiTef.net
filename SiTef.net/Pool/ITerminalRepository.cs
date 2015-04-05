@@ -1,15 +1,11 @@
-﻿using SiTef.net.Pool.model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using SiTef.net.Pool.Model;
 using System.Threading.Tasks;
 
 namespace SiTef.net.Pool
 {
     public interface ITerminalRepository
     {
-        TerminalLease Lease(string id);
-        void Release(string terminal);
+        Task<TerminalLease> LeaseAsync(string id);
+        Task ReleaseAsync(string terminal);
     }
 }

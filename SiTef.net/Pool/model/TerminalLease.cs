@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace SiTef.net.Pool.model
+namespace SiTef.net.Pool.Model
 {
     /// <summary>
     /// Representa um terminal, disponível ou não.
