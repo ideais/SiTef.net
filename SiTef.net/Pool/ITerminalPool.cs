@@ -16,5 +16,12 @@ namespace SiTef.net.Pool
         /// <param name="terminal">Terminal a ser devolvido</param>
         /// <returns></returns>
         Task ReleaseTerminalAsync(ITerminal terminal);
+
+        /// <summary>
+        /// Lê a persistência e recupera os terminais associados
+        /// a esse pool que não estejam no cache.
+        /// </summary>
+        /// <returns></returns>
+        Task ReclaimTerminalsAsync();
     }
 }

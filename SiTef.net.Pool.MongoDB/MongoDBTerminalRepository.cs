@@ -2,6 +2,9 @@
 using MongoDB.Driver;
 using SiTef.net.Pool.Model;
 using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace SiTef.net.Pool.MongoDB
@@ -11,6 +14,8 @@ namespace SiTef.net.Pool.MongoDB
         public IMongoDatabase Database { get; set; }
 
         public string Collection { get; set; }
+
+
 
         public async Task<TerminalLease> LeaseAsync(string id)
         {
@@ -27,6 +32,14 @@ namespace SiTef.net.Pool.MongoDB
             var builder = Builders<MongoTerminalLease>.Update;
             var update = builder.Set(t => t.LeasedTo, null);
             await collection.UpdateOneAsync(t => t.Id == ObjectId.Parse(terminalId), update);
+        }
+
+
+        public async Task<List<TerminalLease>> ReclaimAsync(string id)
+        {
+            var collection = Database.GetCollection<MongoTerminalLease>(Collection);
+            var result = await collection.Find<MongoTerminalLease>(x => x.LeasedTo == id).ToListAsync();
+            return result.Select<MongoTerminalLease,TerminalLease>(l => l as TerminalLease).ToList<TerminalLease>();
         }
     }
 }

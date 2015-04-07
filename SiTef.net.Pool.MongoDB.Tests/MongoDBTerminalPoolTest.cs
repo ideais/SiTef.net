@@ -59,6 +59,18 @@ for( var i = 0; i <= 9; i++ ){
                 Assert.AreEqual("127.0.0.1", term.Servidor);
                 Assert.AreEqual("00000000", term.Empresa);
             }
+
+            using (var term = await pool.GetTerminalAsync())
+            {
+                Assert.AreEqual("127.0.0.1", term.Servidor);
+                Assert.AreEqual("00000000", term.Empresa);
+            }
+        }
+
+        [TestMethod]
+        public async Task TestReclaim()
+        {
+           await pool.ReclaimTerminalsAsync();
         }
     }
 }

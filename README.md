@@ -51,6 +51,9 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 
 Changelog
 ---------
+
+Versão **0.0.0.21** - Adicionando um método para recuperar registros dos Leases no Pool.
+
 Versão **0.0.0.20** - Migrando pro MongoDB.Driver.2.0.0.
 
 Versão **0.0.0.19** - Compilando assembly com AnyCPU, para funcionar tanto com DLL 32 bits quanto 64 bits.

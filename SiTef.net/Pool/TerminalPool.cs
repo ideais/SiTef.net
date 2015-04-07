@@ -91,5 +91,13 @@ namespace SiTef.net.Pool
         {
             Dispose();
         }
+
+        public async Task ReclaimTerminalsAsync()
+        {
+            var leases = await Repository.ReclaimAsync(Id);
+            foreach (var lease in leases)
+                if (_leased.Where(x => x.LeasedTo == Id).Count() == 0)
+                    _cache.Push(lease);
+        }
     }
 }
