@@ -85,11 +85,11 @@ namespace SiTef.net
         }
 
 
-        public void Dispose()
+        public async Task ReleaseAsync()
         {
             SiTef.FinalizaTerminal(_term);
             foreach (var action in _disposeCallbacks)
-                action(this);
+                await action(this);
         }
 
 

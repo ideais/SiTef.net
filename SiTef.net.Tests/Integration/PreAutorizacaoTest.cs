@@ -22,22 +22,20 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecutePreAutorizacao()
         {
-            using (var term = factory.NewInstance())
-            {
-                var action = new PreAutorizacaoAction(term);
-                var response = action.Execute(new PreAutorizacaoRequest(
-                    null,
-                    new DataFiscal(new DateTime()),
-                    null,
-                    new NumeroDoCartao("4929208425739710"),
-                    new DataDeVencimento(12,15),
-                    new Valor(100.00),
-                    null,
-                    new CodigoDeSeguranca("123")
-                ));
-                foreach (var field in response.GetFields())
-                    System.Console.WriteLine(field);
-            }
+            var term = factory.NewInstance();
+            var action = new PreAutorizacaoAction(term);
+            var response = action.Execute(new PreAutorizacaoRequest(
+                null,
+                new DataFiscal(new DateTime()),
+                null,
+                new NumeroDoCartao("4929208425739710"),
+                new DataDeVencimento(12, 15),
+                new Valor(100.00),
+                null,
+                new CodigoDeSeguranca("123")
+            ));
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
         }
     }
 }

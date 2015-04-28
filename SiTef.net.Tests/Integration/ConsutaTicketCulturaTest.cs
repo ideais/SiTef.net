@@ -21,17 +21,15 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecuteConsultaValeCulturaTest()
         {
-            using (var term = factory.NewInstance())
-            {
-                ConsultaTicketCulturaAction action = new ConsultaTicketCulturaAction(term);
+            var term = factory.NewInstance();
+            ConsultaTicketCulturaAction action = new ConsultaTicketCulturaAction(term);
 
-                ConsultaTicketCulturaResponse response = action.Execute(
-                    new ConsultaTicketCulturaRequest(new NumeroDoCartao("5899111111312697"))
-                    );
-                foreach (var field in response.GetFields())
-                    System.Console.WriteLine(field);
-            }
-            
+            ConsultaTicketCulturaResponse response = action.Execute(
+                new ConsultaTicketCulturaRequest(new NumeroDoCartao("5899111111312697"))
+                );
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
+
         }
     }
 }

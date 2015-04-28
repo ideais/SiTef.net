@@ -24,34 +24,29 @@ namespace SiTef.net.Tests.Integration
         public void ExecuteVendaTest()
         {
             VendaResponse response;
-            using (var term = factory.NewInstance())
-            {
-                VendaAction action = new VendaAction(term);
-                VendaRequest request = new VendaRequest(
-                    null,//new DataFiscal(DateTime.Now.AddDays(2)),
-                    null,//new HoraFiscal(DateTime.Now),
-                    null,//new NumeroDeParcelas(1),
-                    null,//new TipoDeFinanciamento(2),
-                    new NumeroDoCartao("4024007122405250"),
-                    new DataDeVencimento(12, 15),
-                    new CodigoDeSeguranca("123"),
-                    new Valor(100.00)
-                    );
-                
-                response = action.Execute(request);
+            var term = factory.NewInstance();
+            VendaAction action = new VendaAction(term);
+            VendaRequest request = new VendaRequest(
+                null,//new DataFiscal(DateTime.Now.AddDays(2)),
+                null,//new HoraFiscal(DateTime.Now),
+                null,//new NumeroDeParcelas(1),
+                null,//new TipoDeFinanciamento(2),
+                new NumeroDoCartao("4024007122405250"),
+                new DataDeVencimento(12, 15),
+                new CodigoDeSeguranca("123"),
+                new Valor(100.00)
+                );
 
-                foreach (var field in response.GetFields()) 
-                    System.Console.WriteLine(field);
-            }
+            response = action.Execute(request);
+
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
 
             //Confirmando em outro terminal
-            using (var term = factory.NewInstance())
-            {
-                if (!response.Failure())
-                    new FinalizaTransacaoAction(term).Execute(new CancelaVenda(response.DadosDeConfirmacao));   
-            }
+            if (!response.Failure())
+                new FinalizaTransacaoAction(term).Execute(new CancelaVenda(response.DadosDeConfirmacao));
 
-            Assert.IsFalse(response.Failure()); 
+            Assert.IsFalse(response.Failure());
         }
     }
 }

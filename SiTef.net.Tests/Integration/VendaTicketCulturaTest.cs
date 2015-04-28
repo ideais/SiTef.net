@@ -22,23 +22,21 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecuteVendaTicketCulturaTest()
         {
-            using (var term = factory.NewInstance())
-            {
-                VendaTicketCulturaAction action = new VendaTicketCulturaAction(term);
-                VendaTicketCulturaResponse response = action.Execute(
-                    new VendaTicketCulturaRequest(
-                        new NumeroDoCartao("4024007122405250"),
-                        new DataDeVencimento(12, 15),
-                        null,
-                        null, //CodigoDoRoteamento
-                        null, //CodigoDoProduto
-                        null, //CodigoLinhaDeCredito
-                        new Valor(100)
-                        )    
-                );
-                foreach (var field in response.GetFields())
-                    System.Console.WriteLine(field);
-            }
+            var term = factory.NewInstance();
+            VendaTicketCulturaAction action = new VendaTicketCulturaAction(term);
+            VendaTicketCulturaResponse response = action.Execute(
+                new VendaTicketCulturaRequest(
+                    new NumeroDoCartao("4024007122405250"),
+                    new DataDeVencimento(12, 15),
+                    null,
+                    null, //CodigoDoRoteamento
+                    null, //CodigoDoProduto
+                    null, //CodigoLinhaDeCredito
+                    new Valor(100)
+                    )
+            );
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
         }
     }
 }

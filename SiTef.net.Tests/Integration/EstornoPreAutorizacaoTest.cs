@@ -23,42 +23,37 @@ namespace SiTef.net.Tests.Integration
         {
 
             var cartao = new NumeroDoCartao("4929208425739710");
-            var vencimento = new DataDeVencimento(12,15);
+            var vencimento = new DataDeVencimento(12, 15);
             var valor = new Valor(100.00);
             var cvv = new CodigoDeSeguranca("123");
 
             PreAutorizacaoResponse autorizacao;
-            using (var term = factory.NewInstance())
-            {
-                var preautoriza = new PreAutorizacaoAction(term);
-                autorizacao = preautoriza.Execute(new PreAutorizacaoRequest(
-                    null,
-                    new DataFiscal(DateTime.Now),
-                    null,
+            var term = factory.NewInstance();
+            var preautoriza = new PreAutorizacaoAction(term);
+            autorizacao = preautoriza.Execute(new PreAutorizacaoRequest(
+                null,
+                new DataFiscal(DateTime.Now),
+                null,
+                cartao,
+                vencimento,
+                valor,
+                null,
+                cvv
+            ));
+
+            var estorno = new EstornoPreAutorizacaoAction(term);
+            var response = estorno.Execute(
+                new EstornoRequest(
                     cartao,
                     vencimento,
                     valor,
-                    null,
+                    new DataDaTransacao(DateTime.Now),
+                    autorizacao.NumeroAutorizacao,
+                    autorizacao.NsuHost,
                     cvv
                 ));
-            }
-
-            using (var term = factory.NewInstance())
-            {
-                var estorno = new EstornoPreAutorizacaoAction(term);
-                var response = estorno.Execute(
-                    new EstornoRequest(
-                        cartao,
-                        vencimento,
-                        valor,
-                        new DataDaTransacao(DateTime.Now),
-                        autorizacao.NumeroAutorizacao,
-                        autorizacao.NsuHost,
-                        cvv
-                    ));
-                foreach (var field in response.GetFields())
-                    System.Console.WriteLine(field);
-            }
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
         }
     }
 }

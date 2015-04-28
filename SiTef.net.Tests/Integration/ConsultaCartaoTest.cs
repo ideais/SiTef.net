@@ -21,19 +21,17 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecuteConsultaCartaoTest()
         {
-            using (var term = factory.NewInstance())
-            {
-                ConsultaCartaoAction action = new ConsultaCartaoAction(term);
+            var term = factory.NewInstance();
+            ConsultaCartaoAction action = new ConsultaCartaoAction(term);
 
-                ConsultaCartaoResponse response = action.Execute(
-                    new ConsultaCartaoRequest(
-                        new NumeroDoCartao("4485022036287910"),
-                        new DataDeVencimento(12,15)
-                    )
-                );
-                foreach (var field in response.GetFields())
-                    System.Console.WriteLine(field);
-            }
+            ConsultaCartaoResponse response = action.Execute(
+                new ConsultaCartaoRequest(
+                    new NumeroDoCartao("4485022036287910"),
+                    new DataDeVencimento(12, 15)
+                )
+            );
+            foreach (var field in response.GetFields())
+                System.Console.WriteLine(field);
         }
     }
 }

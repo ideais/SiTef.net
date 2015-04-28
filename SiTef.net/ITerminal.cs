@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace SiTef.net
 {
-    public interface ITerminal : IDisposable
+    public interface ITerminal
     {
         void IniciaTransacao();
 
@@ -20,6 +20,8 @@ namespace SiTef.net
         void FinalizaTerminal();
 
         void AddDisposeCallback(Func<ITerminal, Task> callback);
+
+        Task ReleaseAsync();
 
         string Id { get; set; }
         string Servidor { get; set; }
