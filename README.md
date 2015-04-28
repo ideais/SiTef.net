@@ -33,24 +33,26 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 ...
 
     TerminalFactory factory = new TerminalFactory("127.0.0.1","00000000");
-    using (var term = factory.NewInstance())
-    {
-        ConsultaCartaoAction action = new ConsultaCartaoAction(term);
+    var term = factory.NewInstance()
+    
+    ConsultaCartaoAction action = new ConsultaCartaoAction(term);
 
-        ConsultaCartaoResponse response = action.Execute(
-            new ConsultaCartaoRequest(
-                new NumeroDoCartao("4000000000000044"),
-                new DataDeVencimento(12,15)
-            )
-        );
-        foreach (var field in response.GetFields())
-            System.Console.WriteLine(field);
-    }
+    ConsultaCartaoResponse response = action.Execute(
+        new ConsultaCartaoRequest(
+            new NumeroDoCartao("4000000000000044"),
+            new DataDeVencimento(12,15)
+        )
+    );
+    foreach (var field in response.GetFields())
+        System.Console.WriteLine(field);
+    await term.ReleaseAsync();
     
 ```
 
 Changelog
 ---------
+
+Versão **0.0.1.0** - ITerminal não implementa mais IDisposable. Método ReleaseAsync para explicitamente devolver o terminal ao Pool.
 
 Versão **0.0.0.21** - Adicionando um método para recuperar registros dos Leases no Pool.
 
