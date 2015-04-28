@@ -19,9 +19,11 @@ namespace SiTef.net
 
         void FinalizaTerminal();
 
-        void AddDisposeCallback(Func<ITerminal, Task> callback);
+        void AddDisposeCallback(Action<ITerminal> callback);
 
         Task ReleaseAsync();
+
+        void Release();
 
         string Id { get; set; }
         string Servidor { get; set; }

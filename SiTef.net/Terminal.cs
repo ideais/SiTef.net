@@ -15,7 +15,7 @@ namespace SiTef.net
 
         private int _transaction;
 
-        private List<Func<ITerminal, Task>> _disposeCallbacks;
+        private List<Action<ITerminal>> _disposeCallbacks;
 
         private string _terminal;
         public string Id { get { return _terminal; } set { _terminal = value; } }
@@ -28,7 +28,7 @@ namespace SiTef.net
             Servidor = servidor;
             Empresa = empresa;
             _term = SiTef.IniciaTerminal(servidor, terminal, empresa);
-            _disposeCallbacks = new List<Func<ITerminal, Task>>();
+            _disposeCallbacks = new List<Action<ITerminal>>();
             if (IntPtr.Zero == _term)
                 throw new TerminalException("unable to initialize terminal");
             IniciaTransacao();
@@ -85,15 +85,24 @@ namespace SiTef.net
         }
 
 
-        public async Task ReleaseAsync()
+        public Task ReleaseAsync()
         {
             SiTef.FinalizaTerminal(_term);
-            foreach (var action in _disposeCallbacks)
-                await action(this);
+            return Task.Run(() =>
+            {
+                foreach (var action in _disposeCallbacks)
+                    action(this);
+            });
+            
         }
 
+        public void Release() {
+            SiTef.FinalizaTerminal(_term);
+            foreach (var action in _disposeCallbacks)
+                action(this);
+        }
 
-        public void AddDisposeCallback(Func<ITerminal, Task> callback)
+        public void AddDisposeCallback(Action<ITerminal> callback)
         {
             _disposeCallbacks.Add(callback);
         }
