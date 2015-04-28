@@ -30,7 +30,7 @@ namespace SiTef.net.Pool.MongoDB
         {
             var collection = Database.GetCollection<MongoTerminalLease>(Collection);
             var builder = Builders<MongoTerminalLease>.Update;
-            var update = builder.Set(t => t.LeasedTo, null);
+            var update = builder.Unset(t => t.LeasedTo);
             await collection.UpdateOneAsync(t => t.Id == ObjectId.Parse(terminalId), update);
         }
 
