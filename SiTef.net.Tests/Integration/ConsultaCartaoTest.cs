@@ -26,7 +26,7 @@ namespace SiTef.net.Tests.Integration
 
             ConsultaCartaoResponse response = action.Execute(
                 new ConsultaCartaoRequest(
-                    new NumeroDoCartao("4485022036287910"),
+                    new NumeroDoCartao("4024007122405250"),
                     new DataDeVencimento(12, 15)
                 )
             );

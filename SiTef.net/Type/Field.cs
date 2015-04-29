@@ -364,7 +364,7 @@ namespace SiTef.net.Type
     /// </summary>
     public class NumeroDoCartao : StringField
     {
-        public NumeroDoCartao(string numero) : base(4, numero, 30, @"^\d{0,30}$") { }
+        public NumeroDoCartao(string numero) : base(4, numero, 30, null) { }
     }
 
     /// <summary>

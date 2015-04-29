@@ -21,6 +21,7 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecuteCancelaVendaTest()
         {
+            var valor = new Random().Next(20, 120);
 
             // Primeiro executa uma venda
 
@@ -35,7 +36,7 @@ namespace SiTef.net.Tests.Integration
                 new NumeroDoCartao("4024007122405250"),
                 new DataDeVencimento(12, 15),
                 new CodigoDeSeguranca("123"),
-                new Valor(100.00)
+                new Valor(valor)
                 );
 
             venda = action.Execute(request);
@@ -62,14 +63,14 @@ namespace SiTef.net.Tests.Integration
                     null,
                     null,
                     TipoDeTerminal.WEB,
-                    null,
-                    new NumeroDoCartao("4024007122405250"),
+                    TipoOperacaoDeVenda.TRANSACAO_DIGITADA,
+                    new NumeroDoCartao("402400******5250"),
                     null,
                     null,
                     venda.NSUHost,
                     venda.Data,
                     null,
-                    new Valor(100.00),
+                    new Valor(valor),
                     null,
                     null
                 );
