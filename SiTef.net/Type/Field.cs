@@ -462,10 +462,12 @@ namespace SiTef.net.Type
     /// Data da efetivação da transação.  
     /// Para pagamento de contas: Este campo será repetido tantas vezes quanto for o número de Documentos pagos
     /// </summary>
-    public class Data : StringField
+    public class Data : DateField
     {
         public static short ID = 13;
-        public Data(ITerminal terminal) : base(ID, 4, terminal) { }
+        public Data(ITerminal terminal) : base(ID, 4, terminal) { Pattern = "MMdd"; }
+        public Data(DateTime date) : base(ID, date, 4, "MMdd") { }
+        public Data(int day, int month, int year) : base(ID, day, month, year, 4, "MMdd") { }
     }
 
     /// <summary>

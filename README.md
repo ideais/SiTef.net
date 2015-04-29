@@ -52,6 +52,8 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
+Versão **0.0.1.3** - Campo Data agora valida o formato dos dados, e pode ser instanciado com um DateTime.
+
 Versão **0.0.1.2** - Cancelamento de Vendas implementado.
 
 Versão **0.0.1.1** - Adicionando versão síncrona para o Terminal.Relaase().
