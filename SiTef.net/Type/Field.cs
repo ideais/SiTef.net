@@ -237,7 +237,7 @@ namespace SiTef.net.Type
         {
             if (Value == null)
                 return null;
-            return String.Format("{0}", Value);
+            return Padding ? Value.ToString().PadLeft(Length,'0') : Value.ToString() ;
         }
     }
 
@@ -304,8 +304,8 @@ namespace SiTef.net.Type
     public class Rede : NumericField
     {
         public static short LENGTH = 4;
-        public Rede(ITerminal terminal) : base(1, LENGTH, terminal) { }
-        public Rede(int codigo) : base(1, codigo, LENGTH) { }
+        public Rede(ITerminal terminal) : base(1, LENGTH, terminal) { Padding = false; }
+        public Rede(int codigo) : base(1, codigo, LENGTH) { Padding = false; }
 
         public static Rede TECHAN = new Rede(1);
         public static Rede REDE = new Rede(5);
@@ -492,9 +492,8 @@ namespace SiTef.net.Type
     {
         public static short ID = 15;
         public static short LENGTH = 12;
-        const string PATTERN = @"^\d*$";
         public NSUHost(ITerminal terminal) : base(ID, LENGTH, terminal) { }
-        public NSUHost(string numero) : base(ID, numero, LENGTH, PATTERN) { }
+        public NSUHost(string numero) : base(ID, numero, LENGTH, null) { }
     }
 
     /// <summary>
