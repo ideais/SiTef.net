@@ -100,7 +100,7 @@ namespace SiTef.net.Type
         public override string ToString()
         {
             if (Value != null)
-                return String.Format("{2}({0})\n{1}", Id, Value, Label != null ? Label : this.GetType().Name);
+                return String.Format("{2}({0}):{1}", Id, Value, Label != null ? Label : this.GetType().Name);
             return "null";
         }
 
@@ -519,6 +519,42 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Número do documento da transação cancelada. 
+    /// </summary>
+    public class DocumentoCancelado : NumericField
+    {
+        public static short ID = 18;
+        public static short LENGTH = 12;
+        public DocumentoCancelado(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+        public DocumentoCancelado(int value) : base(ID, value, LENGTH) { }
+    }
+
+    /// <summary>
+    /// Data de efetivação da compra cancelada.
+    /// </summary>
+    public class DataDaCompraCancelada : DateField
+    {
+        public static short ID = 19;
+        public static short LENGTH = 4;
+        public DataDaCompraCancelada(ITerminal terminal) : base(ID, LENGTH, terminal) {
+            this.Pattern = "MMdd";
+        }
+        public DataDaCompraCancelada(DateTime date) : base(ID, date, LENGTH, "MMdd") { }
+    }
+
+    /// <summary>
+    /// Hora de efetivação da compra cancelada.
+    /// </summary>
+    public class HoraDaCompraCancelada : StringField
+    {
+        public static short ID = 20;
+        public static short LENGTH = 6;
+        const string PATTERN = @"^[0-2]\d[0-5]\d[0-5]\d$";
+        public HoraDaCompraCancelada(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+        public HoraDaCompraCancelada(string hora) : base(ID, hora, LENGTH, PATTERN) { }
+    }
+
+    /// <summary>
     /// Descrição da Instituição que processou a transação
     /// </summary>
     public class NomeDaInstituicao : StringField
@@ -800,6 +836,25 @@ namespace SiTef.net.Type
     }
 
     /// <summary>
+    /// Este é um campo que deve ser utilizado para gravação de prefixo´s opcionais do SITEF.
+    /// Exemplos:
+    ///     VIACRT:5
+    ///     TITULAR:1
+    /// </summary>
+    public class CamposVariaveisComPrefixo : StringField
+    {
+        public CamposVariaveisComPrefixo(string valor) : base(156, valor, 128, null) { }
+    }
+
+    /// <summary>
+    /// Número do documento de identidade (RG)
+    /// </summary>
+    public class RG : StringField
+    {
+        public RG(string value) : base(161, value, 20, null) { }
+    }
+
+    /// <summary>
     /// Valor da taxa de serviço a ser cobrada na operação de venda (Por exemplo: gorjeta).
     /// Quando compra IATA o valor indica a taxa de embarque.
     /// Este valor é opcional
@@ -1022,6 +1077,62 @@ namespace SiTef.net.Type
     {
         public static short ID = 379;
         public TipoOperacaoDeVenda(ITerminal terminal) : base(ID, 1, terminal) { }
+        private TipoOperacaoDeVenda(int code) : base(ID, code, 1){}
+
+        public static TipoOperacaoDeVenda TRANSACAO_COM_TARJA_MAGNETICA = new TipoOperacaoDeVenda(1);
+        public static TipoOperacaoDeVenda TRANSACAO_DIGITADA = new TipoOperacaoDeVenda(2);
+        public static TipoOperacaoDeVenda E_GIFT = new TipoOperacaoDeVenda(6);
+    }
+
+    /// <summary>
+    /// Trilha 1 do Cartao
+    /// </summary>
+    public class Trilha1 : StringField
+    {
+        public static short ID = 380;
+        public Trilha1(ITerminal terminal) : base(ID, 76, terminal) { }
+        public Trilha1(string value) : base(ID, value, 76) { } 
+    }
+
+    /// <summary>
+    /// Trilha 2 do Cartao
+    /// </summary>
+    public class Trilha2 : StringField
+    {
+        public static short ID = 381;
+        public Trilha2(ITerminal terminal) : base(ID, 37, terminal) { }
+        public Trilha2(string value) : base(ID, value, 37) { }
+    }
+
+    /// <summary>
+    /// Texto para exibição no visor do cliente 
+    /// </summary>
+    public class TextoParaExibicaoVisorCliente : StringField
+    {
+        public static short ID = 409;
+        public static int LENGTH = 64;
+        public TextoParaExibicaoVisorCliente(ITerminal terminal) : base(ID, LENGTH, terminal) { }
+        public TextoParaExibicaoVisorCliente(string texto) : base(ID, texto, LENGTH) { }
+    }
+
+    /// <summary>
+    /// Tipo de Terminal
+    /// </summary>
+    public class TipoDeTerminal : NumericField
+    {
+        public static short ID = 527;
+        public TipoDeTerminal(ITerminal terminal) : base(ID, 2, terminal) { }
+        private TipoDeTerminal(int tipo) : base(ID, tipo, 2) { }
+
+        public static TipoDeTerminal FRENTE_DE_LOJA = new TipoDeTerminal(1);
+        public static TipoDeTerminal MAGAZINE = new TipoDeTerminal(2);
+        public static TipoDeTerminal RETAGUARDA = new TipoDeTerminal(3);
+        public static TipoDeTerminal POSTO_DE_GASOLINA = new TipoDeTerminal(4);
+        public static TipoDeTerminal WEB = new TipoDeTerminal(5);
+        public static TipoDeTerminal TELEVENDAS = new TipoDeTerminal(6);
+        public static TipoDeTerminal MOBILE = new TipoDeTerminal(7);
+        public static TipoDeTerminal RESERVADO = new TipoDeTerminal(8);
+
     }
 
     /// <summary>

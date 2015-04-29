@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Integration\CancelaVendaTest.cs" />
     <Compile Include="Integration\CapturaTest.cs" />
     <Compile Include="Integration\ConsultaCartaoTest.cs" />
     <Compile Include="Integration\ConsutaTicketCulturaTest.cs" />

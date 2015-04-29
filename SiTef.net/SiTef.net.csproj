@@ -45,6 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Action\AbstractAction.cs" />
+    <Compile Include="Action\CancelaVendaAction.cs" />
+    <Compile Include="Action\Model\CancelaVendaRequest.cs" />
+    <Compile Include="Action\Model\CancelaVendaResponse.cs" />
     <Compile Include="Action\CapturaPreAutorizacaoAction.cs" />
     <Compile Include="Action\ConsultaTicketCulturaAction.cs" />
     <Compile Include="Action\Model\ConsultaTicketCulturaResponse.cs" />
