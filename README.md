@@ -52,6 +52,8 @@ Exemplo de operação de consulta às informações do cartão do usuário:
 Changelog
 ---------
 
+Versão **0.0.1.2** - Cancelamento de Vendas implementado.
+
 Versão **0.0.1.1** - Adicionando versão síncrona para o Terminal.Relaase().
 
 Versão **0.0.1.0** - ITerminal não implementa mais IDisposable. Método ReleaseAsync para explicitamente devolver o terminal ao Pool.
