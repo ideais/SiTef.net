@@ -21,7 +21,7 @@ namespace SiTef.net.Tests.Integration
         [TestMethod]
         public void ExecuteCancelaVendaTest()
         {
-            var valor = new Random().Next(20, 120) * 100;
+            decimal valor = new Random().Next(20, 120) * 100;
 
             // Primeiro executa uma venda
 
@@ -60,8 +60,8 @@ namespace SiTef.net.Tests.Integration
                     Rede.CIELO,
                     new NumeroDoCartao("402400******5250"),
                     new NSUHost(nsuHost),
-                    new Data(new DateTime(2015,4,29)),
-                    new Valor(valor)
+                    venda.Data,
+                    new Valor(valor - 10)
                 );
 
             cancelResponse = cancelAction.Execute(cancelRequest);
