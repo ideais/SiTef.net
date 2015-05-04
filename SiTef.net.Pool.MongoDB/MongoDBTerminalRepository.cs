@@ -15,8 +15,6 @@ namespace SiTef.net.Pool.MongoDB
 
         public string Collection { get; set; }
 
-
-
         public async Task<TerminalLease> LeaseAsync(string id)
         {
             var collection = Database.GetCollection<MongoTerminalLease>(Collection);
@@ -31,9 +29,8 @@ namespace SiTef.net.Pool.MongoDB
             var collection = Database.GetCollection<MongoTerminalLease>(Collection);
             var builder = Builders<MongoTerminalLease>.Update;
             var update = builder.Unset(t => t.LeasedTo);
-            await collection.UpdateOneAsync(t => t.Id == ObjectId.Parse(terminalId), update);
+            await collection.UpdateOneAsync(t => t.Terminal == terminalId, update);
         }
-
 
         public async Task<List<TerminalLease>> ReclaimAsync(string id)
         {
