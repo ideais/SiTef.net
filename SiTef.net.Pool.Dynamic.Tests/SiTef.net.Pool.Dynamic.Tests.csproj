@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{23713363-4902-4816-9234-A4D9905B6240}</ProjectGuid>
+    <ProjectGuid>{F73D7834-967B-4712-9999-77B48864D789}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SiTef.net.Pool.MongoDB.Tests</RootNamespace>
-    <AssemblyName>SiTef.net.Pool.MongoDB.Tests</AssemblyName>
+    <RootNamespace>SiTef.net.Pool.Dynamic.Tests</RootNamespace>
+    <AssemblyName>SiTef.net.Pool.Dynamic.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,9 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
-    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
-    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,17 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MongoDB.Bson, Version=2.0.0.828, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MongoDB.Bson.2.0.0\lib\net45\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.0.0.828, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MongoDB.Driver.2.0.0\lib\net45\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core">
-      <HintPath>..\packages\MongoDB.Driver.Core.2.0.0\lib\net45\MongoDB.Driver.Core.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -64,21 +50,18 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MongoDBTerminalPoolTest.cs" />
+    <Compile Include="DynamicTerminalRepositoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SiTef.net.Pool.MongoDB\SiTef.net.Pool.MongoDB.csproj">
-      <Project>{8a59be08-e922-42b2-a1b5-9de560ba8ecf}</Project>
-      <Name>SiTef.net.Pool.MongoDB</Name>
+    <ProjectReference Include="..\SiTef.net.Pool.Dynamic\SiTef.net.Pool.Dynamic.csproj">
+      <Project>{D5E424C9-249C-40B7-A1AB-D0CEDEAF0E42}</Project>
+      <Name>SiTef.net.Pool.Dynamic</Name>
     </ProjectReference>
     <ProjectReference Include="..\SiTef.net\SiTef.net.csproj">
-      <Project>{1ffed85e-f4c0-4169-9200-c43a3ff1278d}</Project>
+      <Project>{1FFED85E-F4C0-4169-9200-C43A3FF1278D}</Project>
       <Name>SiTef.net</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
