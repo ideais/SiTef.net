@@ -58,7 +58,7 @@ namespace SiTef.net.Pool
 
             // As propriedades do Lease tem prioridade sobre as configuradas no Pool
             var server = lease.Servidor ?? Server;
-            var empresa = lease.Empresa ?? Server;
+            var empresa = lease.Empresa ?? Empresa;
 
             ITerminal term = new Terminal(server, lease.Terminal, empresa);
             term.AddDisposeCallback(async instance => { await ReleaseTerminalAsync(instance); });
